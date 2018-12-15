@@ -9,22 +9,33 @@ public class MultipleSelection : MonoBehaviour {
 	public GameObject pointPrefab;
 	public GameObject anglePrefab;
 	
-	private List<GameObject> points;
+	//private List<GameObject> points;
 	
 	public Texture dashedLineTexture;
 
-	public void CreateLine(){
-		
-		points = new List<GameObject>();
+	private List<GameObject> GetObjects(string name, bool selected){
+		List<GameObject> list = new List<GameObject>();
 		
 		foreach(Transform child in task.transform){
-			if(child.gameObject.name == "Point" && child.gameObject.GetComponent<PointObject>().isSelected){
-				points.Add(child.gameObject);
+			if(child.gameObject.name == name || name == ""){
+				if(selected){
+					if(child.gameObject.GetComponent<CreatedObject>().isSelected){
+						list.Add(child.gameObject);
+					}
+				}else{
+					list.Add(child.gameObject);
+				}
 			}
 		}
 		
+		return list;
+	}
+	
+	public void CreateLine(){
+		List<GameObject> points = GetObjects("Point", true);
+		
 		if(points.Count != 2){
-			Debug.Log("ERROR: 2 points must be selected");
+			//ERR: 2 points must be selected
 		}else{
 			BuildLine(points[0], points[1]);
 			
@@ -38,8 +49,8 @@ public class MultipleSelection : MonoBehaviour {
 	private void BuildLine(GameObject point1, GameObject point2){
 		//check if line already exists
 		foreach(GameObject connectedLine in point1.GetComponent<PointObject>().lines){
-			if(connectedLine.GetComponent<LineObject>().point1.GetInstanceID() == point2.GetInstanceID() || connectedLine.GetComponent<LineObject>().point2.GetInstanceID() == point2.GetInstanceID()){
-				Debug.Log("Line already exists");
+			if(connectedLine.GetComponent<LineObject>().point1 == point2 || connectedLine.GetComponent<LineObject>().point2 == point2){
+				//ERR: Line already exists
 				return;
 			}
 		}
@@ -65,14 +76,12 @@ public class MultipleSelection : MonoBehaviour {
 	public void ChangeColor(){
 		Color c = gameObject.GetComponent<Renderer>().material.color;
 		
-		foreach(Transform child in task.transform){
-			if(child.gameObject.GetComponent<CreatedObject>().isSelected){
-				child.gameObject.GetComponent<CreatedObject>().ChangeColor(c);
-			}
+		foreach(GameObject obj in GetObjects("", true)){
+			obj.GetComponent<CreatedObject>().ChangeColor(c);
 		}
 	}
 	
-	public void ShowColorMenu(){
+	public void ShowColorMenu(){  //CHANGE NAME PROLLY?
 		GameObject menu = gameObject.transform.GetChild(0).gameObject;
 		
 		if(menu.activeSelf){
@@ -83,73 +92,54 @@ public class MultipleSelection : MonoBehaviour {
 	}
 	
 	public void ChangeTypeOfLine(){
-		foreach(Transform child in task.transform){
-			if(child.gameObject.name == "Line" && child.gameObject.GetComponent<CreatedObject>().isSelected){
-				
-				//deselect line
-				child.gameObject.GetComponent<LineObject>().SelectClick();
-				
-				//get line color
-				Color tempColor = child.gameObject.GetComponent<Renderer>().material.color;
-				
-				//reset material back to solid
-				child.gameObject.GetComponent<Renderer>().material.mainTexture = null;
-				
-				if(gameObject.name == "Solid"){
-					child.gameObject.GetComponent<Renderer>().material.color = new Color(tempColor.r, tempColor.g, tempColor.b, 1f);
-				}else if(gameObject.name == "Dashed"){
-					                                            //scaleY*10
-					child.gameObject.GetComponent<Renderer>().material.mainTexture = dashedLineTexture;
-					child.gameObject.GetComponent<Renderer>().material.mainTextureScale = new Vector2(1f, child.gameObject.transform.localScale.y * 10f);
-				}else{ // Transparent
-					child.gameObject.GetComponent<Renderer>().material.color = new Color(tempColor.r, tempColor.g, tempColor.b, 0.5f);
-				}
+		foreach(GameObject line in GetObjects("Line", true)){
+			Color tempColor = line.GetComponent<Renderer>().material.color;
+		
+			//reset back to solid <<<<prolly refactor that
+			line.GetComponent<Renderer>().material.mainTexture = null;
+			
+			if(gameObject.name == "Solid"){
+				line.GetComponent<Renderer>().material.color = new Color(tempColor.r, tempColor.g, tempColor.b, 1f);
+			}else if(gameObject.name == "Dashed"){
+				line.GetComponent<Renderer>().material.mainTexture = dashedLineTexture;
+				line.GetComponent<Renderer>().material.mainTextureScale = new Vector2(1f, line.transform.localScale.y * 10f);
+			}else{ //Transparent
+				line.GetComponent<Renderer>().material.color = new Color(tempColor.r, tempColor.g, tempColor.b, 0.5f);
 			}
 		}
 	}
-	
 	public void SubdivideLines(){
-		
-		int numberOfDivisions = int.Parse(transform.parent.GetChild(3).GetChild(0).GetChild(0).GetComponent<TextMesh>().text);
-		
-		foreach(Transform child in task.transform){
-			if(child.gameObject.name == "Line" && child.gameObject.GetComponent<CreatedObject>().isSelected){
-				
-				float lineLength = Vector3.Distance(child.gameObject.GetComponent<LineObject>().point1.transform.position, child.gameObject.GetComponent<LineObject>().point2.transform.position);
-				float subDistance = lineLength / numberOfDivisions;
-				
-				List<GameObject> createdPoints = new List<GameObject>();
-				
-				createdPoints.Add(child.gameObject.GetComponent<LineObject>().point2);
-				
-				for(int i=1; i<numberOfDivisions; i++){
-					GameObject tempPoint = Instantiate(pointPrefab, child.position, child.rotation, task.transform);
-					tempPoint.transform.Translate(Vector3.down * lineLength / 2, Space.Self);
-					tempPoint.name = "Point";
-					createdPoints.Add(tempPoint);
+		int numberOfDivisions = int.Parse(transform.parent.GetChild(3).GetChild(0).GetChild(0).GetComponent<TextMesh>().text);	
+
+		foreach(GameObject line in GetObjects("Line", true)){
+
+			float lineLength = Vector3.Distance(line.GetComponent<LineObject>().point1.transform.position, line.GetComponent<LineObject>().point2.transform.position);
+			float subDistance = lineLength / numberOfDivisions;
+
+			List<GameObject> createdPoints = new List<GameObject>();
+
+			createdPoints.Add(line.GetComponent<LineObject>().point2);
+
+			for(int i=1; i<numberOfDivisions; i++){
+				GameObject tempPoint = Instantiate(pointPrefab, line.transform.position, line.transform.rotation, task.transform);
+				tempPoint.transform.Translate(Vector3.down * lineLength / 2, Space.Self);
+				tempPoint.name = "Point";
+				createdPoints.Add(tempPoint);
 					
-					tempPoint.transform.Translate(Vector3.up * subDistance * i, Space.Self);
-				}
-				
-				createdPoints.Add(child.gameObject.GetComponent<LineObject>().point1);
-				
-				for(int i=0; i<numberOfDivisions; i++){
-					BuildLine(createdPoints[i], createdPoints[i+1]);
-				}
-				
-				Destroy(child.gameObject);
+				tempPoint.transform.Translate(Vector3.up * subDistance * i, Space.Self);
 			}
+
+			createdPoints.Add(line.GetComponent<LineObject>().point1);
+
+			for(int i=0; i<numberOfDivisions; i++){
+				BuildLine(createdPoints[i], createdPoints[i+1]);
+			}
+			Destroy(line);
 		}
 	}
 	
 	public void CreateAngleRepresentation(){
-		List<GameObject> list = new List<GameObject>();
-		
-		foreach(Transform child in task.transform){
-			if(child.name == "Line" && child.GetComponent<LineObject>().isSelected){
-				list.Add(child.gameObject);
-			}
-		}
+		List<GameObject> list = GetObjects("Line", true);
 		
 		if(list.Count != 2){
 			//ERR HERE
@@ -161,24 +151,23 @@ public class MultipleSelection : MonoBehaviour {
 	private void BuildAngle(GameObject line1, GameObject line2){
 		
 		//is this angle existing?
-		foreach(Transform child in task.transform){
-			if(child.name == "Angle"){
-				if((child.gameObject.GetComponent<AngleObject>().line1 == line1 && child.gameObject.GetComponent<AngleObject>().line2 == line2) ||
-				   (child.gameObject.GetComponent<AngleObject>().line1 == line2 && child.gameObject.GetComponent<AngleObject>().line2 == line1)){
-					   return;
-				   }
-			}
+		foreach(GameObject angle in GetObjects("Angle", false)){
+			if((angle.GetComponent<AngleObject>().line1 == line1 && angle.GetComponent<AngleObject>().line2 == line2) ||
+			   (angle.GetComponent<AngleObject>().line1 == line2 && angle.GetComponent<AngleObject>().line2 == line1)){
+				   //ERR: Angle already exists
+				   return;
+			   }
 		}
 		
 		GameObject point = null;
 		
-		if(line1.GetComponent<LineObject>().point1.GetInstanceID() == line2.GetComponent<LineObject>().point1.GetInstanceID()){
+		if(line1.GetComponent<LineObject>().point1 == line2.GetComponent<LineObject>().point1){
 			point = line1.GetComponent<LineObject>().point1;
-		}else if(line1.GetComponent<LineObject>().point1.GetInstanceID() == line2.GetComponent<LineObject>().point2.GetInstanceID()){
+		}else if(line1.GetComponent<LineObject>().point1 == line2.GetComponent<LineObject>().point2){
 			point = line1.GetComponent<LineObject>().point1;
-		}else if(line1.GetComponent<LineObject>().point2.GetInstanceID() == line2.GetComponent<LineObject>().point1.GetInstanceID()){
+		}else if(line1.GetComponent<LineObject>().point2 == line2.GetComponent<LineObject>().point1){
 			point = line1.GetComponent<LineObject>().point2;
-		}else if(line1.GetComponent<LineObject>().point2.GetInstanceID() == line2.GetComponent<LineObject>().point2.GetInstanceID()){
+		}else if(line1.GetComponent<LineObject>().point2 == line2.GetComponent<LineObject>().point2){
 			point = line1.GetComponent<LineObject>().point2;
 		}
 		
@@ -194,19 +183,16 @@ public class MultipleSelection : MonoBehaviour {
 			float ob = line2.GetComponent<LineObject>().GetLength();
 			float ab = Vector3.Distance(p1.transform.position, p2.transform.position);
 			
-			float angleValue = Mathf.Acos( (oa*oa + ob*ob - ab*ab) / (2 * oa * ob) );
+			float angleValue = Mathf.Acos( (oa*oa + ob*ob - ab*ab) / (2 * oa * ob) );  //Vector3.Angle mai imashe sm shit like dis
 			
 			angleValue *= Mathf.Rad2Deg;
 			
-			int segmentsCount = Mathf.RoundToInt( (4*angleValue) / 45);
-			
-			angle.GetComponent<AngleObject>().BuildTorus(segmentsCount);
+			//32-full_torus
+			angle.GetComponent<AngleObject>().BuildTorus( Mathf.RoundToInt( (4*angleValue) / 45) );
 			
 			angle.transform.localScale = new Vector3(1f, 0.12f, 1f);
 			
 			angle.name = "Angle";
-			
-			//--------------
 			
 			Vector3 side1 = p1.transform.position - point.transform.position;
 			Vector3 side2 = p2.transform.position - point.transform.position;
@@ -215,9 +201,7 @@ public class MultipleSelection : MonoBehaviour {
 			
 			angle.transform.rotation = Quaternion.LookRotation(yVector) * Quaternion.Euler(90f, 0f, 0f);
 			
-			//--------------
-			
-			//um, okay thats here for reasons
+			//um, okay thats here for reasons (angle does the moves thing ._.)
 			angle.transform.position = point.transform.position;
 			//
 			
@@ -227,32 +211,24 @@ public class MultipleSelection : MonoBehaviour {
 			//connect to lines
 			angle.GetComponent<AngleObject>().Connect(line1, line2);
 			
+			//deselect lines
 			line1.GetComponent<LineObject>().SelectClick();
 			line2.GetComponent<LineObject>().SelectClick();
 		}else{
-			//ERR HERE
+			//ERR: Nqa obshta tochka
 		}
 	}
 	
 	public void Perpendicular(){
-		int linesCount = 0, pointsCount = 0;
-		GameObject line = null;
-		GameObject point = null;
 		
-		foreach(Transform child in task.transform){
-			if(child.gameObject.name == "Line" && child.gameObject.GetComponent<CreatedObject>().isSelected){
-				linesCount++;
-				line = child.gameObject;
-			}else if(child.gameObject.name == "Point" && child.gameObject.GetComponent<CreatedObject>().isSelected){
-				pointsCount++;
-				point = child.gameObject;
-			}
-		}
-		
-		if(linesCount != 1 || pointsCount != 1){
-			//ERR HERE
+		if(GetObjects("Line", true).Count != 1 || GetObjects("Point", true).Count != 1){
+			//ERR: select 1 line & 1 point u dum fuk
 			return;
 		}
+		
+		//dont like how u call the same f() twice tho
+		GameObject line = GetObjects("Line", true)[0];
+		GameObject point = GetObjects("Point", true)[0];
 		
 		float xa = line.GetComponent<LineObject>().point1.transform.position.x;
 		float ya = line.GetComponent<LineObject>().point1.transform.position.y;
