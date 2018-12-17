@@ -246,19 +246,28 @@ public class MultipleSelection : MonoBehaviour {
 		GameObject newPoint = Instantiate(pointPrefab, new Vector3(xa+l*(xb-xa), ya+l*(yb-ya), za+l*(zb-za)), Quaternion.identity, task.transform);
 		
 		newPoint.name = "Point";
-		
 		BuildLine(newPoint, point);
-		
-		line.GetComponent<LineObject>().SelectClick();
-		point.GetComponent<PointObject>().SelectClick();
 		
 		GameObject pointOne = line.GetComponent<LineObject>().point1;
 		GameObject pointTwo = line.GetComponent<LineObject>().point2;
+		line.GetComponent<LineObject>().SelectClick();
+		point.GetComponent<PointObject>().SelectClick();
 		
-		Destroy(line);
-		
-		BuildLine(pointOne, newPoint);
-		BuildLine(newPoint, pointTwo);
+		if( IsBetween(pointTwo.transform.position, pointOne.transform.position, newPoint.transform.position) ){
+			Destroy(line);
+			BuildLine(pointOne, newPoint);
+			BuildLine(newPoint, pointTwo);
+		}else{
+			if(Vector3.Distance(point.transform.position, pointOne.transform.position) < Vector3.Distance(point.transform.position, pointTwo.transform.position)){
+				BuildLine(newPoint, pointOne);
+			}else{
+				BuildLine(newPoint, pointTwo);
+			}
+		}
+	}
+	
+	private bool IsBetween ( Vector3 A , Vector3 B , Vector3 C ) {
+			return Vector3.Dot( (B-A).normalized , (C-B).normalized ) < 0f && Vector3.Dot( (A-B).normalized , (C-A).normalized ) < 0f;
 	}
 	
 	public void ChangeCount(int num){
