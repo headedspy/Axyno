@@ -17,7 +17,6 @@ public class ToolButton : MonoBehaviour {
 		isSelected = true;
 		GameObject.Find("Head").GetComponent<Info>().ChangeTool(toolName);
 		gameObject.GetComponent<Renderer> ().material.color = new Color (0.8f, 0.8f, 0.8f);
-		Handheld.Vibrate ();
 	}
 	
 	private void Deselect(){

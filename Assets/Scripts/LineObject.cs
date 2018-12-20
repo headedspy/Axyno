@@ -16,4 +16,9 @@ public class LineObject : CreatedObject {
 	public float GetLength(){
 		return Vector3.Distance(point1.transform.position, point2.transform.position);
 	}
+	
+	void OnDestroy(){
+		point1.GetComponent<PointObject>().Disconnect(gameObject);
+		point2.GetComponent<PointObject>().Disconnect(gameObject);
+	}
 }

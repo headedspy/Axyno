@@ -16,7 +16,6 @@ public class ButtonFX : MonoBehaviour {
 		menu.SetActive (!isOn);
 		isOn = !isOn;
 		gameObject.GetComponent<Renderer> ().material.color = new Color (0.5f, 0.5f, 0.5f);
-		Handheld.Vibrate ();
 	}
 
 	public void PressUp(){

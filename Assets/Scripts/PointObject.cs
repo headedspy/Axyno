@@ -22,4 +22,8 @@ public class PointObject : CreatedObject {
 	public void Connect(GameObject givenLine){
 		lines.Add(givenLine);
 	}
+	
+	public void Disconnect(GameObject givenLine){
+		lines.Remove(givenLine);
+	}
 }

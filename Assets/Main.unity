@@ -347,14 +347,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 63298184}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99ab9693daef634da5a1c6928dca97f, type: 3}
+  m_Script: {fileID: 11500000, guid: d94102cd60a7b78449202c781f35da3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  task: {fileID: 13187884}
-  linePrefab: {fileID: 0}
-  pointPrefab: {fileID: 0}
-  anglePrefab: {fileID: 0}
-  dashedLineTexture: {fileID: 0}
 --- !u!114 &63298190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,7 +367,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 63298189}
-          m_MethodName: ChangeColor
+          m_MethodName: Initiate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -799,14 +794,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 374309208}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99ab9693daef634da5a1c6928dca97f, type: 3}
+  m_Script: {fileID: 11500000, guid: d94102cd60a7b78449202c781f35da3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  task: {fileID: 13187884}
-  linePrefab: {fileID: 0}
-  pointPrefab: {fileID: 0}
-  anglePrefab: {fileID: 0}
-  dashedLineTexture: {fileID: 0}
 --- !u!114 &374309214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -824,7 +814,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 374309213}
-          m_MethodName: ChangeColor
+          m_MethodName: Initiate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1093,14 +1083,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 632609015}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99ab9693daef634da5a1c6928dca97f, type: 3}
+  m_Script: {fileID: 11500000, guid: d94102cd60a7b78449202c781f35da3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  task: {fileID: 13187884}
-  linePrefab: {fileID: 0}
-  pointPrefab: {fileID: 0}
-  anglePrefab: {fileID: 0}
-  dashedLineTexture: {fileID: 0}
 --- !u!114 &632609021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1118,7 +1103,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 632609020}
-          m_MethodName: ChangeColor
+          m_MethodName: Initiate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1229,6 +1214,7 @@ GameObject:
   - component: {fileID: 641444088}
   - component: {fileID: 641444090}
   - component: {fileID: 641444091}
+  - component: {fileID: 641444092}
   m_Layer: 0
   m_Name: IncreaseButton
   m_TagString: Untagged
@@ -1307,7 +1293,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1697717546}
+        - m_Target: {fileID: 641444092}
           m_MethodName: ChangeCount
           m_Mode: 3
           m_Arguments:
@@ -1333,6 +1319,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0000001, y: 0.99999994, z: 1}
   m_Center: {x: -0.0000007748604, y: 0, z: -0.0000019073486}
+--- !u!114 &641444092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 641444086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394a93576ecfa3b46b7e578997442c91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  linePrefab: {fileID: 0}
+  textObject: {fileID: 1830892571}
+  pointPrefab: {fileID: 0}
 --- !u!1 &653855334
 GameObject:
   m_ObjectHideFlags: 0
@@ -1450,16 +1450,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 664869255}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99ab9693daef634da5a1c6928dca97f, type: 3}
+  m_Script: {fileID: 11500000, guid: 4497bb50cf4dc584198f918f167e7b11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  task: {fileID: 13187884}
-  linePrefab: {fileID: 1770107553005312, guid: d150523c107525d4d9c0ef825656ab83, type: 2}
-  pointPrefab: {fileID: 1598449762804230, guid: dd2b7a06d1e60344983331138e064437,
-    type: 2}
   anglePrefab: {fileID: 1184861494618866, guid: 00632623684f22d43a6325c9e69a6eec,
     type: 2}
-  dashedLineTexture: {fileID: 0}
 --- !u!114 &664869258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1477,7 +1472,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 664869257}
-          m_MethodName: CreateAngleRepresentation
+          m_MethodName: Initiate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1774,15 +1769,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 911365284}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99ab9693daef634da5a1c6928dca97f, type: 3}
+  m_Script: {fileID: 11500000, guid: 91477b03ce4125a4786c25d7660b50ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  task: {fileID: 13187884}
   linePrefab: {fileID: 1770107553005312, guid: d150523c107525d4d9c0ef825656ab83, type: 2}
   pointPrefab: {fileID: 1598449762804230, guid: dd2b7a06d1e60344983331138e064437,
     type: 2}
-  anglePrefab: {fileID: 0}
-  dashedLineTexture: {fileID: 0}
 --- !u!114 &911365287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1800,7 +1792,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 911365286}
-          m_MethodName: Perpendicular
+          m_MethodName: Initiate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1963,13 +1955,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 927915724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99ab9693daef634da5a1c6928dca97f, type: 3}
+  m_Script: {fileID: 11500000, guid: c0c4afb91ab480d418acbda557a5b5de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  task: {fileID: 13187884}
-  linePrefab: {fileID: 0}
-  pointPrefab: {fileID: 0}
-  anglePrefab: {fileID: 0}
   dashedLineTexture: {fileID: 2800000, guid: c4ab59c9246dd2b40b117f379f2e3237, type: 3}
 --- !u!114 &927915730
 MonoBehaviour:
@@ -1988,7 +1976,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 927915729}
-          m_MethodName: ChangeTypeOfLine
+          m_MethodName: Initiate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2166,6 +2154,7 @@ GameObject:
   - component: {fileID: 965693579}
   - component: {fileID: 965693581}
   - component: {fileID: 965693582}
+  - component: {fileID: 965693583}
   m_Layer: 0
   m_Name: DecreaseButton
   m_TagString: Untagged
@@ -2244,7 +2233,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1697717546}
+        - m_Target: {fileID: 965693583}
           m_MethodName: ChangeCount
           m_Mode: 3
           m_Arguments:
@@ -2270,6 +2259,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.99999994, z: 1.0000001}
   m_Center: {x: -0.0000019073486, y: 0, z: -0.0000009536743}
+--- !u!114 &965693583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 965693577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394a93576ecfa3b46b7e578997442c91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  linePrefab: {fileID: 0}
+  textObject: {fileID: 1830892571}
+  pointPrefab: {fileID: 0}
 --- !u!1 &967820577
 GameObject:
   m_ObjectHideFlags: 0
@@ -2365,14 +2368,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 967820577}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99ab9693daef634da5a1c6928dca97f, type: 3}
+  m_Script: {fileID: 11500000, guid: d94102cd60a7b78449202c781f35da3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  task: {fileID: 13187884}
-  linePrefab: {fileID: 0}
-  pointPrefab: {fileID: 0}
-  anglePrefab: {fileID: 0}
-  dashedLineTexture: {fileID: 0}
 --- !u!114 &967820583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2390,7 +2388,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 967820582}
-          m_MethodName: ChangeColor
+          m_MethodName: Initiate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2498,14 +2496,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1005787267}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99ab9693daef634da5a1c6928dca97f, type: 3}
+  m_Script: {fileID: 11500000, guid: d94102cd60a7b78449202c781f35da3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  task: {fileID: 13187884}
-  linePrefab: {fileID: 0}
-  pointPrefab: {fileID: 0}
-  anglePrefab: {fileID: 0}
-  dashedLineTexture: {fileID: 0}
 --- !u!114 &1005787273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2523,7 +2516,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1005787272}
-          m_MethodName: ChangeColor
+          m_MethodName: Initiate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2820,14 +2813,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1194134592}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99ab9693daef634da5a1c6928dca97f, type: 3}
+  m_Script: {fileID: 11500000, guid: d94102cd60a7b78449202c781f35da3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  task: {fileID: 13187884}
-  linePrefab: {fileID: 0}
-  pointPrefab: {fileID: 0}
-  anglePrefab: {fileID: 0}
-  dashedLineTexture: {fileID: 0}
 --- !u!114 &1194134598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2845,7 +2833,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1194134597}
-          m_MethodName: ChangeColor
+          m_MethodName: Initiate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2914,7 +2902,7 @@ GameObject:
   - component: {fileID: 1395244570}
   - component: {fileID: 1395244569}
   m_Layer: 0
-  m_Name: Purple
+  m_Name: Orange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2995,14 +2983,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1395244564}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99ab9693daef634da5a1c6928dca97f, type: 3}
+  m_Script: {fileID: 11500000, guid: d94102cd60a7b78449202c781f35da3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  task: {fileID: 13187884}
-  linePrefab: {fileID: 0}
-  pointPrefab: {fileID: 0}
-  anglePrefab: {fileID: 0}
-  dashedLineTexture: {fileID: 0}
 --- !u!114 &1395244570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3020,7 +3003,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1395244569}
-          m_MethodName: ChangeColor
+          m_MethodName: Initiate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -3129,13 +3112,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1474732998}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99ab9693daef634da5a1c6928dca97f, type: 3}
+  m_Script: {fileID: 11500000, guid: c0c4afb91ab480d418acbda557a5b5de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  task: {fileID: 13187884}
-  linePrefab: {fileID: 0}
-  pointPrefab: {fileID: 0}
-  anglePrefab: {fileID: 0}
   dashedLineTexture: {fileID: 2800000, guid: c4ab59c9246dd2b40b117f379f2e3237, type: 3}
 --- !u!114 &1474733004
 MonoBehaviour:
@@ -3154,7 +3133,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1474733003}
-          m_MethodName: ChangeTypeOfLine
+          m_MethodName: Initiate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -3263,13 +3242,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1506027823}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99ab9693daef634da5a1c6928dca97f, type: 3}
+  m_Script: {fileID: 11500000, guid: c0c4afb91ab480d418acbda557a5b5de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  task: {fileID: 13187884}
-  linePrefab: {fileID: 0}
-  pointPrefab: {fileID: 0}
-  anglePrefab: {fileID: 0}
   dashedLineTexture: {fileID: 2800000, guid: c4ab59c9246dd2b40b117f379f2e3237, type: 3}
 --- !u!114 &1506027829
 MonoBehaviour:
@@ -3288,7 +3263,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1506027828}
-          m_MethodName: ChangeTypeOfLine
+          m_MethodName: Initiate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -3560,14 +3535,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1603592713}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99ab9693daef634da5a1c6928dca97f, type: 3}
+  m_Script: {fileID: 11500000, guid: aeaa30abb4db5c54f9300f8ad56c2658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  task: {fileID: 13187884}
-  linePrefab: {fileID: 0}
-  pointPrefab: {fileID: 0}
-  anglePrefab: {fileID: 0}
-  dashedLineTexture: {fileID: 0}
+  menu: {fileID: 148545530}
 --- !u!114 &1603592716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3585,7 +3556,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1603592715}
-          m_MethodName: ShowColorMenu
+          m_MethodName: Initiate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -3699,14 +3670,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1643352822}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99ab9693daef634da5a1c6928dca97f, type: 3}
+  m_Script: {fileID: 11500000, guid: aeaa30abb4db5c54f9300f8ad56c2658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  task: {fileID: 13187884}
-  linePrefab: {fileID: 0}
-  pointPrefab: {fileID: 0}
-  anglePrefab: {fileID: 0}
-  dashedLineTexture: {fileID: 2800000, guid: c4ab59c9246dd2b40b117f379f2e3237, type: 3}
+  menu: {fileID: 545947797}
 --- !u!114 &1643352825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3724,7 +3691,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1643352824}
-          m_MethodName: ShowColorMenu
+          m_MethodName: Initiate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -3886,14 +3853,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1651869613}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99ab9693daef634da5a1c6928dca97f, type: 3}
+  m_Script: {fileID: 11500000, guid: d94102cd60a7b78449202c781f35da3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  task: {fileID: 13187884}
-  linePrefab: {fileID: 0}
-  pointPrefab: {fileID: 0}
-  anglePrefab: {fileID: 0}
-  dashedLineTexture: {fileID: 0}
 --- !u!114 &1651869619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3911,7 +3873,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1651869618}
-          m_MethodName: ChangeColor
+          m_MethodName: Initiate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -3965,14 +3927,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1671057365}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99ab9693daef634da5a1c6928dca97f, type: 3}
+  m_Script: {fileID: 11500000, guid: 6cd4063b9f122fc42997f218b21b5459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  task: {fileID: 13187884}
   linePrefab: {fileID: 1770107553005312, guid: d150523c107525d4d9c0ef825656ab83, type: 2}
-  pointPrefab: {fileID: 0}
-  anglePrefab: {fileID: 0}
-  dashedLineTexture: {fileID: 0}
 --- !u!114 &1671057368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3990,7 +3948,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1671057367}
-          m_MethodName: CreateLine
+          m_MethodName: Initiate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -4230,15 +4188,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1697717544}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99ab9693daef634da5a1c6928dca97f, type: 3}
+  m_Script: {fileID: 11500000, guid: aeaa30abb4db5c54f9300f8ad56c2658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  task: {fileID: 13187884}
-  linePrefab: {fileID: 1770107553005312, guid: d150523c107525d4d9c0ef825656ab83, type: 2}
-  pointPrefab: {fileID: 1598449762804230, guid: dd2b7a06d1e60344983331138e064437,
-    type: 2}
-  anglePrefab: {fileID: 0}
-  dashedLineTexture: {fileID: 0}
+  menu: {fileID: 653855334}
 --- !u!114 &1697717547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4256,7 +4209,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1697717546}
-          m_MethodName: ShowColorMenu
+          m_MethodName: Initiate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -4483,6 +4436,7 @@ GameObject:
   - component: {fileID: 1758755054}
   - component: {fileID: 1758755051}
   - component: {fileID: 1758755053}
+  - component: {fileID: 1758755055}
   m_Layer: 0
   m_Name: DivideButton
   m_TagString: Untagged
@@ -4561,8 +4515,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1697717546}
-          m_MethodName: SubdivideLines
+        - m_Target: {fileID: 1758755055}
+          m_MethodName: Initiate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -4587,6 +4541,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0000001, y: 1, z: 1}
   m_Center: {x: -0.000000059604645, y: 0.0000038146973, z: -0.0000009536743}
+--- !u!114 &1758755055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1758755049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394a93576ecfa3b46b7e578997442c91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  linePrefab: {fileID: 1770107553005312, guid: d150523c107525d4d9c0ef825656ab83, type: 2}
+  textObject: {fileID: 0}
+  pointPrefab: {fileID: 1598449762804230, guid: dd2b7a06d1e60344983331138e064437,
+    type: 2}
 --- !u!1 &1822751041
 GameObject:
   m_ObjectHideFlags: 0

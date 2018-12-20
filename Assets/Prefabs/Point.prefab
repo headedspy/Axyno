@@ -185,6 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
+  lines: []
 --- !u!114 &114867482453440128
 MonoBehaviour:
   m_ObjectHideFlags: 1
