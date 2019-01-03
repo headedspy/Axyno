@@ -18,31 +18,34 @@ public class ExpandLine : CreateLine {
 			GameObject B = line.GetComponent<LineObject>().point2;
 			
 			float length = line.GetComponent<LineObject>().GetLength();
+			float offset = 8f;
 			
-			float lambda = 8f;
+			GameObject endPointOne = Instantiate(pointPrefab, new Vector3(Calculate(B.transform.position.x, A.transform.position.x, length, offset), 
+																		  Calculate(B.transform.position.y, A.transform.position.y, length, offset), 
+																		  Calculate(B.transform.position.z, A.transform.position.z, length, offset)), 
+																		  Quaternion.identity);
 			
-			GameObject endPointOne = Instantiate(pointPrefab, new Vector3(Calculate(B.transform.position.x, A.transform.position.x, length, lambda), Calculate(B.transform.position.y, A.transform.position.y, length, lambda), Calculate(B.transform.position.z, A.transform.position.z, length, lambda)), Quaternion.identity);
-			GameObject endPointTwo = Instantiate(pointPrefab, new Vector3(Calculate(B.transform.position.x, A.transform.position.x, length, -8f), Calculate(B.transform.position.y, A.transform.position.y, length, -8f), Calculate(B.transform.position.z, A.transform.position.z, length, -8f)), Quaternion.identity);
-		
+			GameObject endPointTwo = Instantiate(pointPrefab, new Vector3(Calculate(B.transform.position.x, A.transform.position.x, length, -offset), 
+																		  Calculate(B.transform.position.y, A.transform.position.y, length, -offset), 
+																		  Calculate(B.transform.position.z, A.transform.position.z, length, -offset)), 
+																		  Quaternion.identity);
+			
 			GameObject newLine = BuildLine(endPointOne, endPointTwo);
-			
-			line.GetComponent<CreatedObject>().SelectClick();
 			
 			Destroy(newLine.GetComponent<LineObject>());
 			
 			newLine.AddComponent<LineHover>();
-			
-			newLine.GetComponent<LineHover>().SetObjects(GetTaskTransform(), line);
-			
-			newLine.transform.localScale -= new Vector3(0.08f, 0f, 0.08f);
-			
 			newLine.GetComponent<LineHover>().pointPrefab = pointPrefab;
 			newLine.GetComponent<LineHover>().linePrefab = linePrefab;
+			newLine.GetComponent<LineHover>().SetObjects(GetTaskTransform(), line);
+			
+			newLine.GetComponent<Renderer>().material.color = Color.red;
+			newLine.transform.localScale -= new Vector3(0.08f, 0f, 0.08f);
 			
 			Destroy(endPointOne);
 			Destroy(endPointTwo);
 			
-			newLine.GetComponent<Renderer>().material.color = Color.red;
+			line.GetComponent<CreatedObject>().SelectClick();
 		}
 	}
 	

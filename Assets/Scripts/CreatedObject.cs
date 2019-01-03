@@ -5,6 +5,11 @@ using UnityEngine;
 public abstract class CreatedObject : MonoBehaviour {
 
 	public bool isSelected = false;
+	
+	private int rotateSpeed = 5;
+	private GameObject head;
+	private GameObject task;
+	private bool rotationLock = false;
 
 	public void ChangeColor(Color c){
 		gameObject.GetComponent<Renderer>().material.color = c;
@@ -25,9 +30,44 @@ public abstract class CreatedObject : MonoBehaviour {
     }
 	
 	public void SelectClick(){
-		if(GameObject.Find("Head").GetComponent<Info>().tool == "Select"){
+		if(head.GetComponent<Info>().tool == "Select"){
 			if(isSelected)Deselect();
 			else Select();
+		}
+	}
+	
+	
+	public void Awake(){
+		task = GameObject.Find("Task");
+		head = GameObject.Find("Head");
+	}
+
+	
+	
+	public void Update(){
+		if(head.GetComponent<Info>().tool == "Rotate"){
+			Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+			RaycastHit hit;
+			
+			if(Physics.Raycast(ray, out hit)){
+				if(hit.collider.gameObject == gameObject){
+					rotationLock = true;
+				}
+			}
+		}
+		if(rotationLock)Rotate();
+	}
+	
+	private void Rotate(){
+		if(Input.GetMouseButton(0)){
+			
+			float rotX = Input.GetAxis("Mouse X") * rotateSpeed * Mathf.Deg2Rad;
+			float rotY = Input.GetAxis("Mouse Y") * rotateSpeed * Mathf.Deg2Rad;
+			
+			task.transform.RotateAround(Vector3.up, -rotX);
+			task.transform.RotateAround(Vector3.right, rotY);
+		}else{
+			rotationLock = false;
 		}
 	}
 }

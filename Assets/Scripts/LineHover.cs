@@ -8,13 +8,14 @@ public class LineHover : ExpandLine {
 	
 	private GameObject newPoint = null;
 	
+	
 	public void SetObjects(Transform taskTransform, GameObject newLine){
 		task = taskTransform;
 		line = newLine;
 	}
 	
 	public void Update(){
-		Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+		Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 		RaycastHit hit;
 		
 		if(Physics.Raycast(ray, out hit)){
@@ -25,18 +26,16 @@ public class LineHover : ExpandLine {
 			}
 		}
 		
-		if(Input.GetMouseButtonDown(0) && newPoint != null)BuildThingy();
+		if(Input.GetMouseButtonDown(0) && newPoint != null) ExtendToPoint();
 	}
 	
-	private void BuildThingy(){
-		
+	private void ExtendToPoint(){
 		GameObject closestPoint = Vector3.Distance(newPoint.transform.position, line.GetComponent<LineObject>().point1.transform.position) < Vector3.Distance(newPoint.transform.position, line.GetComponent<LineObject>().point2.transform.position)
 		? line.GetComponent<LineObject>().point1 : line.GetComponent<LineObject>().point2;
 		
 		BuildLine(newPoint, closestPoint);
+		newPoint.GetComponent<CreatedObject>().SelectClick();
 		
 		Destroy(gameObject);
-		
-		newPoint.GetComponent<CreatedObject>().SelectClick();
 	}
 }

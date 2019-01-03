@@ -46,6 +46,7 @@ public abstract class Tool : MonoBehaviour {
 		return GameObject.Find("Task").transform;
 	}
 	
+	//add that to scripts aswell
 	protected void Vibrate(){
 		Handheld.Vibrate ();
 	}
