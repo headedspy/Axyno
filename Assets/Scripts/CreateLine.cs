@@ -20,11 +20,11 @@ public class CreateLine : Tool {
 		}
 	}
 	
-	protected void BuildLine(GameObject point1, GameObject point2){
+	protected GameObject BuildLine(GameObject point1, GameObject point2){
 		foreach(GameObject connectedLine in point1.GetComponent<PointObject>().lines){
 			if(connectedLine.GetComponent<LineObject>().point1 == point2 || connectedLine.GetComponent<LineObject>().point2 == point2){
 				ReportMessage("Line already exists", 3);
-				return;
+				return null;
 			}
 		}
 		
@@ -43,5 +43,7 @@ public class CreateLine : Tool {
 		line.GetComponent<Collider>().enabled = false;
 		line.GetComponent<Collider>().enabled = true;
 		//dont ask
+		
+		return line;
 	}
 }

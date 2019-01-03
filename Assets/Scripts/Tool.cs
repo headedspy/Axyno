@@ -27,7 +27,19 @@ public abstract class Tool : MonoBehaviour {
 	
 	//To-do
 	protected void ReportMessage(string message, int type){ //1-info 2-warning 3-error
-		Debug.Log(message);
+		//To-do
+		if(type == 1)
+			GameObject.Find("OutputText").GetComponent<TextMesh>().color = Color.white;
+		else if(type == 2)
+			GameObject.Find("OutputText").GetComponent<TextMesh>().color = Color.yellow;
+		else if(type == 3)
+			GameObject.Find("OutputText").GetComponent<TextMesh>().color = Color.red;
+		
+		GameObject.Find("OutputText").GetComponent<TextMesh>().text = message;
+	}
+	
+	protected void CleanMessage(){
+		GameObject.Find("OutputText").GetComponent<TextMesh>().text = "";
 	}
 	
 	protected Transform GetTaskTransform(){
