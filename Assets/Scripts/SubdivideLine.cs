@@ -29,9 +29,14 @@ public class SubdivideLine : CreateLine {
 			}
 
 			createdPoints.Add(line.GetComponent<LineObject>().point1);
+			
+			Material mat = line.GetComponent<Renderer>().material;
+			
+			line.GetComponent<CreatedObject>().SelectClick();
 
 			for(int i=0; i<numberOfDivisions; i++){
-				BuildLine(createdPoints[i], createdPoints[i+1]);
+				GameObject newLine = BuildLine(createdPoints[i], createdPoints[i+1]);
+				newLine.GetComponent<Renderer>().material = mat;
 			}
 			Destroy(line);
 		}

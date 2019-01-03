@@ -6,7 +6,7 @@ public class PointObject : CreatedObject {
 
 	public List<GameObject> lines;
 	
-	private void Start(){
+	public void Start(){
 		lines = new List<GameObject>();
 	}
 

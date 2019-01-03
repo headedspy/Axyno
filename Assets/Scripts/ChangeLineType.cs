@@ -22,11 +22,14 @@ public class ChangeLineType : Tool {
 			
 			if(gameObject.name == "Solid"){
 				line.GetComponent<Renderer>().material.color = new Color(tempColor.r, tempColor.g, tempColor.b, 1f);
+				line.GetComponent<LineObject>().SetTransparency(false);
 			}else if(gameObject.name == "Dashed"){
 				line.GetComponent<Renderer>().material.mainTexture = dashedLineTexture;
 				line.GetComponent<Renderer>().material.mainTextureScale = new Vector2(1f, line.transform.localScale.y * 10f);
+				line.GetComponent<LineObject>().SetTransparency(false);
 			}else{ //Transparent
 				line.GetComponent<Renderer>().material.color = new Color(tempColor.r, tempColor.g, tempColor.b, 0.5f);
+				line.GetComponent<LineObject>().SetTransparency(true);
 			}
 			
 			line.GetComponent<LineObject>().SelectClick();

@@ -13,6 +13,9 @@ public class AngleObject : CreatedObject {
 	public void Connect(GameObject l1, GameObject l2){
 		line1 = l1;
 		line2 = l2;
+		
+		l1.GetComponent<LineObject>().ConnectAngle(gameObject);
+		l2.GetComponent<LineObject>().ConnectAngle(gameObject);
 	}
 	
 	public void BuildTorus(int segmentsCount){

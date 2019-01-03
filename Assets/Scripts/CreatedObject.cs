@@ -11,7 +11,7 @@ public abstract class CreatedObject : MonoBehaviour {
 	private GameObject task;
 	private bool rotationLock = false;
 
-	public void ChangeColor(Color c){
+	public virtual void ChangeColor(Color c){
 		gameObject.GetComponent<Renderer>().material.color = c;
 	}
 
