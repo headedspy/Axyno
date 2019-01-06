@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//change name of the class
 public class ExpandLine : CreateLine {
 	
 	public GameObject pointPrefab;
@@ -13,6 +15,9 @@ public class ExpandLine : CreateLine {
 			ReportMessage("ERROR: Select one line", 3);
 		}else{
 			GameObject line = lines[0];
+			
+			//
+			line.GetComponent<Collider>().enabled = false;
 			
 			GameObject A = line.GetComponent<LineObject>().point1;
 			GameObject B = line.GetComponent<LineObject>().point2;
@@ -40,7 +45,7 @@ public class ExpandLine : CreateLine {
 			newLine.GetComponent<LineHover>().SetObjects(GetTaskTransform(), line);
 			
 			newLine.GetComponent<Renderer>().material.color = Color.red;
-			newLine.transform.localScale -= new Vector3(0.08f, 0f, 0.08f);
+			newLine.transform.localScale -= new Vector3(0.05f, 0f, 0.05f);
 			
 			Destroy(endPointOne);
 			Destroy(endPointTwo);

@@ -30,11 +30,26 @@ public class LineHover : ExpandLine {
 	}
 	
 	private void ExtendToPoint(){
+		Material mat = line.GetComponent<Renderer>().material;
+		
 		GameObject closestPoint = Vector3.Distance(newPoint.transform.position, line.GetComponent<LineObject>().point1.transform.position) < Vector3.Distance(newPoint.transform.position, line.GetComponent<LineObject>().point2.transform.position)
 		? line.GetComponent<LineObject>().point1 : line.GetComponent<LineObject>().point2;
 		
-		BuildLine(newPoint, closestPoint);
-		newPoint.GetComponent<CreatedObject>().SelectClick();
+		if(IsBetween(line.GetComponent<LineObject>().point1.transform.position, line.GetComponent<LineObject>().point2.transform.position, newPoint.transform.position)){
+			GameObject newLine = BuildLine(line.GetComponent<LineObject>().point1, newPoint);
+			GameObject newLine2 = BuildLine(line.GetComponent<LineObject>().point2, newPoint);
+			
+			newLine.GetComponent<Renderer>().material = mat;
+			newLine2.GetComponent<Renderer>().material = mat;
+			
+			Destroy(line);
+		}else{
+			BuildLine(newPoint, closestPoint);
+			newPoint.GetComponent<CreatedObject>().SelectClick();
+		}
+		
+		
+		line.GetComponent<Collider>().enabled = true;
 		
 		Destroy(gameObject);
 	}

@@ -32,8 +32,10 @@ public class LineObject : CreatedObject {
 		if(point1.GetComponent<PointObject>().lines.Count == 0)Destroy(point1);
 		if(point2.GetComponent<PointObject>().lines.Count == 0)Destroy(point2);
 		
-		foreach(GameObject angle in connectedAngles){
-			Destroy(angle);
+		if(connectedAngles.Count > 0){
+			foreach(GameObject angle in connectedAngles){
+				Destroy(angle);
+			}
 		}
 	}
 	

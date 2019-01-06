@@ -46,4 +46,8 @@ public class CreateLine : Tool {
 		
 		return line;
 	}
+	
+	protected bool IsBetween (Vector3 A , Vector3 B , Vector3 C) {
+			return Vector3.Dot( (B-A).normalized , (C-B).normalized ) < 0f && Vector3.Dot( (A-B).normalized , (C-A).normalized ) < 0f;
+	}
 }

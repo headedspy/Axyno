@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Gvr.Internal;
 
 public abstract class CreatedObject : MonoBehaviour {
 
@@ -61,8 +62,10 @@ public abstract class CreatedObject : MonoBehaviour {
 	private void Rotate(){
 		if(Input.GetMouseButton(0)){
 			
+			
 			float rotX = Input.GetAxis("Mouse X") * rotateSpeed * Mathf.Deg2Rad;
 			float rotY = Input.GetAxis("Mouse Y") * rotateSpeed * Mathf.Deg2Rad;
+			
 			
 			task.transform.RotateAround(Vector3.up, -rotX);
 			task.transform.RotateAround(Vector3.right, rotY);

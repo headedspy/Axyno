@@ -9,7 +9,7 @@ public class ButtonFX : MonoBehaviour {
 	private bool isOn = false;
 
 	void Start(){
-		menu.SetActive (false);
+		menu.SetActive(false);
 	}
 
 	public void PressDown(){
