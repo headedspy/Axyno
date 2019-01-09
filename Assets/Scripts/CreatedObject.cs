@@ -19,6 +19,10 @@ public abstract class CreatedObject : MonoBehaviour {
 	public void AddText(string s){
 		gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = s;
 	}
+	
+	public string GetText(){
+		return gameObject.transform.GetChild(0).GetComponent<TextMesh>().text;
+	}
 
 	private void Select(){
 		isSelected = true;
@@ -61,8 +65,6 @@ public abstract class CreatedObject : MonoBehaviour {
 	
 	private void Rotate(){
 		if(Input.GetMouseButton(0)){
-			
-			
 			float rotX = Input.GetAxis("Mouse X") * rotateSpeed * Mathf.Deg2Rad;
 			float rotY = Input.GetAxis("Mouse Y") * rotateSpeed * Mathf.Deg2Rad;
 			

@@ -36,9 +36,12 @@ public abstract class Tool : MonoBehaviour {
 			GameObject.Find("OutputText").GetComponent<TextMesh>().color = Color.red;
 		
 		GameObject.Find("OutputText").GetComponent<TextMesh>().text = message;
+		
+		StartCoroutine(CleanMessage());
 	}
 	
-	protected void CleanMessage(){
+	private IEnumerator CleanMessage(){
+		yield return new WaitForSeconds(5);
 		GameObject.Find("OutputText").GetComponent<TextMesh>().text = "";
 	}
 	

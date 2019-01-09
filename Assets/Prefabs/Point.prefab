@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4289599798724402}
   - component: {fileID: 23832358101652568}
   - component: {fileID: 102731955772371294}
+  - component: {fileID: 114413849951424438}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -55,7 +56,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1519982491755672}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0608, y: 1.4, z: 0}
+  m_LocalPosition: {x: 0.02, y: 1.01, z: 0.46}
   m_LocalScale: {x: 0.67107, y: 0.67107, z: 0.67107}
   m_Children: []
   m_Father: {fileID: 4685593107649156}
@@ -68,7 +69,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1598449762804230}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.848, y: 0.553, z: -0.46400005}
+  m_LocalPosition: {x: -0.72110033, y: 2.0249999, z: 0.82900006}
   m_LocalScale: {x: 0.1264, y: 0.1264, z: 0.1264}
   m_Children:
   - {fileID: 4289599798724402}
@@ -125,7 +126,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6317951b5e3071f4c9b09261449d14c9, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -163,16 +164,27 @@ TextMesh:
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
-  m_Anchor: 0
+  m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
   m_FontSize: 0
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Font: {fileID: 12800000, guid: 6317951b5e3071f4c9b09261449d14c9, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278190080
+--- !u!114 &114413849951424438
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1519982491755672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2586363ae9ff05a4b8f0248a8e29590f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114520676237473908
 MonoBehaviour:
   m_ObjectHideFlags: 1
