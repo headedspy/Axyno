@@ -61,7 +61,6 @@ public class ExtrudeFace : CreateLine {
 		menu.SetActive(false);
 		
 		Dictionary<GameObject, GameObject> ortho = new Dictionary<GameObject, GameObject>();
-		List<GameObject> newPoints = new List<GameObject>();
 		
 		
 		List<GameObject> points = GetPoints(GetObjects("Line", true), false);

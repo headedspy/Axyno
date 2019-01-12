@@ -7,10 +7,10 @@ public class LineObject : CreatedObject {
 	
 	private bool isTransparent = false;
 	
-	private List<GameObject> connectedAngles;
+	public List<GameObject> connectedAngles;
 	
 	public void Start(){
-		connectedAngles = new List<GameObject>();
+		if(connectedAngles == null)connectedAngles = new List<GameObject>();
 	}
 	
 	public void SetPoints(GameObject p1, GameObject p2){
@@ -66,5 +66,9 @@ public class LineObject : CreatedObject {
 		gameObject.transform.Rotate(Vector3.left * 90f, Space.Self);
 		gameObject.transform.Translate(Vector3.down * (distance/2), Space.Self);
 		gameObject.transform.localScale += new Vector3(0f, distance/2, 0f);
+		
+		foreach(GameObject connectedAngle in connectedAngles){
+			connectedAngle.GetComponent<AngleObject>().UpdateAngle(connectedAngle.GetComponent<AngleObject>().line1, connectedAngle.GetComponent<AngleObject>().line2);
+		}
 	}
 }

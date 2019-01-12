@@ -24,12 +24,12 @@ public abstract class CreatedObject : MonoBehaviour {
 		return gameObject.transform.GetChild(0).GetComponent<TextMesh>().text;
 	}
 
-	private void Select(){
+	public void Select(){
 		isSelected = true;
 		gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Custom/Outline");
 	}
 
-	private void Deselect(){
+	public void Deselect(){
 		isSelected = false;
         gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Legacy Shaders/Transparent/Bumped Diffuse");
     }
@@ -38,6 +38,30 @@ public abstract class CreatedObject : MonoBehaviour {
 		if(head.GetComponent<Info>().tool == "Select"){
 			if(isSelected)Deselect();
 			else Select();
+		}else if(head.GetComponent<Info>().tool == "ShapeSelect"){
+			SelectShape();
+		}
+	}
+	
+	public void SelectShape(){
+		RecursiveAdd(gameObject, !isSelected);
+	}
+	
+	private void RecursiveAdd(GameObject obj, bool isSelect){
+		if((!obj.GetComponent<CreatedObject>().isSelected && isSelect) || (obj.GetComponent<CreatedObject>().isSelected && !isSelect)){
+			if(isSelect)obj.GetComponent<CreatedObject>().Select();
+			else obj.GetComponent<CreatedObject>().Deselect();
+			if(obj.name == "Point"){
+				foreach(GameObject connectedLine in obj.GetComponent<PointObject>().lines){
+					RecursiveAdd(connectedLine, isSelect);
+				}
+			}else if(obj.name == "Line"){
+				RecursiveAdd(obj.GetComponent<LineObject>().point1, isSelect);
+				RecursiveAdd(obj.GetComponent<LineObject>().point2, isSelect);
+			}else if(obj.name == "Angle"){
+				RecursiveAdd(obj.GetComponent<AngleObject>().line1, isSelect);
+				RecursiveAdd(obj.GetComponent<AngleObject>().line2, isSelect);
+			}
 		}
 	}
 	

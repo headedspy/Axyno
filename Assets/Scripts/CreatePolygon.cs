@@ -10,7 +10,6 @@ public class CreatePolygon : CreateLine {
 	public override void Initiate(){
 		Vector3 pos = new Vector3(0.5f, 1f, 0.5f);
 		Vector3 offset = new Vector3(0f, 0f, 1f);
-		float side = 0.5f;
 		
 		float angleSize = 360f / sidesCount;
 		
