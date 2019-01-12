@@ -7,12 +7,12 @@ public class PointObject : CreatedObject {
 	public List<GameObject> lines;
 	
 	public void Start(){
-		lines = new List<GameObject>();
+		if(lines == null)lines = new List<GameObject>();
 	}
 
 	public bool ConnectedTo(GameObject givenLine){
 		foreach(GameObject line in lines){
-			if(givenLine.GetInstanceID() == line.GetInstanceID()){
+			if(givenLine == line){
 				return true;
 			}
 		}

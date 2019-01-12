@@ -55,4 +55,16 @@ public class LineObject : CreatedObject {
 	public void DisconnectAngle(GameObject angle){
 		connectedAngles.Remove(angle);
 	}
+	
+	public void UpdatePosition(Vector3 point1, Vector3 point2){
+		float distance = Vector3.Distance(point1, point2);
+		
+		gameObject.transform.localScale = new Vector3(0.055639f, 0f, 0.055639f);
+		gameObject.transform.position = point1;
+		
+		gameObject.transform.LookAt(point2, gameObject.transform.up * -1); //why the 2nd part tho?
+		gameObject.transform.Rotate(Vector3.left * 90f, Space.Self);
+		gameObject.transform.Translate(Vector3.down * (distance/2), Space.Self);
+		gameObject.transform.localScale += new Vector3(0f, distance/2, 0f);
+	}
 }
