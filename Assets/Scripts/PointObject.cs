@@ -26,4 +26,12 @@ public class PointObject : CreatedObject {
 	public void Disconnect(GameObject givenLine){
 		lines.Remove(givenLine);
 	}
+	
+	public void AddText(string s){
+		gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = s;
+	}
+	
+	public string GetText(){
+		return gameObject.transform.GetChild(0).GetComponent<TextMesh>().text;
+	}
 }

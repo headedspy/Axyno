@@ -19,13 +19,13 @@ public class Keyboard : Tool {
 				ReportMessage("ERROR: Select a point", 3);
 			}else{
 				foreach(GameObject obj in GetObjects("Point", false)){
-					if(obj.GetComponent<CreatedObject>().GetText() == text){
+					if(obj.GetComponent<PointObject>().GetText() == text){
 						ReportMessage("ERROR: Point with name \"" + text + "\" already exists", 3);
 						return;
 					}
 				}
 				
-				objects[0].GetComponent<CreatedObject>().AddText(text);
+				objects[0].GetComponent<PointObject>().AddText(text);
 				objects[0].GetComponent<CreatedObject>().SelectClick();
 				
 				text = "";

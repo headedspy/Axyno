@@ -16,13 +16,6 @@ public abstract class CreatedObject : MonoBehaviour {
 		gameObject.GetComponent<Renderer>().material.color = c;
 	}
 
-	public void AddText(string s){
-		gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = s;
-	}
-	
-	public string GetText(){
-		return gameObject.transform.GetChild(0).GetComponent<TextMesh>().text;
-	}
 
 	public void Select(){
 		isSelected = true;
@@ -65,13 +58,10 @@ public abstract class CreatedObject : MonoBehaviour {
 		}
 	}
 	
-	
 	public void Awake(){
 		task = GameObject.Find("Task");
 		head = GameObject.Find("Head");
 	}
-
-	
 	
 	public void Update(){
 		if(head.GetComponent<Info>().tool == "Rotate"){
@@ -91,7 +81,6 @@ public abstract class CreatedObject : MonoBehaviour {
 		if(Input.GetMouseButton(0)){
 			float rotX = Input.GetAxis("Mouse X") * rotateSpeed * Mathf.Deg2Rad;
 			float rotY = Input.GetAxis("Mouse Y") * rotateSpeed * Mathf.Deg2Rad;
-			
 			
 			task.transform.RotateAround(Vector3.up, -rotX);
 			task.transform.RotateAround(Vector3.right, rotY);

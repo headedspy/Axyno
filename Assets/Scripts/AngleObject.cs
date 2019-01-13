@@ -10,12 +10,27 @@ public class AngleObject : CreatedObject {
 	
 	public GameObject line1, line2;
 	
+	public float angleValue = 0f;
+	
 	public void Connect(GameObject l1, GameObject l2){
 		line1 = l1;
 		line2 = l2;
 		
 		l1.GetComponent<LineObject>().ConnectAngle(gameObject);
 		l2.GetComponent<LineObject>().ConnectAngle(gameObject);
+	}
+	
+	public void SwitchLine(GameObject fromLine, GameObject toLine){
+		if(line1 == fromLine){
+			line1.GetComponent<LineObject>().DisconnectAngle(gameObject);
+			line1 = toLine;
+			line1.GetComponent<LineObject>().ConnectAngle(gameObject);
+		}
+		if(line2 == fromLine){
+			line2.GetComponent<LineObject>().DisconnectAngle(gameObject);
+			line2 = toLine;
+			line2.GetComponent<LineObject>().ConnectAngle(gameObject);
+		}
 	}
 	
 	public void OnDestroy(){
@@ -51,12 +66,10 @@ public class AngleObject : CreatedObject {
 			float ob = line2.GetComponent<LineObject>().GetLength();
 			float ab = Vector3.Distance(p1.transform.position, p2.transform.position);
 			
-			float angleValue = Mathf.Acos( (oa*oa + ob*ob - ab*ab) / (2 * oa * ob) );  //Vector3.Angle mai imashe sm shit like dis
-			
-			angleValue *= Mathf.Rad2Deg;
+			angleValue = Mathf.Acos( (oa*oa + ob*ob - ab*ab) / (2 * oa * ob) );  //Vector3.Angle mai imashe sm shit like dis
 			
 			//32-full_torus
-			BuildTorus( Mathf.RoundToInt( (4*angleValue) / 45) );
+			BuildTorus( Mathf.RoundToInt( (4 * (angleValue*Mathf.Rad2Deg)) / 45) );
 			
 			gameObject.transform.localScale = new Vector3(1f, 0.12f, 1f);
 			
