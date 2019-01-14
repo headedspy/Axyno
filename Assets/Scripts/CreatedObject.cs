@@ -17,12 +17,12 @@ public abstract class CreatedObject : MonoBehaviour {
 	}
 
 
-	public void Select(){
+	private void Select(){
 		isSelected = true;
 		gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Custom/Outline");
 	}
 
-	public void Deselect(){
+	private void Deselect(){
 		isSelected = false;
         gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Legacy Shaders/Transparent/Bumped Diffuse");
     }
