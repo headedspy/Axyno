@@ -1,11 +1,24 @@
-﻿using System.Collections;
+﻿//------------------------------------------------------------------------
+// ИМЕ НА ФАЙЛА: CreateAngle.cs
+// НАСЛЕДЕН ОТ: SubdivideLine, CreatePerpendicular
+// ЦЕЛ НА КЛАСА: Построяване на обект линия между две дадени точки
+//------------------------------------------------------------------------
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CreateAngle : Tool {
 
 	public GameObject anglePrefab;
-
+	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: Initiate
+	// Ако броя на селектираните линии от чертежа е две извиква BuildAngle 
+	// с тях, иначе изписва грешка до потребителя.
+	// ПАРАМЕТРИ:
+	// - Няма
+	//------------------------------------------------------------------------
 	public override void Initiate(){
 		List<GameObject> lines = GetObjects("Line", true);
 		
@@ -16,7 +29,15 @@ public class CreateAngle : Tool {
 		}
 	}
 	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: BuildAngle
+	// Създава ъгъл между две свързани линии
+	// ПАРАМЕТРИ:
+	// - GameObject line1 : Едната линия, съставляваща ъгъла
+	// - GameObject line2 : Втората линия, съставляваща ъгъла
+	//------------------------------------------------------------------------
 	private void BuildAngle(GameObject line1, GameObject line2){
+		// Проверка дали ъгъла вече съществува
 		foreach(GameObject angle in GetObjects("Angle", false)){
 			if((angle.GetComponent<AngleObject>().line1 == line1 && angle.GetComponent<AngleObject>().line2 == line2) ||
 			   (angle.GetComponent<AngleObject>().line1 == line2 && angle.GetComponent<AngleObject>().line2 == line1)){
@@ -25,12 +46,17 @@ public class CreateAngle : Tool {
 			   }
 		}
 		
+		// Създаване на обек от тип ъгъл на позицията на едната линия
 		GameObject createdAngle = Instantiate(anglePrefab, line1.transform.position, Quaternion.identity, GetTaskTransform());
 		createdAngle.name = "Angle";
 		
+		// Свързване на ъгъла към двете линии
 		createdAngle.GetComponent<AngleObject>().Connect(line1, line2);
+		
+		// Задаване на определената позиция и форма на ъгъла
 		createdAngle.GetComponent<AngleObject>().UpdateAngle(line1, line2);
 		
+		// Деселектиране на двете линии
 		line1.GetComponent<LineObject>().SelectClick();
 		line2.GetComponent<LineObject>().SelectClick();
 	}
