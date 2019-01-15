@@ -68,6 +68,9 @@ public class CreateBisector : CreateLine{
 				createdAngle.GetComponent<AngleObject>().Connect(line2, newLine);
 				createdAngle.GetComponent<AngleObject>().UpdateAngle(newLine, line2);
 				
+				
+				
+				
 				List<GameObject> lines = new List<GameObject>(c.GetComponent<PointObject>().lines);
 				
 				foreach(GameObject lineb in b.GetComponent<PointObject>().lines){

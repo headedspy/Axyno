@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------
 // ИМЕ НА ФАЙЛА: CreateLine.cs
-// НАСЛЕДЕН ОТ: 
+// НАСЛЕДЕН ОТ: SubdivideLine, CreatePerpendicular
 // ЦЕЛ НА КЛАСА: Построяване на обект линия между две дадени точки
 //------------------------------------------------------------------------
 
@@ -9,14 +9,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CreateLine : Tool {
+	
 	public GameObject linePrefab;
 	
 	//------------------------------------------------------------------------
 	// ФУНКЦИЯ: Initiate
-	// Ако броя на селектираните точки от чертежа е две извиква BuildLine с тях,
-	// иначе изписва грешка до потребителя
+	// Ако броя на селектираните точки от чертежа е две извиква BuildLine 
+	// с тях, иначе изписва грешка до потребителя.
 	// ПАРАМЕТРИ:
-	// -Няма
+	// - Няма
 	//------------------------------------------------------------------------
 	public override void Initiate(){
 		// Списък със всички селектирани точки
@@ -25,6 +26,7 @@ public class CreateLine : Tool {
 		// Ако в списъка има повече или по-малко от два обекта изписва грешка
 		if(points.Count != 2){
 			ReportMessage("2 points must be selected", 3);
+			return;
 		}else{
 			// Иначе построява линия между тях
 			BuildLine(points[0], points[1]);
@@ -72,10 +74,6 @@ public class CreateLine : Tool {
 		
 		// Свързване на линията с точките
 		line.GetComponent<LineObject>().SetPoints(point1, point2);
-		
-		// Предотвратяване на бъг в Unity, където линията не може да бъде селектирана
-		line.GetComponent<Collider>().enabled = false;
-		line.GetComponent<Collider>().enabled = true;
 		
 		// Връща новата линия
 		return line;

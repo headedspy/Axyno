@@ -57,6 +57,7 @@ public class ExtrudeFace : CreateLine {
 		return true;
 	}
 	
+	// upon pyramid creation the new edge's name is (Clone)
 	public void Confirm(bool isExtrude){
 		menu.SetActive(false);
 		

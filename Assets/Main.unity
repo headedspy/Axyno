@@ -4892,8 +4892,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linePrefab: {fileID: 0}
-  textObject: {fileID: 1830892571}
   pointPrefab: {fileID: 0}
+  textObject: {fileID: 1830892571}
 --- !u!1 &649275001
 GameObject:
   m_ObjectHideFlags: 0
@@ -8892,8 +8892,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linePrefab: {fileID: 0}
-  textObject: {fileID: 1830892571}
   pointPrefab: {fileID: 0}
+  textObject: {fileID: 1830892571}
 --- !u!1 &967820577
 GameObject:
   m_ObjectHideFlags: 0
@@ -15786,9 +15786,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linePrefab: {fileID: 1770107553005312, guid: d150523c107525d4d9c0ef825656ab83, type: 2}
-  textObject: {fileID: 0}
   pointPrefab: {fileID: 1598449762804230, guid: dd2b7a06d1e60344983331138e064437,
     type: 2}
+  textObject: {fileID: 0}
 --- !u!1 &1759997749
 GameObject:
   m_ObjectHideFlags: 0
