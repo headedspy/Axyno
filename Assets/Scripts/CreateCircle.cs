@@ -62,7 +62,6 @@ public class CreateCircle : CreateLine {
 		GameObject line2 = angle.GetComponent<AngleObject>().line1 == line1 ? angle.GetComponent<AngleObject>().line2 : angle.GetComponent<AngleObject>().line1;
 		
 		GameObject point2 = line1.GetComponent<LineObject>().point1 == point1 ? line1.GetComponent<LineObject>().point2 : line1.GetComponent<LineObject>().point1;
-		
 		GameObject point3 = line2.GetComponent<LineObject>().point1 == point1 ? line2.GetComponent<LineObject>().point2 : line2.GetComponent<LineObject>().point1;
 		
 		// Изчисляване на перпендикулярния вектор на равнината, описана от селектираните обекти

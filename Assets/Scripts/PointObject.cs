@@ -10,10 +10,9 @@ public class PointObject : CreatedObject {
 		if(lines == null)lines = new List<GameObject>();
 		
 		StartCoroutine(checkOverlap());
-		
-		
 	}
 	
+	//return to Start()
 	private IEnumerator checkOverlap(){
 		yield return new WaitForSeconds(.5f);
 		
