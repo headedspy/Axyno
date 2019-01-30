@@ -51,6 +51,10 @@ public abstract class CreatedObject : MonoBehaviour {
 	private void Select(){
 		isSelected = true;
 		gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Custom/Outline");
+		// Ако обекта е от типа ъгъл, смалява outline-а на shader-а
+		if(gameObject.name == "Angle"){
+			GetComponent<Renderer>().material.SetFloat("_Outline", 1f);
+		}
 	}
 	
 	//------------------------------------------------------------------------
@@ -61,7 +65,7 @@ public abstract class CreatedObject : MonoBehaviour {
 	//------------------------------------------------------------------------
 	private void Deselect(){
 		isSelected = false;
-        gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Legacy Shaders/Transparent/Bumped Diffuse");
+		gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
     }
 	
 	//------------------------------------------------------------------------

@@ -24,6 +24,8 @@ public class MoveObjects : CreateLine {
 				rotateWith = new Vector3(0f, 0f, 5f);
 			}
 			
+			if(gameObject.name == "Minus") rotateWith *= -1;
+			
 		}else{
 			if(gameObject.name[0] == '-')movement *= -1;
 		

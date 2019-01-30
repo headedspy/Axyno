@@ -130,6 +130,7 @@ MonoBehaviour:
   isSelected: 0
   point1: {fileID: 0}
   point2: {fileID: 0}
+  connectedAngles: []
 --- !u!136 &136183452322737278
 CapsuleCollider:
   m_ObjectHideFlags: 1
