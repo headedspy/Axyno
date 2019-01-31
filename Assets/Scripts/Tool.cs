@@ -37,6 +37,7 @@ public abstract class Tool : MonoBehaviour {
 		
 		// Добавяне на всеки обект от чертежа който отговаря на условията в списъка
 		foreach(Transform child in task){
+			
 			if(child.gameObject.name == name || name == ""){
 				if(selected){
 					if(child.gameObject.GetComponent<CreatedObject>().isSelected){

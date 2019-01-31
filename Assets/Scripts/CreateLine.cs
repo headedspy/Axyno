@@ -61,6 +61,14 @@ public class CreateLine : Tool {
 		GameObject line = Instantiate(linePrefab, point1.transform.position, Quaternion.identity, GetTaskTransform());
 		line.name = "Line";
 		
+		line.GetComponent<LineObject>().SetPoints(point1, point2);
+		
+		line.GetComponent<LineObject>().UpdatePosition(point1.transform.position, point2.transform.position);
+		
+		
+		return line;
+		
+		/*
 		// Изчисляване на разстоянието между двете точки
 		float distance = Vector3.Distance(point1.transform.position, point2.transform.position);
 
@@ -77,6 +85,7 @@ public class CreateLine : Tool {
 		
 		// Връща новата линия
 		return line;
+		*/
 	}
 	
 	//------------------------------------------------------------------------

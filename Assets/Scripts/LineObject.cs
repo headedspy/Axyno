@@ -40,8 +40,10 @@ public class LineObject : CreatedObject {
 	}
 	
 	public override void ChangeColor(Color c){
-		if(isTransparent)gameObject.GetComponent<Renderer>().material.color = new Color(c.r, c.g, c.b, 0.5f);
-		else gameObject.GetComponent<Renderer>().material.color = c;
+		GameObject lineMesh = gameObject.transform.GetChild(1).gameObject;
+		
+		if(isTransparent)lineMesh.GetComponent<Renderer>().material.color = new Color(c.r, c.g, c.b, 0.5f);
+		else lineMesh.GetComponent<Renderer>().material.color = c;
 	}
 	
 	public void SetTransparency(bool state){
@@ -57,18 +59,32 @@ public class LineObject : CreatedObject {
 	}
 	
 	public void UpdatePosition(Vector3 point1, Vector3 point2){
+		
+		GameObject lineMesh = gameObject.transform.GetChild(1).gameObject;
+		
 		float distance = Vector3.Distance(point1, point2);
 		
-		gameObject.transform.localScale = new Vector3(0.055639f, 0f, 0.055639f);
-		gameObject.transform.position = point1;
+		lineMesh.transform.localScale = new Vector3(0.055639f, 0f, 0.055639f);
+		lineMesh.transform.position = point1;
 		
-		gameObject.transform.LookAt(point2, gameObject.transform.up * -1); //why the 2nd part tho?
-		gameObject.transform.Rotate(Vector3.left * 90f, Space.Self);
-		gameObject.transform.Translate(Vector3.down * (distance/2), Space.Self);
-		gameObject.transform.localScale += new Vector3(0f, distance/2, 0f);
+		lineMesh.transform.LookAt(point2, lineMesh.transform.up * -1); //why the 2nd part tho?
+		lineMesh.transform.Rotate(Vector3.left * 90f, Space.Self);
+		lineMesh.transform.Translate(Vector3.down * (distance/2), Space.Self);
+		lineMesh.transform.localScale += new Vector3(0f, distance/2, 0f);
 		
 		foreach(GameObject connectedAngle in connectedAngles){
 			connectedAngle.GetComponent<AngleObject>().UpdateAngle(connectedAngle.GetComponent<AngleObject>().line1, connectedAngle.GetComponent<AngleObject>().line2);
 		}
+		
+		Transform lineText = gameObject.transform.GetChild(0);
+		
+		lineText.gameObject.transform.localScale = new Vector3(-0.067107f, 0.067107f, 0.067107f);
+		
+		lineText.position = lineMesh.transform.position;
+		
+	}
+	
+	public void AddText(string text){
+		gameObject.transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = text;
 	}
 }

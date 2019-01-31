@@ -50,7 +50,12 @@ public abstract class CreatedObject : MonoBehaviour {
 	//------------------------------------------------------------------------
 	private void Select(){
 		isSelected = true;
-		gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Custom/Outline");
+		
+		if(gameObject.name == "Line"){
+			gameObject.transform.GetChild(1).gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Custom/Outline");
+		}else{
+			gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Custom/Outline");
+		}
 		// Ако обекта е от типа ъгъл, смалява outline-а на shader-а
 		if(gameObject.name == "Angle"){
 			GetComponent<Renderer>().material.SetFloat("_Outline", 1f);
@@ -65,7 +70,12 @@ public abstract class CreatedObject : MonoBehaviour {
 	//------------------------------------------------------------------------
 	private void Deselect(){
 		isSelected = false;
-		gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
+		
+		if(gameObject.name == "Line"){
+			gameObject.transform.GetChild(1).gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
+		}else{
+			gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
+		}
     }
 	
 	//------------------------------------------------------------------------
@@ -143,7 +153,7 @@ public abstract class CreatedObject : MonoBehaviour {
 			
 			if(Physics.Raycast(ray, out hit)){
 				// Ако лъчът удари обекта може да се предприеме ротация
-				if(hit.collider.gameObject == gameObject){
+				if(hit.collider.gameObject == gameObject || hit.collider.gameObject.transform.parent == gameObject){
 					rotationLock = true;
 				}
 			}

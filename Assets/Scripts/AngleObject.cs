@@ -51,9 +51,7 @@ public class AngleObject : CreatedObject {
 			point = line1.GetComponent<LineObject>().point2;
 		}
 		
-		if(point != null){
-			//GameObject angle = Instantiate(anglePrefab, point.transform.position, Quaternion.identity, GetTaskTransform());
-			
+		if(point != null){			
 			gameObject.transform.position = point.transform.position;
 			gameObject.transform.rotation = Quaternion.identity;
 			
@@ -86,14 +84,6 @@ public class AngleObject : CreatedObject {
 			
 			gameObject.transform.LookAt(p2.transform, yVector);
 			gameObject.transform.Rotate(Vector3.up * -90f);
-			
-			//connect to lines
-			
-			//Connect(line1, line2);
-			
-			//deselect lines
-			//line1.GetComponent<LineObject>().SelectClick();
-			//line2.GetComponent<LineObject>().SelectClick();
 		}
 	}
 	
@@ -179,6 +169,4 @@ public class AngleObject : CreatedObject {
 		
 		GetComponent<MeshFilter>().mesh.RecalculateNormals();
 	}
-	
-	//GetComponent<Renderer>().material.SetFloat("_Outline", 0.013f);
 }
