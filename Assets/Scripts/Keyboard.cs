@@ -15,14 +15,21 @@ public class Keyboard : Tool {
 				Debug.Log("cifra");
 				
 				List<GameObject> lines = GetObjects("Line", true);
+				List<GameObject> angles = GetObjects("Angle", true);
 			
 				if(lines.Count > 0){
 					foreach(GameObject line in lines){
-						line.gameObject.GetComponent<LineObject>().AddText(text);
+						line.GetComponent<LineObject>().AddText(text);
 						line.GetComponent<CreatedObject>().SelectClick();
 					}
+				}else if(angles.Count > 0){
+					foreach(GameObject angle in angles){
+						// addtext method prolly
+						angle.transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = text;
+						angle.GetComponent<CreatedObject>().SelectClick();
+					}
 				}else{
-					ReportMessage("ERROR: Select a line", 3);
+					ReportMessage("ERROR: Select an object", 3);
 				}
 				
 			}else if(!Regex.IsMatch(text, "[0-9]", RegexOptions.IgnoreCase)){
@@ -48,7 +55,7 @@ public class Keyboard : Tool {
 					text = "";
 				}
 			}else{
-				ReportMessage("ERROR: Invalid name");
+				ReportMessage("ERROR: Invalid name", 3);
 			}
 		}else if(isBackspace){
 			if(text.Length != 0){

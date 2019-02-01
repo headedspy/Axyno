@@ -76,6 +76,8 @@ public class LineObject : CreatedObject {
 			connectedAngle.GetComponent<AngleObject>().UpdateAngle(connectedAngle.GetComponent<AngleObject>().line1, connectedAngle.GetComponent<AngleObject>().line2);
 		}
 		
+		lineMesh.GetComponent<CapsuleCollider>().height = distance;
+		
 		Transform lineText = gameObject.transform.GetChild(0);
 		
 		lineText.gameObject.transform.localScale = new Vector3(-0.067107f, 0.067107f, 0.067107f);

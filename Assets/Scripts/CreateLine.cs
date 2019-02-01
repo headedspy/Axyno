@@ -67,25 +67,6 @@ public class CreateLine : Tool {
 		
 		
 		return line;
-		
-		/*
-		// Изчисляване на разстоянието между двете точки
-		float distance = Vector3.Distance(point1.transform.position, point2.transform.position);
-
-		// Преместване на линията по средата между двете точки
-		line.transform.LookAt(point2.transform, line.transform.up * -1);
-		line.transform.Rotate(Vector3.left * 90f, Space.Self);
-		line.transform.Translate(Vector3.down * (distance/2), Space.Self);
-		
-		// Оразмеряване на линията, така че да бъде равна на разстоянието между точките
-		line.transform.localScale += new Vector3(0f, distance/2, 0f);
-		
-		// Свързване на линията с точките
-		line.GetComponent<LineObject>().SetPoints(point1, point2);
-		
-		// Връща новата линия
-		return line;
-		*/
 	}
 	
 	//------------------------------------------------------------------------

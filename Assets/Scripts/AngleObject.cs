@@ -84,6 +84,14 @@ public class AngleObject : CreatedObject {
 			
 			gameObject.transform.LookAt(p2.transform, yVector);
 			gameObject.transform.Rotate(Vector3.up * -90f);
+			
+			GameObject text = gameObject.transform.GetChild(0).gameObject;
+			
+			text.transform.LookAt((p2.transform.position + p1.transform.position) / 2f);
+			
+			text.transform.Translate(Vector3.forward * 0.5f, Space.Self);
+			
+			text.GetComponent<FaceCamera>().enabled = true;
 		}
 	}
 	
