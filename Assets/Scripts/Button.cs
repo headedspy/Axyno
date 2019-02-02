@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonFX : MonoBehaviour {
+public class Button : MonoBehaviour {
 
 	public GameObject menu;
 
