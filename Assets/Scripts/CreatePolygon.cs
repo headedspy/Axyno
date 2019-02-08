@@ -29,6 +29,8 @@ public class CreatePolygon : CreateLine {
 		}
 		
 		BuildLine(firstPoint, point);
+		
+		NamePoints();
 	}
 	
 	public void ChangeNumberOfSides(int amount){

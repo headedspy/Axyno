@@ -25,14 +25,16 @@ public class Keyboard : Tool {
 				}else if(angles.Count > 0){
 					foreach(GameObject angle in angles){
 						// addtext method prolly
-						angle.transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = text;
+						angle.GetComponent<AngleObject>().AddText(text);
+						//angle.transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = text;
 						angle.GetComponent<CreatedObject>().SelectClick();
 					}
 				}else{
 					ReportMessage("ERROR: Select an object", 3);
 				}
-				
-			}else if(!Regex.IsMatch(text, "[0-9]", RegexOptions.IgnoreCase)){
+				/*!Regex.IsMatch(text, "[0-9]", RegexOptions.IgnoreCase)*/
+			}else if(Regex.IsMatch(text, "[a-z]", RegexOptions.IgnoreCase) && 
+					(!Regex.IsMatch(text.Substring(1), "[a-z]", RegexOptions.IgnoreCase) || text.Length == 1)){
 				Debug.Log("bukfa");
 				
 				List<GameObject> objects = GetObjects("Point", true);

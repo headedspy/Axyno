@@ -13,6 +13,8 @@ public class PointObject : CreatedObject {
 
 	public List<GameObject> lines;
 	
+	public string name = null;
+	
 	//------------------------------------------------------------------------
 	// ФУНКЦИЯ: Start
 	// Бива извикана при създаването на обекта. Проверява дали не
@@ -92,6 +94,7 @@ public class PointObject : CreatedObject {
 	public void AddText(string s){
 		// Задаване на текста на дъщерния обект на точката
 		gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = s;
+		name = s;
 	}
 	
 	//------------------------------------------------------------------------
@@ -102,6 +105,6 @@ public class PointObject : CreatedObject {
 	//------------------------------------------------------------------------
 	public string GetText(){
 		// Връщане на текста на дъщерния обект на точката
-		return gameObject.transform.GetChild(0).GetComponent<TextMesh>().text;
+		return name;
 	}
 }

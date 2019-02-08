@@ -133,6 +133,9 @@ public class LineObject : CreatedObject {
 		// Изчислява се разстоянието между двете точки
 		float distance = Vector3.Distance(point1, point2);
 		
+		// Нулиране на размера на линията
+		lineMesh.transform.localScale = new Vector3(0.055639f, 0f, 0.055639f);
+		
 		// Правата се поставя на координатите на първата точка
 		lineMesh.transform.position = point1;
 		
@@ -160,14 +163,13 @@ public class LineObject : CreatedObject {
 		Transform lineText = gameObject.transform.GetChild(0);
 		lineText.gameObject.transform.localScale = new Vector3(-0.067107f, 0.067107f, 0.067107f);
 		lineText.position = lineMesh.transform.position;
-		
 	}
 	
 	//------------------------------------------------------------------------
 	// ФУНКЦИЯ: AddText
-	// Дава стойност
+	// Дава репрезентативна стойност на линията
 	// ПАРАМЕТРИ:
-	// - string s : Стойността, което точката ще има
+	// - string s : Стойността, което линията ще има
 	//------------------------------------------------------------------------
 	public void AddText(string s){
 		gameObject.transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = s;

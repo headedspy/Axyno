@@ -8,7 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateAngle : Tool {
+public class CreateAngle : ActionsManager {
 
 	public GameObject anglePrefab;
 	
@@ -59,5 +59,13 @@ public class CreateAngle : Tool {
 		// Деселектиране на двете линии
 		line1.GetComponent<LineObject>().SelectClick();
 		line2.GetComponent<LineObject>().SelectClick();
+		
+		
+		GameObject centerPoint = createdAngle.GetComponent<AngleObject>().point;
+		GameObject point1 = line1.GetComponent<LineObject>().point1 == centerPoint ? line1.GetComponent<LineObject>().point2 : line1.GetComponent<LineObject>().point1;
+		GameObject point2 = line2.GetComponent<LineObject>().point1 == centerPoint ? line2.GetComponent<LineObject>().point2 : line2.GetComponent<LineObject>().point1;
+		
+		
+		AddCommand("ANGLE_"+point1.GetComponent<PointObject>().GetText()+"_"+centerPoint.GetComponent<PointObject>().GetText()+"_"+point2.GetComponent<PointObject>().GetText());
 	}
 }

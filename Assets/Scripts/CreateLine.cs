@@ -8,7 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateLine : Tool {
+public class CreateLine : ActionsManager {
 	
 	public GameObject linePrefab;
 	
@@ -65,6 +65,7 @@ public class CreateLine : Tool {
 		
 		line.GetComponent<LineObject>().UpdatePosition(point1.transform.position, point2.transform.position);
 		
+		AddCommand("LINE_"+point1.GetComponent<PointObject>().GetText()+"_"+point2.GetComponent<PointObject>().GetText());
 		
 		return line;
 	}

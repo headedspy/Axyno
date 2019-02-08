@@ -37,7 +37,6 @@ public abstract class Tool : MonoBehaviour {
 		
 		// Добавяне на всеки обект от чертежа който отговаря на условията в списъка
 		foreach(Transform child in task){
-			
 			if(child.gameObject.name == name || name == ""){
 				if(selected){
 					if(child.gameObject.GetComponent<CreatedObject>().isSelected){
@@ -110,4 +109,33 @@ public abstract class Tool : MonoBehaviour {
 		Handheld.Vibrate ();
 	}
 	
+	
+	
+	
+	private static char nextPointName = 'a';
+	private static int prefix = 0;
+	
+	protected void NamePoints(){
+		List<GameObject> points = GetObjects("Point", false);
+		
+		foreach(GameObject point in points){
+			if(point.GetComponent<PointObject>().GetText() == ""){
+				
+				string prefixString;
+				
+				if(prefix==0)prefixString = "";
+				else prefixString = prefix.ToString();
+				
+				if(point.GetComponent<PointObject>().GetText() != nextPointName.ToString() + prefixString)point.GetComponent<PointObject>().AddText(nextPointName.ToString() + prefixString);
+				else continue;
+				
+				if(nextPointName == 'z'){
+					nextPointName = 'a';
+					prefix++;
+					continue;
+				}
+				nextPointName++;
+			}
+		}
+	}
 }
