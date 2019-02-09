@@ -26,6 +26,7 @@ public class PointObject : CreatedObject {
 		// Инициализира се списъкът със свързаните линии
 		if(lines == null)lines = new List<GameObject>();
 		
+		/*
 		// Взимат се всички collider-и, които са на разстояние по-малко или равно на радиуса на сферата, репрезентираща точката
 		Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, gameObject.transform.localScale.x);
 		
@@ -48,6 +49,7 @@ public class PointObject : CreatedObject {
 				Destroy(collider.gameObject);
 			}
 		}
+		*/
 	}
 	
 	public void OnDestroy(){

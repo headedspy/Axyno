@@ -22468,6 +22468,8 @@ MonoBehaviour:
   linePrefab: {fileID: 1420556273945770, guid: 7cdd2e172762c6b4989a2f88e14f9d73, type: 2}
   pointPrefab: {fileID: 1598449762804230, guid: dd2b7a06d1e60344983331138e064437,
     type: 2}
+  circlePrefab: {fileID: 1064635440685074, guid: 8894ed238142ec444a2c889c90268255,
+    type: 2}
 --- !u!114 &2095239686
 MonoBehaviour:
   m_ObjectHideFlags: 0

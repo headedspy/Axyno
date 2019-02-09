@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text.RegularExpressions;
 
 public class ActionsManager : Tool {
 	
@@ -25,10 +26,20 @@ public class ActionsManager : Tool {
 	// ANGLE_[p1Name]_[pCName]_[p2Name]
 	
 	public void AddCommand(string command){
+		/*
 		if(command != "LINE__"){
 			commands.Add(command);
 			Debug.Log(command);
 		}
+		*/
+		
+		if(command.Substring(0,4) == "LINE"){
+			if(!Regex.IsMatch(command, "LINE_[a-z]_[a-z]", RegexOptions.IgnoreCase)){
+				return;
+			}
+		}
+		commands.Add(command);
+		Debug.Log(command);
 	}
 	
 	private void Revert(string command){
@@ -105,6 +116,24 @@ public class ActionsManager : Tool {
 			foreach(string pointName in pointNames){
 				Destroy(FindPoint(pointName));
 			}
+		}else if(commandArray[0] == "CIRCLE"){
+			string centerPoint = commandArray[1];
+			string linePoint = commandArray[2];
+			string anglePoint = commandArray[3];
+			
+			GameObject point = FindPoint(centerPoint);
+			GameObject line = FindLine(centerPoint, linePoint);
+			GameObject angle = FindAngle(linePoint, centerPoint, anglePoint);
+			
+			GameObject circleObject = null;
+			
+			foreach(GameObject circle in GetObjects("Circle", false)){
+				if(circle.GetComponent<CircleObject>().Check(point, line, angle)){
+					circleObject = circle;
+				}
+			}
+			
+			Destroy(circleObject);
 		}
 	}
 	
