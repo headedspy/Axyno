@@ -77,9 +77,9 @@ public abstract class CreatedObject : MonoBehaviour {
 		isSelected = false;
 		
 		if(gameObject.name == "Line"){
-			gameObject.transform.GetChild(1).gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
+			gameObject.transform.GetChild(1).gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Transparent/Bumped Diffuse"); //Standard
 		}else{
-			gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
+			gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Transparent/Bumped Diffuse"); //Standard
 		}
     }
 	

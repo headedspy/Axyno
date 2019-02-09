@@ -50,6 +50,12 @@ public class PointObject : CreatedObject {
 		}
 	}
 	
+	public void OnDestroy(){
+		foreach(GameObject line in lines){
+			Destroy(line);
+		}
+	}
+	
 	//------------------------------------------------------------------------
 	// ФУНКЦИЯ: ConnectedTo
 	// Проверява дали точката е свързана към дадена линия

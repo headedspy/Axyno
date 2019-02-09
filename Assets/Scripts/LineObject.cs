@@ -11,6 +11,7 @@ using UnityEngine;
 
 public class LineObject : CreatedObject {
 	public GameObject point1, point2;
+	public string type = "SOLID";
 	
 	private bool isTransparent = false;
 	
@@ -25,6 +26,8 @@ public class LineObject : CreatedObject {
 	//------------------------------------------------------------------------
 	public void Start(){
 		if(connectedAngles == null)connectedAngles = new List<GameObject>();
+		
+		transform.GetChild(1).gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Transparent/Diffuse");
 	}
 	
 	//------------------------------------------------------------------------

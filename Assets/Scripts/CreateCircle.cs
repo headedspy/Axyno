@@ -86,6 +86,8 @@ public class CreateCircle : CreateLine {
 		// Свързване на последните две точки
 		BuildLine(lastPoint, point2);
 		
+		//NamePoints();
+		
 		// Деселектиране на обектите
 		angle.GetComponent<CreatedObject>().SelectClick();
 		point1.GetComponent<CreatedObject>().SelectClick();

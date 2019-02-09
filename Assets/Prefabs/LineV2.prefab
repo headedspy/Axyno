@@ -120,7 +120,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 725cea7a779b99f40983258c93b8ea32, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -228,6 +228,7 @@ MonoBehaviour:
   isSelected: 0
   point1: {fileID: 0}
   point2: {fileID: 0}
+  type: SOLID
   connectedAngles: []
 --- !u!114 &114955293790437794
 MonoBehaviour:
