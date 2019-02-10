@@ -134,6 +134,70 @@ public class ActionsManager : Tool {
 			}
 			
 			Destroy(circleObject);
+		}else if(commandArray[0] == "PERP"){
+			string oldPoint = commandArray[1];
+			string newPoint = commandArray[2];
+			string firstPoint = commandArray[3];
+			string secondPoint = commandArray[4];
+			
+			Destroy(FindLine(oldPoint, newPoint));
+			
+			GameObject smallLine = FindLine(newPoint, secondPoint);
+			
+			Destroy(smallLine);
+			
+			GameObject line = FindLine(firstPoint, newPoint);
+			
+			GameObject pointF = FindPoint(firstPoint);
+			GameObject pointN = FindPoint(newPoint);
+			GameObject pointS = FindPoint(secondPoint);
+			
+			GameObject bigLine = FindLine(newPoint, secondPoint);
+			
+			pointS.GetComponent<PointObject>().Disconnect(bigLine);
+			pointN.GetComponent<PointObject>().Disconnect(bigLine);
+			pointN.GetComponent<PointObject>().Disconnect(line);
+			
+			line.GetComponent<LineObject>().SetPoints(pointF, pointS);
+			
+			line.GetComponent<LineObject>().UpdatePosition(pointF.transform.position, pointS.transform.position);
+		}else if(commandArray[0] == "BISECTOR"){
+			string pointOne = commandArray[1];
+			string pointCenter = commandArray[2];
+			string pointTwo = commandArray[3];
+			string pointBisector = commandArray[4];
+			
+			GameObject lineOne = FindLine(pointOne, pointCenter);
+			GameObject lineTwo = FindLine(pointTwo, pointCenter);
+			
+			GameObject lineBisector = FindLine(pointCenter, pointBisector);
+			
+			GameObject firstAngle = FindAngle(pointOne, pointCenter, pointBisector);
+			
+			GameObject secondAngle = FindAngle(pointBisector, pointCenter, pointTwo);
+			
+			firstAngle.GetComponent<AngleObject>().Connect(lineOne, lineTwo);
+			firstAngle.GetComponent<AngleObject>().UpdateAngle(lineOne, lineTwo);
+			
+			Destroy(secondAngle);
+			
+			lineBisector.GetComponent<LineObject>().DisconnectAngle(firstAngle);
+			Destroy(lineBisector);
+			
+			GameObject pointOneObj = FindPoint(pointOne);
+			GameObject pointTwoObj = FindPoint(pointTwo);
+			
+			GameObject lineLeft = FindLine(pointOne, pointBisector);
+			GameObject lineRight = FindLine(pointOne, pointBisector);
+			
+			lineLeft.GetComponent<LineObject>().SetPoints(pointOneObj, pointTwoObj);
+			lineLeft.GetComponent<LineObject>().UpdatePosition(pointOneObj.transform.position, pointTwoObj.transform.position);
+			
+			GameObject pointBisectorObj = FindPoint(pointBisector);
+			
+			pointBisectorObj.GetComponent<PointObject>().Disconnect(lineLeft);
+			
+			Destroy(pointBisectorObj);
 		}
 	}
 	

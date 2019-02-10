@@ -38,7 +38,6 @@ public class CreateBisector : CreateLine{
 				line1.GetComponent<LineObject>().DisconnectAngle(angle);
 				line2.GetComponent<LineObject>().DisconnectAngle(angle);
 				
-				
 				// Запазват се трите точки, съставляващи свързаните линии
 				GameObject c = null, b = null, a = null;
 				
@@ -140,6 +139,11 @@ public class CreateBisector : CreateLine{
 					// Изтрива се линията
 					Destroy(cbLine);
 				}
+				
+				NamePoints();
+				
+				// NAME THE NEW POINT YOU MONGOLIAN
+				AddCommand("BISECTOR_"+c.GetComponent<PointObject>().GetText()+"_"+a.GetComponent<PointObject>().GetText()+"_"+b.GetComponent<PointObject>().GetText()+"_"+point.GetComponent<PointObject>().GetText());
 			}
 		}
 	}

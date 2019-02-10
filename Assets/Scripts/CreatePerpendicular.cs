@@ -80,17 +80,15 @@ public class CreatePerpendicular : CreateLine {
 		// Проверява се дали новосъздадената пета на перпендикуляра е между тях
 		if(IsBetween(pointTwo.transform.position, pointOne.transform.position, newPoint.transform.position)){
 			// Ако е помежду им се запазва материала на оригиналната линия
-			Material mat = line.GetComponent<Renderer>().material;
+			Material mat = line.transform.GetChild(1).gameObject.GetComponent<Renderer>().material;
 			
 			// Създават се нови линии между двете точки на оригиналната линия и петата на перпендикуляра
 			// като им се поставя същия материал като на оригиналната
 			GameObject newLine1 = BuildLine(pointOne, newPoint);
-			newLine1.GetComponent<Renderer>().material = mat;
+			newLine1.transform.GetChild(1).gameObject.GetComponent<Renderer>().material = mat;
 			
 			GameObject newLine2 = BuildLine(newPoint, pointTwo);
-			newLine2.GetComponent<Renderer>().material = mat;
-			
-			
+			newLine2.transform.GetChild(1).gameObject.GetComponent<Renderer>().material = mat;
 			
 			// Запазване на всички ъгли, свързани с линията
 			List<GameObject> connectedAngles = new List<GameObject>(line.GetComponent<LineObject>().connectedAngles);
@@ -125,6 +123,10 @@ public class CreatePerpendicular : CreateLine {
 				BuildLine(newPoint, pointTwo);
 			}
 		}
+		
+		NamePoints();
+		
+		AddCommand("PERP_"+point.GetComponent<PointObject>().GetText()+"_"+newPoint.GetComponent<PointObject>().GetText()+"_"+line.GetComponent<LineObject>().point1.GetComponent<PointObject>().GetText()+"_"+line.GetComponent<LineObject>().point2.GetComponent<PointObject>().GetText());
 	}
 	
 	
