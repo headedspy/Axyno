@@ -186,65 +186,14 @@ public abstract class CreatedObject : MonoBehaviour {
 		// Започване на ротацията при натискане на екрана
 		if(Input.GetMouseButton(0)){
 			
-			float rotationSpeed = 1.5f;
-			
 			Vector3 newRotation = gyro.attitude.eulerAngles;
 			
 			Vector3 deltaRotation = newRotation - oldRotation;
 			
-			
-			//task.transform.eulerAngles += newRotation - oldRotation;
-			
 			oldRotation = newRotation;
 			
-			task.transform.eulerAngles += new Vector3(deltaRotation.y, -deltaRotation.x, 0f) * rotationSpeed;
-			
-			
-			
-			
-			
-			//Vector3 newPos = Camera.main.transform.eulerAngles - oldPos;
-			
-			//deltaX = Mathf.Clamp(Remap(deltaX, -180f, 180f, -1f, 1f), -1f, 1f);
-			//deltaY = Mathf.Clamp(Remap(deltaY, -90f, 90f, -1f, 1f), -1f, 1f);
-			
-			//Debug.Log(newPos);
-			
-			//float rotX = deltaX * rotateSpeed * Mathf.Deg2Rad;
-			//float rotY = deltaY * rotateSpeed * Mathf.Deg2Rad;
-			
-			//task.transform.RotateAround(Vector3.up, -rotX);
-			//task.transform.RotateAround(Vector3.right, -rotY);
-			
-			
-			
-			
-			
-			
-			
-			
-			/*
-			string AXIS_MOUSE_X = "Mouse X";
-			string AXIS_MOUSE_Y = "Mouse Y";
-			
-			float mouseX = 0;
-			float mouseY = 0;
-			
-			mouseX += Input.GetAxis(AXIS_MOUSE_X) * 5;
-			if(mouseX <= -180) {
-				mouseX += 360;
-			}else if (mouseX > 180) {
-				mouseX -= 360;
-			}
-			mouseY -= Input.GetAxis(AXIS_MOUSE_Y) * 2.4f;
-			mouseY = Mathf.Clamp(mouseY, -85, 85);
-			
-			float rotX = mouseX * rotateSpeed * Mathf.Deg2Rad;
-			float rotY = mouseY * rotateSpeed * Mathf.Deg2Rad;
-			
-			task.transform.RotateAround(Vector3.up, -rotX);
-			task.transform.RotateAround(Vector3.right, -rotY);
-			*/
+			task.transform.Rotate(-deltaRotation.y * Vector3.right);
+			task.transform.Rotate(deltaRotation.x * Vector3.up);
 		}else{
 			// При отпускане на екрана спира изпълнението
 			rotationLock = false;

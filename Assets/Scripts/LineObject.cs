@@ -64,17 +64,19 @@ public class LineObject : CreatedObject {
 	// - Няма
 	//------------------------------------------------------------------------
 	public void OnDestroy(){
-		point1.GetComponent<PointObject>().Disconnect(gameObject);
-		point2.GetComponent<PointObject>().Disconnect(gameObject);
+		if(point1 != null && point2 != null){
+			point1.GetComponent<PointObject>().Disconnect(gameObject);
+			point2.GetComponent<PointObject>().Disconnect(gameObject);
 
-		// Ако точката е част от единична линия, то и линията бива изтрита
-		if(point1.GetComponent<PointObject>().lines.Count == 0)Destroy(point1);
-		if(point2.GetComponent<PointObject>().lines.Count == 0)Destroy(point2);
-		
-		// Изтриват се и всички ъгли, свързани към линията
-		if(connectedAngles.Count > 0){
-			foreach(GameObject angle in connectedAngles){
-				Destroy(angle);
+			// Ако точката е част от единична линия, то и линията бива изтрита
+			if(point1.GetComponent<PointObject>().lines.Count == 0)Destroy(point1);
+			if(point2.GetComponent<PointObject>().lines.Count == 0)Destroy(point2);
+			
+			// Изтриват се и всички ъгли, свързани към линията
+			if(connectedAngles.Count > 0){
+				foreach(GameObject angle in connectedAngles){
+					Destroy(angle);
+				}
 			}
 		}
 	}
@@ -158,9 +160,6 @@ public class LineObject : CreatedObject {
 		foreach(GameObject connectedAngle in connectedAngles){
 			connectedAngle.GetComponent<AngleObject>().UpdateAngle(connectedAngle.GetComponent<AngleObject>().line1, connectedAngle.GetComponent<AngleObject>().line2);
 		}
-		
-		// Оразмеряване на колизионната капсула на линията
-		lineMesh.GetComponent<CapsuleCollider>().height = distance;
 		
 		// Оразмеряване наново и позициониране на текста на правата
 		Transform lineText = gameObject.transform.GetChild(0);

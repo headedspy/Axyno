@@ -143,6 +143,9 @@ public class Extrude : CreateLine {
 	//					  (true - само избутване / false - избутване и сливане)
 	//------------------------------------------------------------------------
 	public void Confirm(bool isExtrude){
+		//string pointNames = "";
+		
+		
 		// Скриване на подменюто
 		menu.SetActive(false);
 		
@@ -162,11 +165,15 @@ public class Extrude : CreateLine {
 													 
 				extrudedPoint.name = "Point";
 				
-				// Построяваме линия между всяка точка и проекцията ѝ (стените на призмата)
-				BuildLine(extrudedPoint, point);
+				NamePoints();
+				
+				//pointsNames += extrudedPoint.GetComponent<PointObject>().GetText() + "_";
 				
 				// Добавяме двете точки в речника
 				ortho.Add(point, extrudedPoint);
+				
+				// Построяваме линия между всяка точка и проекцията ѝ (стените на призмата)
+				BuildLine(extrudedPoint, point);
 			}
 			
 			// Построяваме ръбовете на избутаната форма като свързваме проекциите на точките по идентичен начин
@@ -178,20 +185,40 @@ public class Extrude : CreateLine {
 			
 			// Изтриваме точката-маркер
 			Destroy(centerPoint);
-		}else{
 			
+			//NamePoints();
+			
+			/*
+			foreach(GameObject point in points){
+				pointNames += ortho[point].GetComponent<PointObject>().GetText() + "_";
+			}
+			*/
+			
+			AddCommand("EXTRUDE_"+ortho.Count+"_PRISM");
+			
+		}else{
+			centerPoint.name = "Point";
+			NamePoints();
 		// Ако имаме избутване и сливане
+		
+			int lines = 0;
+		
 			foreach(GameObject point in points){
 				// Построяваме линия между всяка точка от контура и точката-маркер
 				BuildLine(centerPoint, point);
+				lines++;
 			}
 			// Правим точката-маркер на нормална точка
-			centerPoint.name = "Point";
+			
+			AddCommand("EXTRUDE_"+lines.ToString()+"_PYRAMID");
+			//pointNames += centerPoint.GetComponent<PointObject>().GetText() + "_";
 		}
 		
 		// Деселектираме всички линии
 		foreach(GameObject line in GetObjects("Line", true)){
 			line.GetComponent<CreatedObject>().SelectClick();
 		}
+		
+		//AddCommand("EXTRUDE_"+pointNames.Substring(0, pointNames.Length-1));
 	}
 }

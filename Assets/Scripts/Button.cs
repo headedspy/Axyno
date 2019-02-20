@@ -7,7 +7,6 @@ public class Button : MonoBehaviour {
 	public GameObject menu;
 
 	private bool isOn = false;
-	
 	public bool isTool = false;
 	
 	public static bool isMenuOpen = false;

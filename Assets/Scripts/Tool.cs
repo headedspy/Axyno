@@ -126,13 +126,12 @@ public abstract class Tool : MonoBehaviour {
 				if(prefix==0)prefixString = "";
 				else prefixString = prefix.ToString();
 				
-				if(point.GetComponent<PointObject>().GetText() != nextPointName.ToString() + prefixString)point.GetComponent<PointObject>().AddText(nextPointName.ToString() + prefixString);
-				else continue;
+				point.GetComponent<PointObject>().AddText(nextPointName.ToString() + prefixString);
+				
 				
 				if(nextPointName == 'z'){
 					nextPointName = 'a';
 					prefix++;
-					continue;
 				}
 				nextPointName++;
 			}

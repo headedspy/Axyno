@@ -34,6 +34,7 @@ public class CreatePolygon : CreateLine {
 			point = newPoint;
 		}
 		
+		
 		BuildLine(firstPoint, point);
 		
 		NamePoints();

@@ -5,11 +5,14 @@ using System.Text.RegularExpressions;
 
 public class ActionsManager : Tool {
 	
-	private static List<string> commands = null;
+	public static List<string> commands = null;
 
 	// Use this for initialization
-	void Start () {
-		commands = new List<string>();
+	
+	public void Start() {
+		if(commands == null){
+			commands = new List<string>();
+		}
 	}
 	
 	public override void Initiate(){
@@ -17,21 +20,12 @@ public class ActionsManager : Tool {
 			Debug.Log("NO MORE");
 			return;
 		}
-		
-		Revert(commands[commands.Count - 1]);
+		string command = commands[commands.Count - 1];
 		commands.RemoveAt(commands.Count - 1);
+		Revert(command);
 	}
 	
-	// LINE_[p1Name]_[p2Name]
-	// ANGLE_[p1Name]_[pCName]_[p2Name]
-	
 	public void AddCommand(string command){
-		/*
-		if(command != "LINE__"){
-			commands.Add(command);
-			Debug.Log(command);
-		}
-		*/
 		
 		if(command.Substring(0,4) == "LINE"){
 			if(!Regex.IsMatch(command, "LINE_[a-z]_[a-z]", RegexOptions.IgnoreCase)){
@@ -39,10 +33,14 @@ public class ActionsManager : Tool {
 			}
 		}
 		commands.Add(command);
-		Debug.Log(command);
+		
+		Debug.Log(command + ">" + commands.Count + "<");
 	}
 	
 	private void Revert(string command){
+		
+		Debug.Log("REVERT>>>"+command);
+		
 		string[] commandArray = command.Split('_');
 		
 		if(commandArray[0] == "LINE"){
@@ -198,6 +196,55 @@ public class ActionsManager : Tool {
 			pointBisectorObj.GetComponent<PointObject>().Disconnect(lineLeft);
 			
 			Destroy(pointBisectorObj);
+		}else if(commandArray[0] == "EXTRUDE"){
+			int pointCount = int.Parse(commandArray[1]);
+			
+			if(commandArray[2] == "PRISM")pointCount *= 2;
+			
+			for(int i=0; i<pointCount; i++){
+				Initiate();
+			}
+		}else if(commandArray[0] == "EXPAND"){
+			if(commandArray[3] == "OUT"){
+				Destroy(FindPoint(commandArray[4]));
+			}else if(commandArray[3] == "IN"){
+				GameObject line1 = FindLine(commandArray[1], commandArray[4]);
+				GameObject line2 = FindLine(commandArray[2], commandArray[4]);
+				
+				Destroy(line2);
+				
+				GameObject newPoint1 = FindPoint(commandArray[1]);
+				GameObject newPoint2 = FindPoint(commandArray[2]);
+				
+				line1.GetComponent<LineObject>().UpdatePosition(newPoint1.transform.position, newPoint2.transform.position);
+			
+				GameObject midPoint = FindPoint(commandArray[4]);
+				
+				midPoint.GetComponent<PointObject>().Disconnect(line1);
+				midPoint.GetComponent<PointObject>().Disconnect(line2);
+			
+				Destroy(midPoint);
+			}
+			
+			//FINISH THIS SHIT DEEBA
+		}else if(commandArray[0] == "SPLIT"){
+			GameObject line = FindLine(commandArray[1], commandArray[2]);
+			
+			int newPoints = commandArray.Length - 3;
+			
+			GameObject firstLine = FindLine(commandArray[2], commandArray[3]);
+			
+			//FindPoint(commandArray[3]).GetComponent<PointObject>().Disconnect(firstLine);
+			//FindPoint(commandArray[2]).GetComponent<PointObject>().Disconnect(firstLine);
+			
+			FindPoint(commandArray[3]).GetComponent<PointObject>().Disconnect(firstLine);
+			
+			firstLine.GetComponent<LineObject>().UpdatePosition(FindPoint(commandArray[1]).transform.position, FindPoint(commandArray[2]).transform.position);
+			firstLine.GetComponent<LineObject>().SetPoints(FindPoint(commandArray[1]), FindPoint(commandArray[2]));
+			
+			for(int i=3; i<commandArray.Length; i++){
+				Destroy(FindPoint(commandArray[i]));
+			}
 		}
 	}
 	

@@ -33,6 +33,7 @@ public class SubdivideLine : CreateLine {
 		
 		// Разделяне на всяка селектирана линия
 		foreach(GameObject line in lines){
+			string pointsNames = "";
 
 			// Изчисляване на размера на линията, както и на всеки отделен сегмент
 			float lineLength = line.GetComponent<LineObject>().GetLength();
@@ -45,7 +46,7 @@ public class SubdivideLine : CreateLine {
 			// Създаване на точките по линията
 			for(int i=1; i<numberOfDivisions; i++){
 				// Създаване на нова точка на позицията на втората точка на линията
-				GameObject tempPoint = Instantiate(pointPrefab, line.GetComponent<LineObject>().point2.transform.position, line.transform.rotation, GetTaskTransform());
+				GameObject tempPoint = Instantiate(pointPrefab, line.GetComponent<LineObject>().point2.transform.position, line.transform.GetChild(1).rotation, GetTaskTransform());
 				tempPoint.name = "Point";
 				
 				// Транслиране на новосъздадената точка по линията до съответното ѝ място
@@ -54,35 +55,45 @@ public class SubdivideLine : CreateLine {
 				// Добавяне на новата точка в списъка
 				createdPoints.Add(tempPoint);
 			}
-
 			
 			// Добавяне на първата точка на линията в списъка
 			createdPoints.Add(line.GetComponent<LineObject>().point1);
 			
 			// Запазване на материала на линията
-			Material mat = line.GetComponent<Renderer>().material;
+			Material mat = line.transform.GetChild(0).gameObject.GetComponent<Renderer>().material;
 			
 			// Запазване на всички ъгли, свързани с линията
 			List<GameObject> connectedAngles = new List<GameObject>(line.GetComponent<LineObject>().connectedAngles);
 			
-			
 			GameObject firstLine = null;
 			GameObject lastLine = null;
+			
+			List<GameObject> newPoints = new List<GameObject>();
 			
 			for(int i=0; i<numberOfDivisions; i++){
 				
 				// Създаване на нова линия между две точки със същия материал като оригиналната
 				GameObject newLine = BuildLine(createdPoints[i], createdPoints[i+1]);
-				newLine.GetComponent<Renderer>().material = mat;
+				newLine.transform.GetChild(0).gameObject.GetComponent<Renderer>().material = mat;
+				
+				//NamePoints();
+				//pointsNames += createdPoints[i].GetComponent<PointObject>().GetText() + "_";
+				newPoints.Add(createdPoints[i]);
 				
 				// Запазване на първата и последна новосъздадена линия
 				if(i == 0)firstLine = newLine;
 				else if(i == numberOfDivisions-1)lastLine = newLine;
 			}
 			
+			NamePoints();
+			
+			for(int i=1; i<createdPoints.Count-1; i++){
+				//Debug.Log(createdPoints[i].GetComponent<PointObject>().GetText() + "<-----");
+				pointsNames += createdPoints[i].GetComponent<PointObject>().GetText() + "_";
+			}
+			
 			// Създаване на спомагателен списък за свързването на ъглите към новите им линии
 			List<GameObject> switchList = new List<GameObject>();
-			
 			
 			foreach(GameObject connectedAngle in connectedAngles){
 				// За всеки свързан ъгъл се намира по-близката линия - първата или последната от новосъздадените
@@ -98,6 +109,8 @@ public class SubdivideLine : CreateLine {
 			for(int i=0; i<switchList.Count; i += 3){
 				switchList[i].GetComponent<AngleObject>().SwitchLine(switchList[i+1], switchList[i+2]);
 			}
+	
+			AddCommand("SPLIT_" + line.GetComponent<LineObject>().point1.GetComponent<PointObject>().GetText() + "_" + line.GetComponent<LineObject>().point2.GetComponent<PointObject>().GetText() + "_" + pointsNames.Substring(0, pointsNames.Length-1));
 	
 			// Оригиналната линия се унищожава
 			Destroy(line);

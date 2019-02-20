@@ -41,7 +41,7 @@ public class LineSplit : CreateLine {
 	private void BuildSegment(GameObject line){
 		
 		// Изключва колизията на линията за да не пречи на колизията с новата линия
-		line.GetComponent<Collider>().enabled = false;
+		line.transform.GetChild(1).gameObject.GetComponent<Collider>().enabled = false;
 		
 		// Запазване на двете точки, съставляващи линията
 		GameObject A = line.GetComponent<LineObject>().point1;
@@ -72,8 +72,8 @@ public class LineSplit : CreateLine {
 		newLine.GetComponent<LineHover>().SetObjects(GetTaskTransform(), line);
 		
 		// Промяна на дебелината и цвета на линията
-		newLine.GetComponent<Renderer>().material.color = Color.red;
-		newLine.transform.localScale -= new Vector3(0.05f, 0f, 0.05f);
+		newLine.transform.GetChild(1).gameObject.GetComponent<Renderer>().material.color = Color.red;
+		newLine.transform.GetChild(1).gameObject.transform.localScale -= new Vector3(0.05f, 0f, 0.05f);
 		
 		// Изтриване на новосъздадените точки
 		Destroy(endPointOne);

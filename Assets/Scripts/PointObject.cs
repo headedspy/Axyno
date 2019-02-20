@@ -80,7 +80,7 @@ public class PointObject : CreatedObject {
 	// - GameObject givenLine : Линията, която ще бъде свързана
 	//------------------------------------------------------------------------
 	public void Connect(GameObject givenLine){
-		lines.Add(givenLine);
+		if(!lines.Contains(givenLine))lines.Add(givenLine);
 	}
 	
 	//------------------------------------------------------------------------
@@ -91,6 +91,12 @@ public class PointObject : CreatedObject {
 	//------------------------------------------------------------------------
 	public void Disconnect(GameObject givenLine){
 		lines.Remove(givenLine);
+		
+		foreach(GameObject line in lines){
+			if(line == null){
+				lines.Remove(line);
+			}
+		}
 	}
 	
 	//------------------------------------------------------------------------
