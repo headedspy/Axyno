@@ -29,11 +29,11 @@ public class Extrude : CreateLine {
 		// Проверка дали избраните обекти са линии, образуващи затворен контур
 		List<GameObject> lines = GetObjects("Line", true);
 		if(lines.Count <= 2){
-			ReportMessage("ERROR: Select at lest 3 lines", 3);
+			ReportMessage("ERROR: Select at lest 3 lines");
 			return;
 		}
 		if(!HasLoop(lines)){
-			ReportMessage("ERROR: Select lines that form a loop", 3);
+			ReportMessage("ERROR: Select lines that form a loop");
 			return;
 		}
 		

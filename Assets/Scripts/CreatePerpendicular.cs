@@ -25,7 +25,7 @@ public class CreatePerpendicular : CreateLine {
 		List<GameObject> points = GetObjects("Point", true);
 		List<GameObject> lines = GetObjects("Line", true);
 		if(points.Count != 1 || lines.Count != 1){
-			ReportMessage("Select one point and one line", 3);
+			ReportMessage("Select one point and one line");
 			
 		// Ако са селектирани правилни обекти, извиква BuildPerpendicular с тях
 		}else{

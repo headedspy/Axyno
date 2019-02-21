@@ -23,7 +23,7 @@ public class CreateAngle : ActionsManager {
 		List<GameObject> lines = GetObjects("Line", true);
 		
 		if(lines.Count != 2){
-			ReportMessage("2 lines must be selected", 3);
+			ReportMessage("2 lines must be selected");
 		}else{
 			BuildAngle(lines[0], lines[1]);
 		}
@@ -41,7 +41,7 @@ public class CreateAngle : ActionsManager {
 		foreach(GameObject angle in GetObjects("Angle", false)){
 			if((angle.GetComponent<AngleObject>().line1 == line1 && angle.GetComponent<AngleObject>().line2 == line2) ||
 			   (angle.GetComponent<AngleObject>().line1 == line2 && angle.GetComponent<AngleObject>().line2 == line1)){
-				   ReportMessage("Angle already exists", 3);
+				   ReportMessage("Angle already exists");
 				   return;
 			   }
 		}

@@ -141,11 +141,7 @@ public abstract class CreatedObject : MonoBehaviour {
 		}
 	}
 	
-	
 	Vector3 oldRotation;
-	
-	
-	
 	
 	//------------------------------------------------------------------------
 	// ФУНКЦИЯ: Update

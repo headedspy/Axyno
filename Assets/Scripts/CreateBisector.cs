@@ -26,7 +26,7 @@ public class CreateBisector : CreateLine{
 		List<GameObject> angles = GetObjects("Angle", true);
 		
 		if(angles.Count < 1){
-			ReportMessage("ERROR: Select at least one angle object", 3);
+			ReportMessage("ERROR: Select at least one angle object");
 		}else{
 			foreach(GameObject angle in angles){
 				

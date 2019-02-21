@@ -27,7 +27,7 @@ public class SubdivideLine : CreateLine {
 		// Ако няма селектирани линии изписва грешка до потребителя
 		List<GameObject> lines = GetObjects("Line", true);
 		if(lines.Count == 0){
-			ReportMessage("ERROR: Select at least one line", 3);
+			ReportMessage("ERROR: Select at least one line");
 			return;
 		}
 		

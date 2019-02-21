@@ -30,7 +30,7 @@ public class Keyboard : Tool {
 						angle.GetComponent<CreatedObject>().SelectClick();
 					}
 				}else{
-					ReportMessage("ERROR: Select an object", 3);
+					ReportMessage("ERROR: Select an object");
 				}
 				/*!Regex.IsMatch(text, "[0-9]", RegexOptions.IgnoreCase)*/
 			}else if(Regex.IsMatch(text, "[a-z]", RegexOptions.IgnoreCase) && 
@@ -40,13 +40,13 @@ public class Keyboard : Tool {
 				List<GameObject> objects = GetObjects("Point", true);
 			
 				if(objects.Count > 1){
-					ReportMessage("ERROR: Select only one point", 3);
+					ReportMessage("ERROR: Select only one point");
 				}else if(objects.Count == 0){
-					ReportMessage("ERROR: Select a point", 3);
+					ReportMessage("ERROR: Select a point");
 				}else{
 					foreach(GameObject obj in GetObjects("Point", false)){
 						if(obj.GetComponent<PointObject>().GetText() == text){
-							ReportMessage("ERROR: Point with name \"" + text + "\" already exists", 3);
+							ReportMessage("ERROR: Point with name \"" + text + "\" already exists");
 							return;
 						}
 					}
@@ -57,7 +57,7 @@ public class Keyboard : Tool {
 					text = "";
 				}
 			}else{
-				ReportMessage("ERROR: Invalid name", 3);
+				ReportMessage("ERROR: Invalid name");
 			}
 		}else if(isBackspace){
 			if(text.Length != 0){

@@ -24,7 +24,7 @@ public class ChangeColor : ActionsManager {
 		// Ако няма селектирани обеки връща грешка до портебителя
 		List<GameObject> objects = GetObjects("", true);
 		if(objects.Count == 0){
-			ReportMessage("ERROR: Select at least one object", 3);
+			ReportMessage("ERROR: Select at least one object");
 			return;
 		}
 		

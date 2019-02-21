@@ -25,7 +25,7 @@ public class LineSplit : CreateLine {
 		// Вика BuildSegment ако е селектирана една линия, иначе връща грешка
 		List<GameObject> lines = GetObjects("Line", true);
 		if(lines.Count != 1){
-			ReportMessage("ERROR: Select one line", 3);
+			ReportMessage("ERROR: Select one line");
 		}else{
 			BuildSegment(lines[0]);
 		}

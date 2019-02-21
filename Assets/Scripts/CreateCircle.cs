@@ -27,15 +27,15 @@ public class CreateCircle : CreateLine {
 		List<GameObject> angles = GetObjects("Angle", true);
 		
 		if(lines.Count != 1){
-			ReportMessage("ERROR: Select one line", 3);
+			ReportMessage("ERROR: Select one line");
 			return;
 		}
 		if(points.Count != 1){
-			ReportMessage("ERROR: Select one point", 3);
+			ReportMessage("ERROR: Select one point");
 			return;
 		}
 		if(angles.Count != 1){
-			ReportMessage("ERROR: Select one angle", 3);
+			ReportMessage("ERROR: Select one angle");
 			return;
 		}
 		
@@ -44,11 +44,11 @@ public class CreateCircle : CreateLine {
 		GameObject angle = angles[0];
 		
 		if(!point1.GetComponent<PointObject>().lines.Contains(line1)){
-			ReportMessage("ERROR: Line is not connected", 3);
+			ReportMessage("ERROR: Line is not connected");
 			return;
 		}
 		if(!line1.GetComponent<LineObject>().connectedAngles.Contains(angle)){
-			ReportMessage("ERROR: Angle in not connected", 3);
+			ReportMessage("ERROR: Angle in not connected");
 			return;
 		}
 		

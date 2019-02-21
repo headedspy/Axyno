@@ -1,0 +1,5 @@
+Axyno source code:
+
+https://github.com/headedspy/Axyno
+
+The scripts alone are found in Assets/Scripts

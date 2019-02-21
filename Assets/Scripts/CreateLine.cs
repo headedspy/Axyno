@@ -25,7 +25,7 @@ public class CreateLine : ActionsManager {
 		
 		// Ако в списъка има повече или по-малко от два обекта изписва грешка
 		if(points.Count != 2){
-			ReportMessage("2 points must be selected", 3);
+			ReportMessage("2 points must be selected");
 			return;
 		}else{
 			// Иначе построява линия между тях
@@ -52,7 +52,7 @@ public class CreateLine : ActionsManager {
 		// Проверка дали линията вече не съществува
 		foreach(GameObject connectedLine in point1.GetComponent<PointObject>().lines){
 			if(connectedLine.GetComponent<LineObject>().point1 == point2 || connectedLine.GetComponent<LineObject>().point2 == point2){
-				ReportMessage("Line already exists", 3);
+				ReportMessage("Line already exists");
 				return null;
 			}
 		}

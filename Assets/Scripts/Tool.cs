@@ -61,20 +61,13 @@ public abstract class Tool : MonoBehaviour {
 	//                                 (2 - предупредително)
 	//                                 (3 - грешка)
 	//------------------------------------------------------------------------
-	protected void ReportMessage(string message, int type){
-		// В зависимост от типа се избира цвят за съобщението
-		if(type == 1)
-			GameObject.Find("OutputText").GetComponent<TextMesh>().color = Color.white;
-		else if(type == 2)
-			GameObject.Find("OutputText").GetComponent<TextMesh>().color = Color.yellow;
-		else if(type == 3)
-			GameObject.Find("OutputText").GetComponent<TextMesh>().color = Color.red;
+	protected void ReportMessage(string message){
 		
 		// Изписване на самото съобщение
 		GameObject.Find("OutputText").GetComponent<TextMesh>().text = message;
 		
 		// Изчистване на съобщението
-		StartCoroutine(CleanMessage());
+		StartCoroutine(CleanMessage(message));
 	}
 	
 	//------------------------------------------------------------------------
@@ -83,9 +76,10 @@ public abstract class Tool : MonoBehaviour {
 	// ПАРАМЕТРИ:
 	// - Няма
 	//------------------------------------------------------------------------
-	private IEnumerator CleanMessage(){
+	private IEnumerator CleanMessage(string message){
 		yield return new WaitForSeconds(5);
-		GameObject.Find("OutputText").GetComponent<TextMesh>().text = "";
+		if(GameObject.Find("OutputText").GetComponent<TextMesh>().text == message)
+			GameObject.Find("OutputText").GetComponent<TextMesh>().text = "";
 	}
 	
 	//------------------------------------------------------------------------
@@ -108,9 +102,6 @@ public abstract class Tool : MonoBehaviour {
 	protected void Vibrate(){
 		Handheld.Vibrate ();
 	}
-	
-	
-	
 	
 	private static char nextPointName = 'a';
 	private static int prefix = 0;

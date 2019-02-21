@@ -10,6 +10,10 @@ public class ToolButton : Tool {
 	
 	public List<GameObject> otherTools;
 	
+	public GameObject pointerObject;
+	
+	public GameObject captionObject;
+	
 	public void Start(){
 		if(otherTools == null)otherTools = new List<GameObject>();
 	}
@@ -34,12 +38,24 @@ public class ToolButton : Tool {
 		}
 		isSelected = true;
 		GameObject.Find("Head").GetComponent<Info>().ChangeTool(toolName);
-		gameObject.GetComponent<Renderer>().material.color = new Color (0.8f, 0.8f, 0.8f);
+		gameObject.GetComponent<Renderer>().material.color = new Color(0.8f, 0.8f, 0.8f);
+		
+		Color c;
+		
+		if(toolName == "Select")c = new Color(0.26f, 0.23f, 0.51f);
+		else if(toolName == "ShapeSelect")c = new Color(0.61f, 0.24f, 0.13f);
+		else c = new Color(0.19f, 0.65f, 0.26f);
+		
+		captionObject.GetComponent<TextMesh>().color = c;
+		pointerObject.GetComponent<Renderer>().material.color = c;
 	}
 	
 	private void Deselect(){
 		isSelected = false;
 		GameObject.Find("Head").GetComponent<Info>().ResetTool();
-		gameObject.GetComponent<Renderer>().material.color = new Color (0f, 0f, 0f);
+		gameObject.GetComponent<Renderer>().material.color = new Color(0f, 0f, 0f);
+		
+		pointerObject.GetComponent<Renderer>().material.color = new Color(0.25f, 0.25f, 0.25f);
+		captionObject.GetComponent<TextMesh>().color = new Color(0.25f, 0.25f, 0.25f);
 	}
 }

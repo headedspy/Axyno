@@ -24,7 +24,7 @@ public class ChangeLineType : ActionsManager {
 		// При неселектирани никакви линии, изписва грешка до потребителя
 		List<GameObject> lines = GetObjects("Line", true);
 		if(lines.Count == 0){
-			ReportMessage("Select at least one line", 3);
+			ReportMessage("Select at least one line");
 			return;
 		}
 		
