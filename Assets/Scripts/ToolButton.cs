@@ -21,7 +21,7 @@ public class ToolButton : Tool {
 	public override void Initiate(){
 		if(!isSelected)Select();
 		else{
-			if(GameObject.Find("Head").GetComponent<Info>().tool == "Select"){
+			if(GameObject.Find("Head").GetComponent<Info>().tool == "Select" || GameObject.Find("Head").GetComponent<Info>().tool == "ShapeSelect"){
 				foreach(GameObject selectedObject in GetObjects("", true)){
 					selectedObject.GetComponent<CreatedObject>().SelectClick();
 				}

@@ -24,18 +24,14 @@ public class MoveObjects : CreateLine {
 				rotateWith = new Vector3(0f, 0f, 5f);
 			}
 			
-			if(gameObject.name == "Minus") rotateWith *= -1;
+			if(gameObject.name == "MinusRot") rotateWith *= -1;
 			
 		}else{
-			if(gameObject.name[0] == '-')movement *= -1;
-		
-			if(gameObject.name[1] == 'X'){
-				moveWith = new Vector3(movement, 0f, 0f);
-			}else if(gameObject.name[1] == 'Y'){
-				moveWith = new Vector3(0f, movement, 0f);
-			}else{
-				moveWith = new Vector3(0f, 0f, movement);
-			}
+			if(axis == 'X')moveWith = new Vector3(movement, 0f, 0f);
+			else if(axis == 'Y')moveWith = new Vector3(0f, movement, 0f);
+			else if(axis == 'Z')moveWith = new Vector3(0f, 0f, movement);
+			
+			if(gameObject.name == "MinusMove") moveWith *= -1;
 		}
 		
 		
@@ -130,9 +126,19 @@ public class MoveObjects : CreateLine {
 	
 	public void ChangeMethod(){
 		isForced = !isForced;
+		
+		string s = isForced ? "F" : "L";
+		transform.parent.Find("Method_Text").GetComponent<TextMesh>().text = s;
 	}
 	
 	public void ChangeAxis(){
+		GameObject oldBox = transform.parent.Find(axis.ToString()).gameObject;
+		GameObject newBox = transform.parent.Find(gameObject.name).gameObject;
+		
 		axis = gameObject.name[0];
+		
+		
+		oldBox.GetComponent<Renderer>().material.color = Color.white;
+		newBox.GetComponent<Renderer>().material.color = Color.gray;
 	}
 }

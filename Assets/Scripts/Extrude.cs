@@ -12,7 +12,6 @@ using UnityEngine;
 public class Extrude : CreateLine {
 	
 	public GameObject pointPrefab;
-	public GameObject menu;
 	
 	private static GameObject centerPoint;
 	
@@ -46,9 +45,6 @@ public class Extrude : CreateLine {
 		testPos /= ((float)lines.Count * 2f);
 		
 		centerPoint = Instantiate(pointPrefab, testPos, Quaternion.identity, GetTaskTransform());
-		
-		// Включва се второстепенното меню на инструмента
-		menu.SetActive(true);
 		
 		// Изчистване на предходни отмествания
 		newPos = Vector3.zero;
@@ -116,6 +112,12 @@ public class Extrude : CreateLine {
 	//				   ("X", "-X", "Y", "-Y", "Z", "-Z")
 	//------------------------------------------------------------------------
 	public void ChangePos(string axis){
+		
+		if(centerPoint == null){
+			//ERROR
+			return;
+		}
+		
 		// Отместване
 		float amount = 0.1f;
 		
@@ -143,17 +145,17 @@ public class Extrude : CreateLine {
 	//					  (true - само избутване / false - избутване и сливане)
 	//------------------------------------------------------------------------
 	public void Confirm(bool isExtrude){
-		//string pointNames = "";
-		
-		
-		// Скриване на подменюто
-		menu.SetActive(false);
 		
 		// Създаване на нов речник, съдържащ оригиналната точка и нейната ортографска проекция
 		Dictionary<GameObject, GameObject> ortho = new Dictionary<GameObject, GameObject>();
 		
 		// Запазване на всички точки от контура без повтаряне в списък
 		List<GameObject> points = GetPoints(GetObjects("Line", true), false);
+		
+		if(points.Count <= 3){
+			//ERROR
+			return;
+		}
 		
 		// Ако имаме само избутване
 		if(isExtrude){

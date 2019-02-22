@@ -15,7 +15,7 @@ public class Button : MonoBehaviour {
 		if(!isTool){
 			StartCoroutine(PlayAnimation(!isOn));
 			isOn = !isOn;
-			gameObject.GetComponent<Renderer> ().material.color = new Color (0.5f, 0.5f, 0.5f);
+			gameObject.GetComponent<Renderer> ().material.color = new Color (1f, 1f, 1f);
 		}else{
 			if(!isMenuOpen){
 				isOn = true;
@@ -33,7 +33,7 @@ public class Button : MonoBehaviour {
 
 	public void PressUp(){
 		if(isOn && isTool && isMenuOpen){
-			gameObject.GetComponent<Renderer> ().material.color = new Color (0.5f, 0.5f, 0.5f);
+			gameObject.GetComponent<Renderer> ().material.color = new Color (1f, 1f, 1f);
 		}else{
 			gameObject.GetComponent<Renderer> ().material.color = new Color (0f, 0f, 0f);
 		}
@@ -41,7 +41,7 @@ public class Button : MonoBehaviour {
 	
 	private IEnumerator PlayAnimation(bool isOpen){
 		float scale = 1f;
-		if(isTool)scale = 3f;
+		if(isTool)scale = 1.1f;
 		
 		if(isOpen){
 			menu.SetActive(isOpen);

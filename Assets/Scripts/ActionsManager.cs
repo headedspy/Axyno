@@ -6,8 +6,6 @@ using System.Text.RegularExpressions;
 public class ActionsManager : Tool {
 	
 	public static List<string> commands = null;
-
-	// Use this for initialization
 	
 	public void Start() {
 		if(commands == null){
@@ -225,17 +223,12 @@ public class ActionsManager : Tool {
 			
 				Destroy(midPoint);
 			}
-			
-			//FINISH THIS SHIT DEEBA
 		}else if(commandArray[0] == "SPLIT"){
 			GameObject line = FindLine(commandArray[1], commandArray[2]);
 			
 			int newPoints = commandArray.Length - 3;
 			
 			GameObject firstLine = FindLine(commandArray[2], commandArray[3]);
-			
-			//FindPoint(commandArray[3]).GetComponent<PointObject>().Disconnect(firstLine);
-			//FindPoint(commandArray[2]).GetComponent<PointObject>().Disconnect(firstLine);
 			
 			FindPoint(commandArray[3]).GetComponent<PointObject>().Disconnect(firstLine);
 			
@@ -245,6 +238,8 @@ public class ActionsManager : Tool {
 			for(int i=3; i<commandArray.Length; i++){
 				Destroy(FindPoint(commandArray[i]));
 			}
+			
+			FindPoint(commandArray[1]).GetComponent<PointObject>().lines.RemoveAt(1);
 		}
 	}
 	
