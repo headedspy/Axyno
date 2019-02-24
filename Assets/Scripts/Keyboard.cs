@@ -24,9 +24,7 @@ public class Keyboard : ActionsManager {
 					}
 				}else if(angles.Count > 0){
 					foreach(GameObject angle in angles){
-						// addtext method prolly
 						angle.GetComponent<AngleObject>().AddText(text);
-						//angle.transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = text;
 						angle.GetComponent<CreatedObject>().SelectClick();
 					}
 				}else{
