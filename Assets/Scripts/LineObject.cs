@@ -132,20 +132,20 @@ public class LineObject : CreatedObject {
 	// - Vector3 point1 : Първите координати на линията
 	// - Vector3 point2 : Вторите координати на линията
 	//------------------------------------------------------------------------
-	public void UpdatePosition(Vector3 point1, Vector3 point2){
+	public void UpdatePosition(GameObject point1, GameObject point2){
 		GameObject lineMesh = gameObject.transform.GetChild(1).gameObject;
 		
 		// Изчислява се разстоянието между двете точки
-		float distance = Vector3.Distance(point1, point2);
+		float distance = Vector3.Distance(point1.transform.position, point2.transform.position);
 		
 		// Нулиране на размера на линията
 		lineMesh.transform.localScale = new Vector3(0.055639f, 0f, 0.055639f);
 		
 		// Правата се поставя на координатите на първата точка
-		lineMesh.transform.position = point1;
+		lineMesh.transform.position = point1.transform.position;
 		
 		// Насочване на Z-вектора на линията към втората точка
-		lineMesh.transform.LookAt(point2, lineMesh.transform.up * -1);
+		lineMesh.transform.LookAt(point2.transform.position, lineMesh.transform.up * -1);
 		
 		// Завъртане на линията на 90 градуса, така че Y-вектора вече да "гледа" към втората точка
 		lineMesh.transform.Rotate(Vector3.left * 90f, Space.Self);

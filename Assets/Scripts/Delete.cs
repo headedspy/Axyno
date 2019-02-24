@@ -8,7 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Delete : Tool {
+public class Delete : ActionsManager {
 	
 	//------------------------------------------------------------------------
 	// ФУНКЦИЯ: Initiate

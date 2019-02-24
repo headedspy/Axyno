@@ -128,6 +128,4 @@ public class CreatePerpendicular : CreateLine {
 		
 		AddCommand("PERP_"+point.GetComponent<PointObject>().GetText()+"_"+newPoint.GetComponent<PointObject>().GetText()+"_"+line.GetComponent<LineObject>().point1.GetComponent<PointObject>().GetText()+"_"+line.GetComponent<LineObject>().point2.GetComponent<PointObject>().GetText());
 	}
-	
-	
 }

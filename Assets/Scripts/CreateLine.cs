@@ -63,7 +63,7 @@ public class CreateLine : ActionsManager {
 		
 		line.GetComponent<LineObject>().SetPoints(point1, point2);
 		
-		line.GetComponent<LineObject>().UpdatePosition(point1.transform.position, point2.transform.position);
+		line.GetComponent<LineObject>().UpdatePosition(point1, point2);
 		
 		AddCommand("LINE_"+point1.GetComponent<PointObject>().GetText()+"_"+point2.GetComponent<PointObject>().GetText());
 		

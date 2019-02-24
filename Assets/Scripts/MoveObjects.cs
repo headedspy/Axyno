@@ -69,14 +69,14 @@ public class MoveObjects : CreateLine {
 					foreach(GameObject line in point.GetComponent<PointObject>().lines){
 						GameObject otherPoint = line.GetComponent<LineObject>().point1 == point ? line.GetComponent<LineObject>().point2 : line.GetComponent<LineObject>().point1;
 						
-						line.GetComponent<LineObject>().UpdatePosition(point.transform.position, otherPoint.transform.position);
+						line.GetComponent<LineObject>().UpdatePosition(point, otherPoint);
 					}
 				}
 				foreach(GameObject line in lines){
 					GameObject point1 = line.GetComponent<LineObject>().point1;
 					GameObject point2 = line.GetComponent<LineObject>().point2;
 					
-					line.GetComponent<LineObject>().UpdatePosition(point1.transform.position, point2.transform.position);
+					line.GetComponent<LineObject>().UpdatePosition(point1, point2);
 				}
 				
 				foreach(GameObject angle in angles){
@@ -105,13 +105,13 @@ public class MoveObjects : CreateLine {
 						GameObject connectedPoint1 = connectedLine.GetComponent<LineObject>().point1;
 						GameObject connectedPoint2 = connectedLine.GetComponent<LineObject>().point2;
 						
-						connectedLine.GetComponent<LineObject>().UpdatePosition(connectedPoint1.transform.position, connectedPoint2.transform.position);
+						connectedLine.GetComponent<LineObject>().UpdatePosition(connectedPoint1, connectedPoint2);
 					}
 					foreach(GameObject connectedLine in point2.GetComponent<PointObject>().lines){
 						GameObject connectedPoint1 = connectedLine.GetComponent<LineObject>().point1;
 						GameObject connectedPoint2 = connectedLine.GetComponent<LineObject>().point2;
 						
-						connectedLine.GetComponent<LineObject>().UpdatePosition(connectedPoint1.transform.position, connectedPoint2.transform.position);
+						connectedLine.GetComponent<LineObject>().UpdatePosition(connectedPoint1, connectedPoint2);
 					}
 				}
 			}

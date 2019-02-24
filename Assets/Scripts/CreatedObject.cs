@@ -13,8 +13,6 @@ using Gvr.Internal;
 public abstract class CreatedObject : MonoBehaviour {
 
 	public bool isSelected = false;
-	
-	private float rotateSpeed = 5f;
 	private GameObject head;
 	private GameObject task;
 	private bool rotationLock = false;

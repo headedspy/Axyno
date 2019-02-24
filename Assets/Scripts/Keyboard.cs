@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
 
-public class Keyboard : Tool {
+public class Keyboard : ActionsManager {
 	public static string text = "";
 	public GameObject textField;
 	public bool isEnter;

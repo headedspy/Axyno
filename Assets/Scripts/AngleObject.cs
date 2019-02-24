@@ -14,7 +14,8 @@ public class AngleObject : CreatedObject {
 	private int segments = 32;
 	private int tubes = 12;
 	
-	public GameObject line1, line2;
+	public GameObject line1;
+	public GameObject line2;
 	
 	public float angleValue = 0f;
 	
@@ -96,7 +97,7 @@ public class AngleObject : CreatedObject {
 			GameObject p1 = line1.GetComponent<LineObject>().point1 == point ? line1.GetComponent<LineObject>().point2 : line1.GetComponent<LineObject>().point1;
 			GameObject p2 = line2.GetComponent<LineObject>().point1 == point ? line2.GetComponent<LineObject>().point2 : line2.GetComponent<LineObject>().point1;
 			
-			// Насочване на Z-векторът към средата на двете тойки в края на ъгъла
+			// Насочване на Z-векторът към средата на двете точки в края на ъгъла
 			gameObject.transform.LookAt((p1.transform.position + p2.transform.position) / 2);
 			
 			// Изчисляване на останалите разстояния
@@ -104,10 +105,9 @@ public class AngleObject : CreatedObject {
 			float ob = line2.GetComponent<LineObject>().GetLength();
 			float ab = Vector3.Distance(p1.transform.position, p2.transform.position);
 			
-			// Изчисляване на стойността на самия ъгъл
+			// Изчисляване на стойността на самия ъгъл чрез косинусова теорема
 			angleValue = Mathf.Acos( (oa*oa + ob*ob - ab*ab) / (2 * oa * ob) );  //Vector3.Angle mai imashe sm shit like dis
 			
-			//32-full_torus
 			// Промяна на фигурата на тор с определен брой сегменти
 			BuildTorus( Mathf.RoundToInt( (4 * (angleValue*Mathf.Rad2Deg)) / 45) );
 			

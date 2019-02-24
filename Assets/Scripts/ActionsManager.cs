@@ -156,7 +156,7 @@ public class ActionsManager : Tool {
 			
 			line.GetComponent<LineObject>().SetPoints(pointF, pointS);
 			
-			line.GetComponent<LineObject>().UpdatePosition(pointF.transform.position, pointS.transform.position);
+			line.GetComponent<LineObject>().UpdatePosition(pointF, pointS);
 		}else if(commandArray[0] == "BISECTOR"){
 			string pointOne = commandArray[1];
 			string pointCenter = commandArray[2];
@@ -187,7 +187,7 @@ public class ActionsManager : Tool {
 			GameObject lineRight = FindLine(pointOne, pointBisector);
 			
 			lineLeft.GetComponent<LineObject>().SetPoints(pointOneObj, pointTwoObj);
-			lineLeft.GetComponent<LineObject>().UpdatePosition(pointOneObj.transform.position, pointTwoObj.transform.position);
+			lineLeft.GetComponent<LineObject>().UpdatePosition(pointOneObj, pointTwoObj);
 			
 			GameObject pointBisectorObj = FindPoint(pointBisector);
 			
@@ -214,7 +214,7 @@ public class ActionsManager : Tool {
 				GameObject newPoint1 = FindPoint(commandArray[1]);
 				GameObject newPoint2 = FindPoint(commandArray[2]);
 				
-				line1.GetComponent<LineObject>().UpdatePosition(newPoint1.transform.position, newPoint2.transform.position);
+				line1.GetComponent<LineObject>().UpdatePosition(newPoint1, newPoint2);
 			
 				GameObject midPoint = FindPoint(commandArray[4]);
 				
@@ -232,7 +232,7 @@ public class ActionsManager : Tool {
 			
 			FindPoint(commandArray[3]).GetComponent<PointObject>().Disconnect(firstLine);
 			
-			firstLine.GetComponent<LineObject>().UpdatePosition(FindPoint(commandArray[1]).transform.position, FindPoint(commandArray[2]).transform.position);
+			firstLine.GetComponent<LineObject>().UpdatePosition(FindPoint(commandArray[1]), FindPoint(commandArray[2]));
 			firstLine.GetComponent<LineObject>().SetPoints(FindPoint(commandArray[1]), FindPoint(commandArray[2]));
 			
 			for(int i=3; i<commandArray.Length; i++){
