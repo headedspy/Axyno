@@ -51,7 +51,7 @@ public abstract class CreatedObject : MonoBehaviour {
 	// ПАРАМЕТРИ:
 	// - Няма
 	//------------------------------------------------------------------------
-	private void Select(){
+	public void Select(){
 		isSelected = true;
 		
 		if(gameObject.name == "Line"){
@@ -71,7 +71,7 @@ public abstract class CreatedObject : MonoBehaviour {
 	// ПАРАМЕТРИ:
 	// - Няма
 	//------------------------------------------------------------------------
-	private void Deselect(){
+	public void Deselect(){
 		isSelected = false;
 		
 		if(gameObject.name == "Line"){
@@ -130,7 +130,9 @@ public abstract class CreatedObject : MonoBehaviour {
 				RecursiveAdd(obj.GetComponent<LineObject>().point1, isSelect);
 				RecursiveAdd(obj.GetComponent<LineObject>().point2, isSelect);
 				
-				//add angles here
+				foreach(GameObject angle in obj.GetComponent<LineObject>().connectedAngles){
+					RecursiveAdd(angle, isSelect);
+				}
 				
 			// Ако обекта е от тип ъгъл
 			}else if(obj.name == "Angle"){

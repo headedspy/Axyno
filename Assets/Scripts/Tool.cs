@@ -100,6 +100,18 @@ public abstract class Tool : MonoBehaviour {
 		Handheld.Vibrate ();
 	}
 	
+	private static List<string> deletedPoints = null;
+	
+	public void Start(){
+		if(deletedPoints == null){
+			deletedPoints = new List<string>();
+		}
+	}
+	
+	public void AddPointName(string name){
+		deletedPoints.Add(name);
+	}
+	
 	private static char nextPointName = 'a';
 	private static int prefix = 0;
 	
@@ -108,6 +120,15 @@ public abstract class Tool : MonoBehaviour {
 		
 		foreach(GameObject point in points){
 			if(point.GetComponent<PointObject>().GetText() == ""){
+				
+				if(deletedPoints.Count > 0){
+					string pointName = deletedPoints[0];
+					deletedPoints.Remove(pointName);
+					
+					point.GetComponent<PointObject>().AddText(pointName);
+					
+					continue;
+				}
 				
 				string prefixString;
 				

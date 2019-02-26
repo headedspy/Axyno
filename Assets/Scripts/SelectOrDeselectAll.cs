@@ -23,7 +23,9 @@ public class SelectOrDeselectAll : Tool {
 		if(isDeselect){
 			// Деселектира всички селектирани обекти
 			foreach(GameObject obj in GetObjects("", true)){
-				obj.GetComponent<CreatedObject>().SelectClick();
+				if(obj.GetComponent<CreatedObject>().isSelected){
+					obj.GetComponent<CreatedObject>().Deselect();
+				}
 			}
 			
 		// Ако е избрано селектиране
@@ -31,7 +33,7 @@ public class SelectOrDeselectAll : Tool {
 			// Селектира всички неселектирани обекти
 			foreach(GameObject obj in GetObjects("", false)){
 				if(!obj.GetComponent<CreatedObject>().isSelected){
-					obj.GetComponent<CreatedObject>().SelectClick();
+					obj.GetComponent<CreatedObject>().Select();
 				}
 			}
 		}

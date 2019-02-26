@@ -46,6 +46,8 @@ public class CreatePolygon : CreateLine {
 		text = text.Substring(0, text.Length-1);
 		
 		AddCommand(text);
+		
+		
 	}
 	
 	public void ChangeNumberOfSides(int amount){

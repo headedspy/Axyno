@@ -64,19 +64,21 @@ public class LineObject : CreatedObject {
 	// - Няма
 	//------------------------------------------------------------------------
 	public void OnDestroy(){
-		if(point1 != null && point2 != null){
+		if(point1 != null){
 			point1.GetComponent<PointObject>().Disconnect(gameObject);
+			if(point1.GetComponent<PointObject>().lines.Count == 0)
+				Destroy(point1);
+		}
+		if(point2 != null){
 			point2.GetComponent<PointObject>().Disconnect(gameObject);
-
-			// Ако точката е част от единична линия, то и линията бива изтрита
-			if(point1.GetComponent<PointObject>().lines.Count == 0)Destroy(point1);
-			if(point2.GetComponent<PointObject>().lines.Count == 0)Destroy(point2);
+			if(point2.GetComponent<PointObject>().lines.Count == 0)
+				Destroy(point2);
+		}
 			
-			// Изтриват се и всички ъгли, свързани към линията
-			if(connectedAngles.Count > 0){
-				foreach(GameObject angle in connectedAngles){
-					Destroy(angle);
-				}
+		// Изтриват се и всички ъгли, свързани към линията
+		if(connectedAngles.Count > 0){
+			foreach(GameObject angle in connectedAngles){
+				Destroy(angle);
 			}
 		}
 	}

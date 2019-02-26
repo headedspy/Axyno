@@ -21,14 +21,11 @@ public class Delete : ActionsManager {
 		foreach(GameObject obj in GetObjects("", true)){
 			
 			// Ако обекта е точка, първо се изтриват всички линии, свързани към нея 
-			/*
+			
 			if(obj.name == "Point"){
-				foreach(GameObject line in obj.GetComponent<PointObject>().lines){
-					Destroy(line);
-				}
-				
+				AddPointName(obj.GetComponent<PointObject>().GetText());
 			// Ако обекта е линия, първо се изтриват всички ъгли, свързани към нея
-			}else */if(obj.name == "Line"){	
+			}else if(obj.name == "Line"){	
 				foreach(GameObject angle in obj.GetComponent<LineObject>().connectedAngles){
 					Destroy(obj);
 				}

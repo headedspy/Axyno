@@ -79,6 +79,14 @@ public class LineHover : LineSplit {
 			newLine.transform.GetChild(1).gameObject.GetComponent<Renderer>().material = mat;
 			newLine2.transform.GetChild(1).gameObject.GetComponent<Renderer>().material = mat;
 			
+			List<GameObject> connectedAngles = new List<GameObject>(line.GetComponent<LineObject>().connectedAngles);
+			
+			foreach(GameObject connectedAngle in connectedAngles){
+				GameObject closerNewLine = Vector3.Distance(connectedAngle.transform.position, newLine.transform.position) > Vector3.Distance(connectedAngle.transform.position, newLine2.transform.position) ? newLine2 : newLine;
+				
+				connectedAngle.GetComponent<AngleObject>().SwitchLine(line, closerNewLine);
+			}
+			
 			Destroy(line);
 			
 		}else{

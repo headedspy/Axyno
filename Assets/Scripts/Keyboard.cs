@@ -14,6 +14,11 @@ public class Keyboard : ActionsManager {
 			if(Regex.IsMatch(text, "[0-9]", RegexOptions.IgnoreCase) && !Regex.IsMatch(text, "[a-z]", RegexOptions.IgnoreCase)){
 				Debug.Log("cifra");
 				
+				if(float.Parse(text) == 0f){
+					ReportMessage("ERROR: Value cannot be zero");
+					return;
+				}
+				
 				List<GameObject> lines = GetObjects("Line", true);
 				List<GameObject> angles = GetObjects("Angle", true);
 			
@@ -30,7 +35,6 @@ public class Keyboard : ActionsManager {
 				}else{
 					ReportMessage("ERROR: Select an object");
 				}
-				/*!Regex.IsMatch(text, "[0-9]", RegexOptions.IgnoreCase)*/
 			}else if(Regex.IsMatch(text, "[a-z]", RegexOptions.IgnoreCase) && 
 					(!Regex.IsMatch(text.Substring(1), "[a-z]", RegexOptions.IgnoreCase) || text.Length == 1)){
 				Debug.Log("bukfa");

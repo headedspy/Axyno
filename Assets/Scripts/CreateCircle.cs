@@ -21,6 +21,7 @@ public class CreateCircle : CreateLine {
 	//------------------------------------------------------------------------
 	public override void Initiate(){
 		
+		
 		// Проверка за правилно селектирани точка, линия и ъгъл
 		List<GameObject> lines = GetObjects("Line", true);
 		List<GameObject> points = GetObjects("Point", true);
@@ -42,6 +43,13 @@ public class CreateCircle : CreateLine {
 		GameObject line1 = lines[0];
 		GameObject point1 = points[0];
 		GameObject angle = angles[0];
+		
+		foreach(GameObject circle in GetObjects("Circle", false)){
+			if(circle.GetComponent<CircleObject>().Check(point1, line1, angle)){
+				ReportMessage("ERROR: Circle already exists");
+				return;
+			}
+		}
 		
 		if(!point1.GetComponent<PointObject>().lines.Contains(line1)){
 			ReportMessage("ERROR: Line is not connected");
