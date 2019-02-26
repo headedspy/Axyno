@@ -46,7 +46,7 @@ public class CreateAngle : ActionsManager {
 			   }
 		}
 		
-		// Създаване на обек от тип ъгъл на позицията на едната линия
+		// Създаване на обект от тип ъгъл на позицията на едната линия
 		GameObject createdAngle = Instantiate(anglePrefab, line1.transform.position, Quaternion.identity, GetTaskTransform());
 		createdAngle.name = "Angle";
 		

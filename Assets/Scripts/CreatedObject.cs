@@ -130,6 +130,8 @@ public abstract class CreatedObject : MonoBehaviour {
 				RecursiveAdd(obj.GetComponent<LineObject>().point1, isSelect);
 				RecursiveAdd(obj.GetComponent<LineObject>().point2, isSelect);
 				
+				//add angles here
+				
 			// Ако обекта е от тип ъгъл
 			}else if(obj.name == "Angle"){
 				// Извиква се същия метод за двете линии, съставляващи ъгъла
