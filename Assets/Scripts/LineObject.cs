@@ -10,7 +10,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LineObject : CreatedObject {
-	public GameObject point1, point2;
+	public GameObject point1;
+	public GameObject point2;
 	public string type = "SOLID";
 	
 	private bool isTransparent = false;

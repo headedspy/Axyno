@@ -11,7 +11,7 @@ using UnityEngine;
 
 public class CircleObject : MonoBehaviour {
 
-	private List<GameObject> lines = null;
+	public List<GameObject> lines = null;
 	
 	private GameObject centerPoint;
 	private GameObject angleRotation;

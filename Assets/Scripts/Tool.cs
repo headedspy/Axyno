@@ -96,17 +96,7 @@ public abstract class Tool : MonoBehaviour {
 	
 	private static List<string> deletedPoints = null;
 	
-	//------------------------------------------------------------------------
-	// ФУНКЦИЯ: Start
-	// При стартиране инициализира списъка с изтритите точки
-	// ПАРАМЕТРИ:
-	// - Няма
-	//------------------------------------------------------------------------
-	public void Start(){
-		if(deletedPoints == null){
-			deletedPoints = new List<string>();
-		}
-	}
+	
 	
 	//------------------------------------------------------------------------
 	// ФУНКЦИЯ: AddPointName
@@ -115,7 +105,8 @@ public abstract class Tool : MonoBehaviour {
 	// - Няма
 	//------------------------------------------------------------------------
 	public void AddPointName(string name){
-		deletedPoints.Add(name);
+		if(!deletedPoints.Contains(name))
+			deletedPoints.Add(name);
 	}
 	
 	private static char nextPointName = 'a';
@@ -129,9 +120,26 @@ public abstract class Tool : MonoBehaviour {
 	//------------------------------------------------------------------------
 	protected void NamePoints(){
 		List<GameObject> points = GetObjects("Point", false);
+		List<GameObject> circles = GetObjects("Circle", false);
+		
+		foreach(GameObject circle in circles){
+			List<GameObject> lines = circle.GetComponent<CircleObject>().lines;
+			
+			foreach(GameObject line in lines){
+				GameObject point1 = line.GetComponent<LineObject>().point1;
+				GameObject point2 = line.GetComponent<LineObject>().point2;
+				
+				if(points.Contains(point1))points.Remove(point1);
+				if(points.Contains(point2))points.Remove(point2);
+			}
+		}
 		
 		foreach(GameObject point in points){
 			if(point.GetComponent<PointObject>().GetText() == ""){
+				
+				if(deletedPoints == null){
+					deletedPoints = new List<string>();
+				}
 				
 				if(deletedPoints.Count > 0){
 					string pointName = deletedPoints[0];

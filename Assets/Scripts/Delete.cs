@@ -28,15 +28,18 @@ public class Delete : ActionsManager {
 		foreach(GameObject obj in selectedObjects){
 			if(obj.name == "Point"){
 				AddPointName(obj.GetComponent<PointObject>().GetText());
-			}else if(obj.name == "Line"){	
+			}else if(obj.name == "Line"){
+				if(obj.GetComponent<LineObject>().point1.GetComponent<PointObject>().lines.Count == 1)
+					AddPointName(obj.GetComponent<LineObject>().point1.GetComponent<PointObject>().GetText());
+				if(obj.GetComponent<LineObject>().point2.GetComponent<PointObject>().lines.Count == 1)
+					AddPointName(obj.GetComponent<LineObject>().point2.GetComponent<PointObject>().GetText());
+				
 				foreach(GameObject angle in obj.GetComponent<LineObject>().connectedAngles){
 					Destroy(obj);
 				}
 			}
-			
 			Destroy(obj);
 		}
-		
 		Vibrate();
 	}
 }
