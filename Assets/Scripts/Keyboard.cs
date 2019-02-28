@@ -16,7 +16,7 @@ public class Keyboard : ActionsManager {
 	public bool isEnter;
 	public bool isBackspace;
 	
-	//------------------------------------------------------------------------
+	//-------------------------------------------- ----------------------------
 	// ФУНКЦИЯ: Initiate
 	// Проверява дали е въведено име или стойност и я записва на 
 	// съответния селектиран обект
@@ -26,7 +26,6 @@ public class Keyboard : ActionsManager {
 	public override void Initiate(){
 		if(isEnter){
 			if(Regex.IsMatch(text, "[0-9]", RegexOptions.IgnoreCase) && !Regex.IsMatch(text, "[a-z]", RegexOptions.IgnoreCase)){
-				Debug.Log("cifra");
 				
 				if(float.Parse(text) == 0f){
 					ReportMessage("ERROR: Value cannot be zero");
@@ -41,17 +40,19 @@ public class Keyboard : ActionsManager {
 						line.GetComponent<LineObject>().AddText(text);
 						line.GetComponent<CreatedObject>().SelectClick();
 					}
+					Vibrate();
 				}else if(angles.Count > 0){
 					foreach(GameObject angle in angles){
 						angle.GetComponent<AngleObject>().AddText(text);
 						angle.GetComponent<CreatedObject>().SelectClick();
 					}
+					Vibrate();
 				}else{
 					ReportMessage("ERROR: Select an object");
 				}
+				text = "";
 			}else if(Regex.IsMatch(text, "[a-z]", RegexOptions.IgnoreCase) && 
 					(!Regex.IsMatch(text.Substring(1), "[a-z]", RegexOptions.IgnoreCase) || text.Length == 1)){
-				Debug.Log("bukfa");
 				
 				List<GameObject> objects = GetObjects("Point", true);
 			
@@ -71,6 +72,7 @@ public class Keyboard : ActionsManager {
 					objects[0].GetComponent<CreatedObject>().SelectClick();
 					
 					text = "";
+					Vibrate();
 				}
 			}else{
 				ReportMessage("ERROR: Invalid name");

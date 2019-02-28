@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Calibration : MonoBehaviour {
-	public Texture BoxTexture;
+	public Texture boxTexture;
 	
 	//------------------------------------------------------------------------
 	// ФУНКЦИЯ: OnGUI
@@ -19,7 +19,7 @@ public class Calibration : MonoBehaviour {
 	//------------------------------------------------------------------------
     void OnGUI(){
 		GUI.backgroundColor = new Color(0f, 0f, 0f, 0f);
-        GUI.Box(new Rect((Screen.width/2f) - 25f/2, (Screen.height/2f) - 25f/2, 25f, 25f), BoxTexture);
+        GUI.Box(new Rect((Screen.width/2f) - 25f/2, (Screen.height/2f) - 25f/2, 25f, 25f), boxTexture);
     }
 	
 	//------------------------------------------------------------------------
