@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RotationEffect : MonoBehaviour {
-	
 	public GameObject camera;
 	
 	void Update (){

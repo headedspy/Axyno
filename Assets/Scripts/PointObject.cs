@@ -23,33 +23,7 @@ public class PointObject : CreatedObject {
 	// - Няма
 	//------------------------------------------------------------------------
 	public void Start(){
-		// Инициализира се списъкът със свързаните линии
 		if(lines == null)lines = new List<GameObject>();
-		
-		/*
-		// Взимат се всички collider-и, които са на разстояние по-малко или равно на радиуса на сферата, репрезентираща точката
-		Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, gameObject.transform.localScale.x);
-		
-		List<GameObject> transferedLines = new List<GameObject>();
-		
-		// Ако collider-а принаднежи на точка, то правите биват свързани към текущата точка
-		foreach(Collider collider in hitColliders){
-			if(collider.name == "Point" && collider.gameObject != gameObject){
-				foreach(GameObject line in collider.gameObject.GetComponent<PointObject>().lines){
-					transferedLines.Add(line);
-				}
-				
-				// Разкачане на линиите, свързани към точката
-				foreach(GameObject line in transferedLines){
-					collider.gameObject.GetComponent<PointObject>().Disconnect(line);
-					lines.Add(line);
-				}
-				
-				// Премахване на втората точка
-				Destroy(collider.gameObject);
-			}
-		}
-		*/
 	}
 	
 	public void OnDestroy(){
@@ -106,7 +80,6 @@ public class PointObject : CreatedObject {
 	// - string s : Името, което точката ще има
 	//------------------------------------------------------------------------
 	public void AddText(string s){
-		// Задаване на текста на дъщерния обект на точката
 		gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = s;
 		name = s;
 	}
@@ -118,7 +91,6 @@ public class PointObject : CreatedObject {
 	// - Няма
 	//------------------------------------------------------------------------
 	public string GetText(){
-		// Връщане на текста на дъщерния обект на точката
 		return name;
 	}
 }

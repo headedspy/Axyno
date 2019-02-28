@@ -41,7 +41,6 @@ public class LineObject : CreatedObject {
 		this.point1 = p1;
 		this.point2 = p2;
 		
-		// Свързва се и линията за самите точки
 		p1.GetComponent<PointObject>().Connect(gameObject);
 		p2.GetComponent<PointObject>().Connect(gameObject);
 	}
@@ -53,7 +52,6 @@ public class LineObject : CreatedObject {
 	// - Няма
 	//------------------------------------------------------------------------
 	public float GetLength(){
-		// Изчислява и връща разсточнието между двеете точки на линията
 		return Vector3.Distance(point1.transform.position, point2.transform.position);
 	}
 	
@@ -74,8 +72,7 @@ public class LineObject : CreatedObject {
 			if(point2.GetComponent<PointObject>().lines.Count == 0)
 				Destroy(point2);
 		}
-			
-		// Изтриват се и всички ъгли, свързани към линията
+
 		if(connectedAngles.Count > 0){
 			foreach(GameObject angle in connectedAngles){
 				Destroy(angle);
@@ -92,7 +89,6 @@ public class LineObject : CreatedObject {
 	public override void ChangeColor(Color c){
 		GameObject lineMesh = gameObject.transform.GetChild(1).gameObject;
 		
-		// Ако линията е била прозрачна, то прозрачността се запазва след промяна на цвета
 		if(isTransparent)lineMesh.GetComponent<Renderer>().material.color = new Color(c.r, c.g, c.b, 0.5f);
 		else lineMesh.GetComponent<Renderer>().material.color = c;
 	}
@@ -137,33 +133,24 @@ public class LineObject : CreatedObject {
 	public void UpdatePosition(GameObject point1, GameObject point2){
 		GameObject lineMesh = gameObject.transform.GetChild(1).gameObject;
 		
-		// Изчислява се разстоянието между двете точки
 		float distance = Vector3.Distance(point1.transform.position, point2.transform.position);
 		
-		// Нулиране на размера на линията
 		lineMesh.transform.localScale = new Vector3(0.055639f, 0f, 0.055639f);
 		
-		// Правата се поставя на координатите на първата точка
 		lineMesh.transform.position = point1.transform.position;
 		
-		// Насочване на Z-вектора на линията към втората точка
 		lineMesh.transform.LookAt(point2.transform.position, lineMesh.transform.up * -1);
 		
-		// Завъртане на линията на 90 градуса, така че Y-вектора вече да "гледа" към втората точка
 		lineMesh.transform.Rotate(Vector3.left * 90f, Space.Self);
 		
-		// Транслиране на обекта до средната позиция между двете точки
 		lineMesh.transform.Translate(Vector3.down * (distance/2), Space.Self);
 		
-		// Задаване на правилната дължина на правата (разстоянието върху две за всяка половинка)
 		lineMesh.transform.localScale += new Vector3(0f, distance/2, 0f);
 		
-		// Преизчисляване на свързаните ъгли спрямо новите координати на линията
 		foreach(GameObject connectedAngle in connectedAngles){
 			connectedAngle.GetComponent<AngleObject>().UpdateAngle(connectedAngle.GetComponent<AngleObject>().line1, connectedAngle.GetComponent<AngleObject>().line2);
 		}
 		
-		// Оразмеряване наново и позициониране на текста на правата
 		Transform lineText = gameObject.transform.GetChild(0);
 		lineText.gameObject.transform.localScale = new Vector3(-0.067107f, 0.067107f, 0.067107f);
 		lineText.position = lineMesh.transform.position;

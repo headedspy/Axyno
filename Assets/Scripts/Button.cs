@@ -1,4 +1,10 @@
-﻿using System.Collections;
+﻿//------------------------------------------------------------------------
+// ИМЕ НА ФАЙЛА: Button.cs
+// НАСЛЕДЕН ОТ: -
+// ЦЕЛ НА КЛАСА: Управление на обектите бутони в сцената
+//------------------------------------------------------------------------
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,12 +16,19 @@ public class Button : MonoBehaviour {
 	public bool isTool = false;
 	
 	public static bool isMenuOpen = false;
-
+	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: PressDown
+	// Извиква се при натискане върху бутона. Отваря съответното меню
+	// на бутона и променя цвета на самия бутон
+	// ПАРАМЕТРИ:
+	// - Няма
+	//------------------------------------------------------------------------
 	public void PressDown(){
 		if(!isTool){
 			StartCoroutine(PlayAnimation(!isOn));
 			isOn = !isOn;
-			gameObject.GetComponent<Renderer> ().material.color = new Color (1f, 1f, 1f);
+			gameObject.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f);
 		}else{
 			if(!isMenuOpen){
 				isOn = true;
@@ -30,7 +43,13 @@ public class Button : MonoBehaviour {
 			}
 		}
 	}
-
+	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: PressUp
+	// Извиква се при отпускане от бутона. Връща цвета на бутона обратно на черен
+	// ПАРАМЕТРИ:
+	// - Няма
+	//------------------------------------------------------------------------
 	public void PressUp(){
 		if(isOn && isTool && isMenuOpen){
 			gameObject.GetComponent<Renderer> ().material.color = new Color (1f, 1f, 1f);
@@ -39,6 +58,12 @@ public class Button : MonoBehaviour {
 		}
 	}
 	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: PlayAnimation
+	// Отваря/Затваря съответното меню с анимация
+	// ПАРАМЕТРИ:
+	// - bool isOpen: Отваряща анимация ли е
+	//------------------------------------------------------------------------
 	private IEnumerator PlayAnimation(bool isOpen){
 		float scale = 1f;
 		if(isTool)scale = 1.1f;

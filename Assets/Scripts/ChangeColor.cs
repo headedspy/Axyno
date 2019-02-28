@@ -18,17 +18,14 @@ public class ChangeColor : ActionsManager {
 	// - Няма
 	//------------------------------------------------------------------------
 	public override void Initiate(){
-		// Запазване на цвета на натиснатия бутон
 		Color c = gameObject.GetComponent<Renderer>().material.color;
 		
-		// Ако няма селектирани обеки връща грешка до портебителя
 		List<GameObject> objects = GetObjects("", true);
 		if(objects.Count == 0){
 			ReportMessage("ERROR: Select at least one object");
 			return;
 		}
 		
-		// Смяна на цвета на всеки селектиран обект и деселектирането му
 		foreach(GameObject obj in objects){
 			GameObject manipulativeObject = obj;
 			if(obj.name == "Line"){
@@ -59,6 +56,8 @@ public class ChangeColor : ActionsManager {
 			}
 			
 			AddCommand("COLOR_"+oldColor.r+","+oldColor.g+","+oldColor.b+"_"+c.r+","+c.g+","+c.b+"_"+objPoints);
+			
+			Vibrate();
 		}
 	}
 }

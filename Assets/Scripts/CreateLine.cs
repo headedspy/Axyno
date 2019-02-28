@@ -1,6 +1,7 @@
 ﻿//------------------------------------------------------------------------
 // ИМЕ НА ФАЙЛА: CreateLine.cs
-// НАСЛЕДЕН ОТ: SubdivideLine, CreatePerpendicular, LineSplit
+// НАСЛЕДЕН ОТ: SubdivideLine, CreatePolygon, MoveObjects, 
+// CreatePerpendicular, LineSplit, CreateCircle, CreateBisector, Extrude
 // ЦЕЛ НА КЛАСА: Построяване на обект линия между две дадени точки
 //------------------------------------------------------------------------
 
@@ -20,21 +21,19 @@ public class CreateLine : ActionsManager {
 	// - Няма
 	//------------------------------------------------------------------------
 	public override void Initiate(){
-		// Списък със всички селектирани точки
 		List<GameObject> points = GetObjects("Point", true);
 		
-		// Ако в списъка има повече или по-малко от два обекта изписва грешка
 		if(points.Count != 2){
 			ReportMessage("2 points must be selected");
 			return;
 		}else{
-			// Иначе построява линия между тях
 			BuildLine(points[0], points[1]);
 			
-			// Разселектира точките
 			foreach(GameObject point in points){
 				point.GetComponent<PointObject>().SelectClick();
 			}
+			
+			Vibrate();
 		}
 	}
 	
@@ -48,8 +47,6 @@ public class CreateLine : ActionsManager {
 	// - GameObject point2 : Другата точка от същата бъдеща линия
 	//------------------------------------------------------------------------
 	protected GameObject BuildLine(GameObject point1, GameObject point2){
-		
-		// Проверка дали линията вече не съществува
 		foreach(GameObject connectedLine in point1.GetComponent<PointObject>().lines){
 			if(connectedLine.GetComponent<LineObject>().point1 == point2 || connectedLine.GetComponent<LineObject>().point2 == point2){
 				ReportMessage("Line already exists");
@@ -57,7 +54,6 @@ public class CreateLine : ActionsManager {
 			}
 		}
 		
-		// Инициализиране на обекта линия на позицията на първата точка
 		GameObject line = Instantiate(linePrefab, point1.transform.position, Quaternion.identity, GetTaskTransform());
 		line.name = "Line";
 		

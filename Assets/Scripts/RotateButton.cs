@@ -3,17 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RotateButton : MonoBehaviour {
-
 	public GameObject task;
-
 	public bool isReset = false;
-
 	public string position = "";
-
 	private bool isDown = false;
-
 	private Vector3 rotateAround;
-
+	
 	public void ButtonDown(){
 		isDown = true;
 	}
@@ -43,8 +38,8 @@ public class RotateButton : MonoBehaviour {
 	}
 
 	void Update(){
-		if (isDown) {
-			if (isReset)
+		if(isDown) {
+			if(isReset)
 				task.transform.rotation = Quaternion.AngleAxis (0, rotateAround);
 			else
 				task.transform.Rotate (rotateAround * 90f * Time.deltaTime, Space.World);

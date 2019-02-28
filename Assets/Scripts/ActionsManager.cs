@@ -1,4 +1,11 @@
-﻿using System.Collections;
+﻿//------------------------------------------------------------------------
+// ИМЕ НА ФАЙЛА: ActionsManager.cs
+// НАСЛЕДЕН ОТ: ChangeLineType, CreateAngle, CreateLine, Delete, ChangeColor
+// ЦЕЛ НА КЛАСА: Запазване на използвани досега команди и
+// връщането назад през тях
+//------------------------------------------------------------------------
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
@@ -7,62 +14,83 @@ public class ActionsManager : Tool {
 	
 	public static List<string> commands = null;
 	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: Start
+	// Функцията се извиква в началото и инициализира списъка с команди
+	// ПАРАМЕТРИ:
+	// - Няма
+	//------------------------------------------------------------------------
 	public void Start() {
 		if(commands == null){
 			commands = new List<string>();
 		}
 	}
 	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: Initiate
+	// Вика Revert метода за последната команда в списъка като я
+	// премахва от там
+	// ПАРАМЕТРИ:
+	// - Няма
+	//------------------------------------------------------------------------
 	public override void Initiate(){
 		if(commands.Count == 0){
-			Debug.Log("NO MORE");
 			return;
 		}
+		
 		string command = commands[commands.Count - 1];
+		
 		commands.RemoveAt(commands.Count - 1);
 		Revert(command);
 	}
 	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: AddCommand
+	// Добавя команда в списъка
+	// премахва от там
+	// ПАРАМЕТРИ:
+	// - string command : Командата, която ще бъде добавена
+	//------------------------------------------------------------------------
 	public void AddCommand(string command){
-		
 		if(command.Substring(0,4) == "LINE"){
 			if(!Regex.IsMatch(command, "LINE_[a-z]_[a-z]", RegexOptions.IgnoreCase)){
 				return;
 			}
 		}
-		commands.Add(command);
 		
-		Debug.Log(command + ">" + commands.Count + "<");
+		commands.Add(command);
 	}
 	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: Revert
+	// Връща промените, направени от съответната команда
+	// премахва от там
+	// ПАРАМЕТРИ:
+	// - string command : Командата, която ще бъде върната
+	//------------------------------------------------------------------------
 	private void Revert(string command){
-		
-		Debug.Log("REVERT>>>"+command);
-		
 		string[] commandArray = command.Split('_');
-		
+
 		if(commandArray[0] == "LINE"){
-			
 			GameObject line = FindLine(commandArray[1], commandArray[2]);
 			
 			if(line != null){
 				Destroy(line);
 			}else{
-				//ERR
+				ReportMessage("UNDO ERROR: LINE NOT FOUND");
 			}
 		}else if(commandArray[0] == "ANGLE"){
-			
 			GameObject angle = FindAngle(commandArray[1], commandArray[2], commandArray[3]);
 			
 			if(angle != null){
 				Destroy(angle);
 			}else{
-				//ERR
+				ReportMessage("UNDO ERROR: ANGLE NOT FOUND");
 			}
 		}else if(commandArray[0] == "COLOR"){
 			string[] fromColor = commandArray[1].Split(',');
 			string[] toColor = commandArray[2].Split(',');
-			
+
 			string p1Name = commandArray[3];
 			GameObject obj = null;
 			
@@ -82,7 +110,7 @@ public class ActionsManager : Tool {
 				//angle
 				obj = FindAngle(commandArray[3], commandArray[4], commandArray[5]);
 			}
-			
+
 			obj.GetComponent<Renderer>().material.color = new Color(float.Parse(fromColor[0]), float.Parse(fromColor[1]), float.Parse(fromColor[2]));
 		}else if(commandArray[0] == "STYLE"){
 			GameObject line = FindLine(commandArray[3], commandArray[4]);
@@ -100,15 +128,14 @@ public class ActionsManager : Tool {
 				GameObject.Find("Transparent").GetComponent<ChangeLineType>().Lock();
 				GameObject.Find("Transparent").GetComponent<ChangeLineType>().Initiate();
 			}
+
 		}else if(commandArray[0] == "POLY"){
 			int sides = commandArray.Length - 1;
-			
 			List<string> pointNames = new List<string>();
 			
 			for(int i=1; i<=sides; i++){
 				pointNames.Add(commandArray[i]);
 			}
-			
 			foreach(string pointName in pointNames){
 				Destroy(FindPoint(pointName));
 			}
@@ -122,14 +149,17 @@ public class ActionsManager : Tool {
 			GameObject angle = FindAngle(linePoint, centerPoint, anglePoint);
 			
 			GameObject circleObject = null;
-			
 			foreach(GameObject circle in GetObjects("Circle", false)){
 				if(circle.GetComponent<CircleObject>().Check(point, line, angle)){
 					circleObject = circle;
 				}
 			}
 			
-			Destroy(circleObject);
+			if(circleObject != null){
+				Destroy(circleObject);
+			}else{
+				ReportMessage("UNDO ERROR: CIRCLE NOT FOUND");
+			}
 		}else if(commandArray[0] == "PERP"){
 			string oldPoint = commandArray[1];
 			string newPoint = commandArray[2];
@@ -278,7 +308,7 @@ public class ActionsManager : Tool {
 				   }
 			}
 		}else{
-			//SOME ERROR WTF DDZ
+			ReportMessage("UNDO ERROR: LINE NOT FOUND");
 		}
 		
 		return line;
@@ -310,7 +340,7 @@ public class ActionsManager : Tool {
 				  }
 			}
 		}else{
-			//ERR
+			ReportMessage("UNDO ERROR: ANGLE NOT FOUND");
 		}
 		
 		return angle;

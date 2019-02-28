@@ -18,21 +18,25 @@ public class Delete : ActionsManager {
 	// - Няма
 	//------------------------------------------------------------------------
 	public override void Initiate(){
-		foreach(GameObject obj in GetObjects("", true)){
-			
-			// Ако обекта е точка, първо се изтриват всички линии, свързани към нея 
-			
+		List<GameObject> selectedObjects = GetObjects("", true);
+		
+		if(selectedObjects.Count == 0){
+			ReportMessage("ERROR: Select at least one object");
+			return;
+		}
+		
+		foreach(GameObject obj in selectedObjects){
 			if(obj.name == "Point"){
 				AddPointName(obj.GetComponent<PointObject>().GetText());
-			// Ако обекта е линия, първо се изтриват всички ъгли, свързани към нея
 			}else if(obj.name == "Line"){	
 				foreach(GameObject angle in obj.GetComponent<LineObject>().connectedAngles){
 					Destroy(obj);
 				}
 			}
 			
-			// Селектираният обект се изтрива
 			Destroy(obj);
 		}
+		
+		Vibrate();
 	}
 }

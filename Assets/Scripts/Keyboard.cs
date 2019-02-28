@@ -1,4 +1,11 @@
-﻿using System.Collections;
+﻿//------------------------------------------------------------------------
+// ИМЕ НА ФАЙЛА: Keyboard.cs
+// НАСЛЕДЕН ОТ: -
+// ЦЕЛ НА КЛАСА: Именуване на точки и задаване на репрезентативни
+//  стойности на линии и ъгли чрез клавиатурата
+//------------------------------------------------------------------------
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
@@ -8,7 +15,14 @@ public class Keyboard : ActionsManager {
 	public GameObject textField;
 	public bool isEnter;
 	public bool isBackspace;
-
+	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: Initiate
+	// Проверява дали е въведено име или стойност и я записва на 
+	// съответния селектиран обект
+	// ПАРАМЕТРИ:
+	// - Няма
+	//------------------------------------------------------------------------
 	public override void Initiate(){
 		if(isEnter){
 			if(Regex.IsMatch(text, "[0-9]", RegexOptions.IgnoreCase) && !Regex.IsMatch(text, "[a-z]", RegexOptions.IgnoreCase)){

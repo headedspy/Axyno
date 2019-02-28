@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------
 // ИМЕ НА ФАЙЛА: CreateAngle.cs
-// НАСЛЕДЕН ОТ: SubdivideLine, CreatePerpendicular
+// НАСЛЕДЕН ОТ:
 // ЦЕЛ НА КЛАСА: Построяване на обект линия между две дадени точки
 //------------------------------------------------------------------------
 
@@ -24,9 +24,11 @@ public class CreateAngle : ActionsManager {
 		
 		if(lines.Count != 2){
 			ReportMessage("2 lines must be selected");
-		}else{
-			BuildAngle(lines[0], lines[1]);
+			return;
 		}
+		
+		BuildAngle(lines[0], lines[1]);
+		Vibrate();
 	}
 	
 	//------------------------------------------------------------------------
@@ -37,7 +39,6 @@ public class CreateAngle : ActionsManager {
 	// - GameObject line2 : Втората линия, съставляваща ъгъла
 	//------------------------------------------------------------------------
 	private void BuildAngle(GameObject line1, GameObject line2){
-		// Проверка дали ъгъла вече съществува
 		foreach(GameObject angle in GetObjects("Angle", false)){
 			if((angle.GetComponent<AngleObject>().line1 == line1 && angle.GetComponent<AngleObject>().line2 == line2) ||
 			   (angle.GetComponent<AngleObject>().line1 == line2 && angle.GetComponent<AngleObject>().line2 == line1)){
@@ -46,25 +47,19 @@ public class CreateAngle : ActionsManager {
 			   }
 		}
 		
-		// Създаване на обект от тип ъгъл на позицията на едната линия
 		GameObject createdAngle = Instantiate(anglePrefab, line1.transform.position, Quaternion.identity, GetTaskTransform());
 		createdAngle.name = "Angle";
 		
-		// Свързване на ъгъла към двете линии
 		createdAngle.GetComponent<AngleObject>().Connect(line1, line2);
 		
-		// Задаване на определената позиция и форма на ъгъла
 		createdAngle.GetComponent<AngleObject>().UpdateAngle(line1, line2);
 		
-		// Деселектиране на двете линии
 		line1.GetComponent<LineObject>().SelectClick();
 		line2.GetComponent<LineObject>().SelectClick();
-		
 		
 		GameObject centerPoint = createdAngle.GetComponent<AngleObject>().point;
 		GameObject point1 = line1.GetComponent<LineObject>().point1 == centerPoint ? line1.GetComponent<LineObject>().point2 : line1.GetComponent<LineObject>().point1;
 		GameObject point2 = line2.GetComponent<LineObject>().point1 == centerPoint ? line2.GetComponent<LineObject>().point2 : line2.GetComponent<LineObject>().point1;
-		
 		
 		AddCommand("ANGLE_"+point1.GetComponent<PointObject>().GetText()+"_"+centerPoint.GetComponent<PointObject>().GetText()+"_"+point2.GetComponent<PointObject>().GetText());
 	}

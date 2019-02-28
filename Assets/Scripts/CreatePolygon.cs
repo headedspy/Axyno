@@ -1,4 +1,10 @@
-﻿using System.Collections;
+﻿//------------------------------------------------------------------------
+// ИМЕ НА ФАЙЛА: CreatePolygon.cs
+// НАСЛЕДЕН ОТ: -
+// ЦЕЛ НА КЛАСА: Създаване на правилна n-ъгълна фигура
+//------------------------------------------------------------------------
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +13,12 @@ public class CreatePolygon : CreateLine {
 	public GameObject number;
 	public GameObject pointPrefab;
 
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: Initiate
+	// Построява правилен многоъгълник
+	// ПАРАМЕТРИ:
+	// - Няма
+	//------------------------------------------------------------------------
 	public override void Initiate(){
 		string text = "POLY_";
 		List<GameObject> points = new List<GameObject>();
@@ -26,14 +38,12 @@ public class CreatePolygon : CreateLine {
 			
 			GameObject newPoint = Instantiate(pointPrefab, pos + offset, Quaternion.identity, GetTaskTransform());
 			newPoint.name = "Point";
-			
 			points.Add(newPoint);
 			
 			BuildLine(point, newPoint);
 			
 			point = newPoint;
 		}
-		
 		
 		BuildLine(firstPoint, point);
 		
@@ -42,16 +52,21 @@ public class CreatePolygon : CreateLine {
 		foreach(GameObject polyPoint in points){
 			text += polyPoint.GetComponent<PointObject>().GetText() + "_";
 		}
-		
 		text = text.Substring(0, text.Length-1);
 		
 		AddCommand(text);
-		
-		
 	}
 	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: ChangeNumberOfSides
+	// Извиква метода за изтриване на игрален обект Destroy за
+	// всеки селектиран обект от чертежа
+	// ПАРАМЕТРИ:
+	// - int amount : С колко ще бъде променена бройката
+	//------------------------------------------------------------------------
 	public void ChangeNumberOfSides(int amount){
 		sidesCount += amount;
+		
 		if(sidesCount < 3)sidesCount = 3;
 		if(sidesCount > 12)sidesCount = 12;
 		

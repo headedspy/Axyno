@@ -24,8 +24,6 @@ public class Extrude : CreateLine {
 	// - Няма
 	//------------------------------------------------------------------------
 	public override void Initiate(){
-		
-		// Проверка дали избраните обекти са линии, образуващи затворен контур
 		List<GameObject> lines = GetObjects("Line", true);
 		if(lines.Count <= 2){
 			ReportMessage("ERROR: Select at lest 3 lines");
@@ -36,7 +34,6 @@ public class Extrude : CreateLine {
 			return;
 		}
 		
-		// Създава се точката-маркер в центъра на контура
 		Vector3 testPos = new Vector3(0f, 0f, 0f);
 		foreach(GameObject line in lines){
 			testPos += line.GetComponent<LineObject>().point1.transform.position;
@@ -46,7 +43,6 @@ public class Extrude : CreateLine {
 		
 		centerPoint = Instantiate(pointPrefab, testPos, Quaternion.identity, GetTaskTransform());
 		
-		// Изчистване на предходни отмествания
 		newPos = Vector3.zero;
 	}
 	
@@ -57,11 +53,8 @@ public class Extrude : CreateLine {
 	// - List<GameObject> lines : Списъка с линии
 	//------------------------------------------------------------------------
 	private bool HasLoop(List<GameObject> lines){
-		
-		// Взимат се всички точки между линиите, като всяка точка от контура бива добавена два пъти
 		List<GameObject> points = GetPoints(lines, true);
 		
-		// Ако всяка точка я има два пъти в списъка, линиите образуват контур
 		while(points.Count != 0){
 			GameObject topPoint = points[0];
 			points.Remove(topPoint);
@@ -85,12 +78,7 @@ public class Extrude : CreateLine {
 	//------------------------------------------------------------------------
 	private List<GameObject> GetPoints(List<GameObject> lines, bool addTwice){
 		
-		// Създаване на нов списък
 		List<GameObject> points = new List<GameObject>();
-		
-		// Всяка точка от всяка линия бива добавена в списъка
-		// Има проверка дали точката вече не е добавена;
-		// addTwice = true за да бъде пропусната и списъка да съдържа два пъти точките от контура
 		foreach(GameObject line in lines){
 			GameObject p1 = line.GetComponent<LineObject>().point1;
 			GameObject p2 = line.GetComponent<LineObject>().point2;
@@ -99,7 +87,6 @@ public class Extrude : CreateLine {
 			if(!points.Contains(p2) || addTwice)points.Add(p2);
 		}
 		
-		// Връщане на списъка
 		return points;
 	}
 	
@@ -114,17 +101,14 @@ public class Extrude : CreateLine {
 	public void ChangePos(string axis){
 		
 		if(centerPoint == null){
-			//ERROR
+			ReportMessage("ERROR: MARKER POINT NOT FOUND");
 			return;
 		}
 		
-		// Отместване
 		float amount = 0.1f;
 		
-		// Ако вектора е с отрицателна посока, промени отместването в другата посока
 		if(axis[0] == '-')amount *= -1;
 		
-		// Спрямо посоката на вектора се променя позицията на точката-маркер
 		if(axis[1] == 'X'){
 			centerPoint.transform.position += new Vector3(amount, 0f, 0f);
 			newPos.x += amount;
@@ -145,22 +129,17 @@ public class Extrude : CreateLine {
 	//					  (true - само избутване / false - избутване и сливане)
 	//------------------------------------------------------------------------
 	public void Confirm(bool isExtrude){
-		
-		// Създаване на нов речник, съдържащ оригиналната точка и нейната ортографска проекция
 		Dictionary<GameObject, GameObject> ortho = new Dictionary<GameObject, GameObject>();
 		
-		// Запазване на всички точки от контура без повтаряне в списък
 		List<GameObject> points = GetPoints(GetObjects("Line", true), false);
 		
 		if(points.Count <= 3){
-			//ERROR
+			ReportMessage("ERROR: 3 points are not selected");
 			return;
 		}
 		
-		// Ако имаме само избутване
 		if(isExtrude){
 			foreach(GameObject point in points){
-				// На всяка точка от контура ѝ създаваме ортографска проекция към точката-маркер
 				GameObject extrudedPoint = Instantiate(pointPrefab, new Vector3(point.transform.position.x + newPos.x,
 																				point.transform.position.y + newPos.y,
 																				point.transform.position.z + newPos.z), Quaternion.identity, GetTaskTransform());
@@ -169,58 +148,39 @@ public class Extrude : CreateLine {
 				
 				NamePoints();
 				
-				//pointsNames += extrudedPoint.GetComponent<PointObject>().GetText() + "_";
-				
-				// Добавяме двете точки в речника
 				ortho.Add(point, extrudedPoint);
 				
-				// Построяваме линия между всяка точка и проекцията ѝ (стените на призмата)
 				BuildLine(extrudedPoint, point);
 			}
 			
-			// Построяваме ръбовете на избутаната форма като свързваме проекциите на точките по идентичен начин
 			List<GameObject> lines = GetObjects("Line", true);
 			foreach(GameObject line in lines){
 				BuildLine(ortho[line.GetComponent<LineObject>().point1],
 						  ortho[line.GetComponent<LineObject>().point2]);
 			}
 			
-			// Изтриваме точката-маркер
 			Destroy(centerPoint);
-			
-			//NamePoints();
-			
-			/*
-			foreach(GameObject point in points){
-				pointNames += ortho[point].GetComponent<PointObject>().GetText() + "_";
-			}
-			*/
 			
 			AddCommand("EXTRUDE_"+ortho.Count+"_PRISM");
 			
 		}else{
 			centerPoint.name = "Point";
 			NamePoints();
-		// Ако имаме избутване и сливане
 		
 			int lines = 0;
 		
 			foreach(GameObject point in points){
-				// Построяваме линия между всяка точка от контура и точката-маркер
 				BuildLine(centerPoint, point);
 				lines++;
 			}
-			// Правим точката-маркер на нормална точка
 			
 			AddCommand("EXTRUDE_"+lines.ToString()+"_PYRAMID");
-			//pointNames += centerPoint.GetComponent<PointObject>().GetText() + "_";
 		}
 		
-		// Деселектираме всички линии
 		foreach(GameObject line in GetObjects("Line", true)){
 			line.GetComponent<CreatedObject>().SelectClick();
 		}
 		
-		//AddCommand("EXTRUDE_"+pointNames.Substring(0, pointNames.Length-1));
+		Vibrate();
 	}
 }

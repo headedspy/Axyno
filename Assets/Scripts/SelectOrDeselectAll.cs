@@ -19,18 +19,14 @@ public class SelectOrDeselectAll : Tool {
 	// - Няма
 	//------------------------------------------------------------------------
 	public override void Initiate(){
-		// Ако е избрано деселектиране
 		if(isDeselect){
-			// Деселектира всички селектирани обекти
 			foreach(GameObject obj in GetObjects("", true)){
 				if(obj.GetComponent<CreatedObject>().isSelected){
 					obj.GetComponent<CreatedObject>().Deselect();
 				}
 			}
 			
-		// Ако е избрано селектиране
 		}else{
-			// Селектира всички неселектирани обекти
 			foreach(GameObject obj in GetObjects("", false)){
 				if(!obj.GetComponent<CreatedObject>().isSelected){
 					obj.GetComponent<CreatedObject>().Select();

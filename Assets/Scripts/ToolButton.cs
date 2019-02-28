@@ -1,23 +1,37 @@
-﻿using System.Collections;
+﻿//------------------------------------------------------------------------
+// ИМЕ НА ФАЙЛА: ToolButton.cs
+// НАСЛЕДЕН ОТ: -
+// ЦЕЛ НА КЛАСА: Управление на инструментите за директна манипулация
+//------------------------------------------------------------------------
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ToolButton : Tool {
 
 	public string toolName = "";
-	
 	public bool isSelected = false;
-	
 	public List<GameObject> otherTools;
-	
 	public GameObject pointerObject;
-	
 	public GameObject captionObject;
 	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: Start
+	// Инициализира списъка с другите инструменти
+	// ПАРАМЕТРИ:
+	// - Няма
+	//------------------------------------------------------------------------
 	public void Start(){
 		if(otherTools == null)otherTools = new List<GameObject>();
 	}
 	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: Initiate
+	// Селектира инструмента и деселектира останалите
+	// ПАРАМЕТРИ:
+	// - Няма
+	//------------------------------------------------------------------------
 	public override void Initiate(){
 		if(!isSelected)Select();
 		else{
@@ -30,6 +44,12 @@ public class ToolButton : Tool {
 		}
 	}
 	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: Select
+	// Селектира инструмента
+	// ПАРАМЕТРИ:
+	// - Няма
+	//------------------------------------------------------------------------
 	private void Select(){
 		foreach(GameObject otherTool in otherTools){
 			if(otherTool.GetComponent<ToolButton>().isSelected == true){
@@ -50,6 +70,12 @@ public class ToolButton : Tool {
 		pointerObject.GetComponent<Renderer>().material.color = c;
 	}
 	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: Select
+	// Деселектира инструмента
+	// ПАРАМЕТРИ:
+	// - Няма
+	//------------------------------------------------------------------------
 	private void Deselect(){
 		isSelected = false;
 		GameObject.Find("Head").GetComponent<Info>().ResetTool();

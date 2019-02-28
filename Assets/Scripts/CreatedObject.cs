@@ -59,7 +59,7 @@ public abstract class CreatedObject : MonoBehaviour {
 		}else{
 			gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Custom/Outline");
 		}
-		// Ако обекта е от типа ъгъл, смалява outline-а на shader-а
+		
 		if(gameObject.name == "Angle"){
 			GetComponent<Renderer>().material.SetFloat("_Outline", 1f);
 		}
@@ -75,9 +75,9 @@ public abstract class CreatedObject : MonoBehaviour {
 		isSelected = false;
 		
 		if(gameObject.name == "Line"){
-			gameObject.transform.GetChild(1).gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Transparent/Bumped Diffuse"); //Standard
+			gameObject.transform.GetChild(1).gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Transparent/Bumped Diffuse");
 		}else{
-			gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Transparent/Bumped Diffuse"); //Standard
+			gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Transparent/Bumped Diffuse");
 		}
     }
 	
@@ -88,12 +88,10 @@ public abstract class CreatedObject : MonoBehaviour {
 	// - Няма
 	//------------------------------------------------------------------------
 	public void SelectClick(){
-		// Ако потребителя е със "Select" инструмента
 		if(head.GetComponent<Info>().tool == "Select"){
 			if(isSelected)Deselect();
 			else Select();
-			
-		// Ако потребителя е със "ShapeSelect" инструмента
+
 		}else if(head.GetComponent<Info>().tool == "ShapeSelect"){
 			RecursiveAdd(gameObject, !isSelected);
 		}
@@ -108,25 +106,18 @@ public abstract class CreatedObject : MonoBehaviour {
 	// - bool isSelect : Дали обектите да бъдат селектирани или деселектирани
 	//------------------------------------------------------------------------
 	private void RecursiveAdd(GameObject obj, bool isSelect){
-		
-		// Проверка дали обекта вече не е селектиран или съответно деселектиран
 		if((!obj.GetComponent<CreatedObject>().isSelected && isSelect) || 
 			(obj.GetComponent<CreatedObject>().isSelected && !isSelect)){
 			
-			// Ако не е, той бива селектиран или съответно деселектиран
 			if(isSelect)obj.GetComponent<CreatedObject>().Select();
 			else obj.GetComponent<CreatedObject>().Deselect();
 			
-			// Ако обекта е от тип точка
 			if(obj.name == "Point"){
 				foreach(GameObject connectedLine in obj.GetComponent<PointObject>().lines){
-					// Извиква се същия метод за всички линии, свързани към точката
 					RecursiveAdd(connectedLine, isSelect);
 				}
 			
-			// Ако обекта е от тип линия
 			}else if(obj.name == "Line"){
-				// Извиква се същия метод за двете точки, ограничаващи линията
 				RecursiveAdd(obj.GetComponent<LineObject>().point1, isSelect);
 				RecursiveAdd(obj.GetComponent<LineObject>().point2, isSelect);
 				
@@ -134,9 +125,7 @@ public abstract class CreatedObject : MonoBehaviour {
 					RecursiveAdd(angle, isSelect);
 				}
 				
-			// Ако обекта е от тип ъгъл
 			}else if(obj.name == "Angle"){
-				// Извиква се същия метод за двете линии, съставляващи ъгъла
 				RecursiveAdd(obj.GetComponent<AngleObject>().line1, isSelect);
 				RecursiveAdd(obj.GetComponent<AngleObject>().line2, isSelect);
 			}
@@ -154,21 +143,17 @@ public abstract class CreatedObject : MonoBehaviour {
 	// - Няма
 	//------------------------------------------------------------------------
 	public void Update(){
-		// Ако потребителя е със "Rotate" инструмента
 		if(head.GetComponent<Info>().tool == "Rotate"){
-			// Спуска се лъч от центъра на екрана напред
 			Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 			RaycastHit hit;
 			
 			if(Physics.Raycast(ray, out hit)){
-				// Ако лъчът удари обекта може да се предприеме ротация
 				if(hit.collider.gameObject == gameObject || hit.collider.gameObject.transform.parent == gameObject.transform){
 					rotationLock = true;
 				}
 			}
 		}
 		
-		// Извиква се Rotate всеки кадър
 		if(rotationLock)Rotate();
 		else oldRotation = gyro.attitude.eulerAngles;
 	}
@@ -181,7 +166,6 @@ public abstract class CreatedObject : MonoBehaviour {
 	// - Няма
 	//------------------------------------------------------------------------
 	private void Rotate(){
-		// Започване на ротацията при натискане на екрана
 		if(Input.GetMouseButton(0)){
 			
 			Vector3 newRotation = gyro.attitude.eulerAngles;
@@ -193,7 +177,6 @@ public abstract class CreatedObject : MonoBehaviour {
 			task.transform.Rotate(-deltaRotation.y * Vector3.right);
 			task.transform.Rotate(deltaRotation.x * Vector3.up);
 		}else{
-			// При отпускане на екрана спира изпълнението
 			rotationLock = false;
 		}
 	}

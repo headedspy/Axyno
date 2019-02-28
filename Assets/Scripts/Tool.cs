@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------
 // ИМЕ НА ФАЙЛА: Tool.cs
-// НАСЛЕДЕН ОТ: CreateLine, ChangeColor, CreateAngle, Delete
+// НАСЛЕДЕН ОТ: ActionsManager
 // ЦЕЛ НА КЛАСА: Създаване на помощни методи, използвани от
 // наследяващите класове
 //------------------------------------------------------------------------
@@ -30,12 +30,10 @@ public abstract class Tool : MonoBehaviour {
 	// - bool selected : Избор само на селектирани обекти
 	//------------------------------------------------------------------------
 	protected List<GameObject> GetObjects(string name, bool selected){
-		// Създаване на празен списък с обекти
 		List<GameObject> list = new List<GameObject>();
 		
 		Transform task = GetTaskTransform();
 		
-		// Добавяне на всеки обект от чертежа който отговаря на условията в списъка
 		foreach(Transform child in task){
 			if(child.gameObject.name == name || name == ""){
 				if(selected){
@@ -48,7 +46,6 @@ public abstract class Tool : MonoBehaviour {
 			}
 		}
 		
-		//Връщане на попълнения списък
 		return list;
 	}
 	
@@ -59,11 +56,8 @@ public abstract class Tool : MonoBehaviour {
 	// - string name : Съобщението, което ще бъде изведено
 	//------------------------------------------------------------------------
 	protected void ReportMessage(string message){
-		
-		// Изписване на самото съобщение
 		GameObject.Find("OutputText").GetComponent<TextMesh>().text = message;
 		
-		// Изчистване на съобщението
 		StartCoroutine(CleanMessage(message));
 	}
 	
@@ -102,12 +96,24 @@ public abstract class Tool : MonoBehaviour {
 	
 	private static List<string> deletedPoints = null;
 	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: Start
+	// При стартиране инициализира списъка с изтритите точки
+	// ПАРАМЕТРИ:
+	// - Няма
+	//------------------------------------------------------------------------
 	public void Start(){
 		if(deletedPoints == null){
 			deletedPoints = new List<string>();
 		}
 	}
 	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: AddPointName
+	// Добавя името на изтрита точка към списъка за бъдещо използване
+	// ПАРАМЕТРИ:
+	// - Няма
+	//------------------------------------------------------------------------
 	public void AddPointName(string name){
 		deletedPoints.Add(name);
 	}
@@ -115,6 +121,12 @@ public abstract class Tool : MonoBehaviour {
 	private static char nextPointName = 'a';
 	private static int prefix = 0;
 	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: NamePoints
+	// Иненуване на всички безименни точки на чертежа
+	// ПАРАМЕТРИ:
+	// - Няма
+	//------------------------------------------------------------------------
 	protected void NamePoints(){
 		List<GameObject> points = GetObjects("Point", false);
 		
@@ -136,7 +148,6 @@ public abstract class Tool : MonoBehaviour {
 				else prefixString = prefix.ToString();
 				
 				point.GetComponent<PointObject>().AddText(nextPointName.ToString() + prefixString);
-				
 				
 				if(nextPointName == 'z'){
 					nextPointName = 'a';

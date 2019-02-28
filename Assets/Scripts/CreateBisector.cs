@@ -22,7 +22,6 @@ public class CreateBisector : CreateLine{
 	//------------------------------------------------------------------------
 	public void Initiate(){
 		
-		// Проверка за селектиран поне един ъгъл
 		List<GameObject> angles = GetObjects("Angle", true);
 		
 		if(angles.Count < 1){
@@ -30,15 +29,12 @@ public class CreateBisector : CreateLine{
 		}else{
 			foreach(GameObject angle in angles){
 				
-				// Запазват се линиите на всеки ъгъл
 				GameObject line1 = angle.GetComponent<AngleObject>().line1;
 				GameObject line2 = angle.GetComponent<AngleObject>().line2;
 				
-				// Ъгълът бива разкачен от линиите му
 				line1.GetComponent<LineObject>().DisconnectAngle(angle);
 				line2.GetComponent<LineObject>().DisconnectAngle(angle);
 				
-				// Запазват се трите точки, съставляващи свързаните линии
 				GameObject c = null, b = null, a = null;
 				
 				if(line1.GetComponent<LineObject>().point1 == line2.GetComponent<LineObject>().point1){
@@ -59,41 +55,31 @@ public class CreateBisector : CreateLine{
 					b = line2.GetComponent<LineObject>().point1;
 				}
 				
-				// Изчисляват се размерите на линиите
 				float ac = line1.GetComponent<LineObject>().GetLength();
 				float ab = line2.GetComponent<LineObject>().GetLength();
 				float cb = Vector3.Distance(c.transform.position, b.transform.position);
 				
-				// Намиране на дължината от точката до т.C
 				float cl = (ac*cb)/(ab+ac);
 				
-				// Създаване на новата точка на позицията на т.B
 				GameObject point = Instantiate(pointPrefab, c.transform.position, Quaternion.identity, GetTaskTransform());
 				point.name = "Point";
 				
-				// Транслиране на точката по BC на съответното разстояние
 				point.transform.LookAt(b.transform);
 				point.transform.Translate(Vector3.forward * cl, Space.Self);
 				
-				// Построяване на самата ъглополовяща
 				GameObject newLine = BuildLine(a, point);
 				
-				// Ъпдейтване на размерите на ъгъла и свързването му за новите линии
 				angle.GetComponent<AngleObject>().Connect(line1, newLine);
 				angle.GetComponent<AngleObject>().UpdateAngle(line1, newLine);
 				
-				// Деселектиране на ъгъла
 				angle.GetComponent<CreatedObject>().SelectClick();
 				
-				// Създаване на втория ъгъл
 				GameObject createdAngle = Instantiate(anglePrefab, newLine.transform.position, Quaternion.identity, GetTaskTransform());
 				createdAngle.name = "Angle";
 				
-				// Всързване и оразмеряване на втория ъгъл
 				createdAngle.GetComponent<AngleObject>().Connect(line2, newLine);
 				createdAngle.GetComponent<AngleObject>().UpdateAngle(newLine, line2);
 				
-				// Запазване на всички линии свързани за т.C и т.B
 				List<GameObject> lines = new List<GameObject>(c.GetComponent<PointObject>().lines);
 				foreach(GameObject lineb in b.GetComponent<PointObject>().lines){
 					if(!lines.Contains(lineb)){
@@ -101,7 +87,6 @@ public class CreateBisector : CreateLine{
 					}
 				}
 				
-				// Откриване на линията между т.C и т.B
 				GameObject cbLine = null;
 				foreach(GameObject connectedLine in c.GetComponent<PointObject>().lines){
 					if(connectedLine.GetComponent<LineObject>().point2 == b || connectedLine.GetComponent<LineObject>().point1 == b){
@@ -110,13 +95,10 @@ public class CreateBisector : CreateLine{
 					}
 				}
 				
-				// Ако има такава, построяват се нови све линии, които да я заменят
 				if(cbLine != null){
 					GameObject clLine = BuildLine(c, point);
 					GameObject lbLine = BuildLine(b, point);
 					
-					// Запазват се вече съществуващите ъгли, свързани за линията между т.C и т.B
-					// Както и линията, за която трябва да бъдат свързани
 					List<GameObject> switchList = new List<GameObject>();
 					
 					foreach(GameObject connectedLine in lines){
@@ -131,18 +113,16 @@ public class CreateBisector : CreateLine{
 						}
 					}
 					
-					// Сменят се свързаните линии на всеки ъгъл
 					for(int i=0; i<switchList.Count; i += 3){
 						switchList[i].GetComponent<AngleObject>().SwitchLine(switchList[i+1], switchList[i+2]);
 					}
 					
-					// Изтрива се линията
 					Destroy(cbLine);
 				}
 				
-				NamePoints();
+				Vibrate();
 				
-				// NAME THE NEW POINT YOU MONGOLIAN
+				NamePoints();
 				AddCommand("BISECTOR_"+c.GetComponent<PointObject>().GetText()+"_"+a.GetComponent<PointObject>().GetText()+"_"+b.GetComponent<PointObject>().GetText()+"_"+point.GetComponent<PointObject>().GetText());
 			}
 		}

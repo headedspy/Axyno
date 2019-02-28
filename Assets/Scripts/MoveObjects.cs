@@ -1,4 +1,10 @@
-﻿using System.Collections;
+﻿//------------------------------------------------------------------------
+// ИМЕ НА ФАЙЛА: MoveObjects.cs
+// НАСЛЕДЕН ОТ: -
+// ЦЕЛ НА КЛАСА: Местене и завъртане на отделни обекти
+//------------------------------------------------------------------------
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,8 +14,19 @@ public class MoveObjects : CreateLine {
 	public static char axis = 'X';
 	public bool isRotation = false;
 	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: Initiate
+	// Преместване/Завъртане на селектираните обекти по избраната ос
+	// ПАРАМЕТРИ:
+	// - Няма
+	//------------------------------------------------------------------------
 	public override void Initiate(){
 		List<GameObject> selected = GetObjects("", true);
+		if(selected.Count == 0){
+			ReportMessage("ERROR: Select at least one object");
+			return;
+		}
+		
 		float movement = 0.1f;
 		Vector3 moveWith = Vector3.zero;
 		Vector3 rotateWith = Vector3.zero;
@@ -34,12 +51,12 @@ public class MoveObjects : CreateLine {
 			if(gameObject.name == "MinusMove") moveWith *= -1;
 		}
 		
-		
 		if(isForced){
 			foreach(GameObject obj in selected){
 				if(isRotation)obj.transform.Rotate(rotateWith, Space.World);
 				else obj.transform.position += moveWith;
 			}
+		
 		}else{
 			List<GameObject> points = GetObjects("Point", true);
 			List<GameObject> lines = GetObjects("Line", true);
@@ -61,7 +78,6 @@ public class MoveObjects : CreateLine {
 				if(!points.Contains(point2))points.Add(point2);
 			}
 			
-			
 			if(!isRotation){
 				foreach(GameObject point in points){
 					point.transform.position += moveWith;
@@ -72,6 +88,7 @@ public class MoveObjects : CreateLine {
 						line.GetComponent<LineObject>().UpdatePosition(point, otherPoint);
 					}
 				}
+				
 				foreach(GameObject line in lines){
 					GameObject point1 = line.GetComponent<LineObject>().point1;
 					GameObject point2 = line.GetComponent<LineObject>().point2;
@@ -86,7 +103,6 @@ public class MoveObjects : CreateLine {
 					angle.GetComponent<AngleObject>().UpdateAngle(line1, line2);
 				}
 
-			// movement
 			}else{
 				foreach(GameObject point in points){
 					midPoint += point.transform.position;
@@ -107,6 +123,7 @@ public class MoveObjects : CreateLine {
 						
 						connectedLine.GetComponent<LineObject>().UpdatePosition(connectedPoint1, connectedPoint2);
 					}
+					
 					foreach(GameObject connectedLine in point2.GetComponent<PointObject>().lines){
 						GameObject connectedPoint1 = connectedLine.GetComponent<LineObject>().point1;
 						GameObject connectedPoint2 = connectedLine.GetComponent<LineObject>().point2;
@@ -116,14 +133,28 @@ public class MoveObjects : CreateLine {
 				}
 			}
 		}
+		
+		Vibrate();
 	}
 	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: Deselect
+	// Деселектиране на всички селектирани обекти
+	// ПАРАМЕТРИ:
+	// - Няма
+	//------------------------------------------------------------------------
 	public void Deselect(){
 		foreach(GameObject obj in GetObjects("", true)){
 			obj.GetComponent<CreatedObject>().SelectClick();
 		}
 	}
 	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: ChangeMethod
+	// Промяна на метода на манипулация между свързан и принудителен
+	// ПАРАМЕТРИ:
+	// - Няма
+	//------------------------------------------------------------------------
 	public void ChangeMethod(){
 		isForced = !isForced;
 		
@@ -131,12 +162,17 @@ public class MoveObjects : CreateLine {
 		transform.parent.Find("Method_Text").GetComponent<TextMesh>().text = s;
 	}
 	
+	//------------------------------------------------------------------------
+	// ФУНКЦИЯ: ChangeAxis
+	// Промяна на оста на манипулация
+	// ПАРАМЕТРИ:
+	// - Няма
+	//------------------------------------------------------------------------
 	public void ChangeAxis(){
 		GameObject oldBox = transform.parent.Find(axis.ToString()).gameObject;
 		GameObject newBox = transform.parent.Find(gameObject.name).gameObject;
 		
 		axis = gameObject.name[0];
-		
 		
 		oldBox.GetComponent<Renderer>().material.color = Color.white;
 		newBox.GetComponent<Renderer>().material.color = Color.gray;
